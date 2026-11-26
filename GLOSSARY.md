@@ -17,6 +17,9 @@ A **Patient Record** or a file-level channel, such as a header or filename, that
 **Direct Identifier**:
 Information that directly identifies a **Patient** or associated person, such as a full name, phone number, or government-assigned identifier.
 
+**Detection Score**:
+A value expressing how strongly the evidence supports treating a field or text span as a **Direct Identifier** in context.
+
 **Quasi-Identifier**:
 An attribute such as an age, locality, or encounter date that can help identify a **Patient** when combined with other information.
 

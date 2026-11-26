@@ -81,6 +81,8 @@ The hackathon workflow centers on a command-line batch. The evaluator prepares t
 
 ## Hypothetical alternative designs
 
+The [candidate pipeline guide](candidate-pipelines.md) compares three end-to-end candidates, with one flowchart per candidate and the evidence needed to choose between them.
+
 ```mermaid
 flowchart TD
     A[Raw input behind a trust boundary] --> B[Format-specific reader]

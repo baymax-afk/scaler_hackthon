@@ -2,6 +2,12 @@
 
 The [Secret Wards hackathon decision map](https://github.com/baymax-afk/scaler_hackthon/issues/1) is the canonical tracker. Its tickets carry the questions, ownership and current dependencies.
 
+## Phase A handoff
+
+The team selected Candidate A for the first implementation path. Phase A uses existing synthetic inputs while Developer B improves the dataset. The improved corpus gates independent model training in Phase B. Score integration and the paired comparison follow in Phases C and D. The regex work can qualify on its own. [Refined candidate](research/candidate-pipelines.md#proposed-phase-a-detection-flow)
+
+The next decisions are developer capacity and ownership, the original-source finding interface, and approval of the preliminary experiments. The first comparison remains [unfamiliar field-role inference](https://github.com/baymax-afk/scaler_hackthon/issues/6). Shared fixtures and runner access still affect the strength of its evidence. The previous single 90-person-minute follow-up limit remains a planning constraint until the team confirms when the later phases fit. The prototype result, adoption criteria and release readiness remain open. [Development plan](development-plan.md) · [Developer B handoff](developer-b-handoff.md)
+
 ## Destination and first frontier
 
 Plan a format-preserving **Research Release** that protects patient identities and keeps clinical facts useful on unfamiliar synthetic exports. The team has 24 total person-hours. One person owns ingestion, FHIR export and Linux packaging. The other owns multilingual detection and linkage evaluation. The team chose unfamiliar field-role inference as the first comparison. The showcase feature is still a decision. [Problem statement](PROBLEM_STATEMENT.md) · [Existing feasibility estimates](research/feasibility-analysis.md)
@@ -34,6 +40,7 @@ flowchart TD
     A --> C["P0: verify judge-like runner"]
     A --> D["P0: verify organizer clarifications"]
     B --> E["P1: compare detector, linkage and format export"]
+    E --> N["P1: choose one follow-up from observed failures"]
     E --> F["P1: compare privacy policy and runtime shape"]
     C --> F
     D --> G["P1: choose the release boundary"]
@@ -41,6 +48,7 @@ flowchart TD
     F --> G
     G --> H["P2: agree on acceptance gates"]
     H --> I["P2: choose MVP scope and measured differentiator"]
+    N --> I
     I --> J["P2: plan judge preflight and demonstration"]
     K --> J
 ```
@@ -56,6 +64,15 @@ flowchart LR
     Holdout["Freeze the synthetic holdout and comparison metrics"] --> Export["Test schema-safe export and honest quarantine"]
     Holdout --> Detection["Compare multilingual detection on unfamiliar field roles"]
     Holdout --> Linkage["Compare cross-script linkage and safe abstention"]
+    Detection --> Followup["Choose the follow-up comparison from held-out failures"]
+    Followup --> AnchorTrial["Test anchor-guided detection across Patient Records"]
+    Linkage --> AnchorTrial
+    Followup --> PreservationTrial["Test whether a preservation check improves ambiguous edits"]
+    Export --> PreservationTrial
+    Holdout --> MLLabels["Check occurrence labels and split readiness for the ML comparison"]
+    MLLabels --> MLTrial["Compare pipeline-only, model-only and hybrid detection"]
+    Followup --> MLTrial
+    Runner --> MLTrial
     Runner["Verify access to a judge-like Linux runner"] --> Runtime["Bound memory and runtime before choosing the batch shape"]
     Export --> Runtime
     Linkage --> Runtime
@@ -66,36 +83,48 @@ flowchart LR
     Policy --> Gates
     Boundary --> Gates
     Gates --> Scope["Choose the MVP cut and the differentiator to demonstrate"]
+    Followup --> Scope
     Scope --> Handoff["Choose the submission preflight and demonstration evidence"]
     Eligibility --> Handoff
 ```
 
 ## Alternative solution pathways
 
-Mix and compare components on the same unseen synthetic patients, schemas and note templates. Candidate library versions and setup costs are documented in the research. [Technology survey](research/tools-and-technologies.md) · [Feasibility comparison](research/feasibility-analysis.md)
+Each route puts a different source of evidence first. All viable routes still have to produce a complete Research Release in the original formats. Effort and performance are planning estimates. The prototype ranges cover narrow comparisons after fixtures exist, and the follow-up budget covers a smaller experiment. All viable routes use local CPU, so the relevant costs are annotation, dependencies, extra passes, memory, and time taken from integration. [Output contract](SPEC.md#4-output-layout) · [Feasibility estimates](research/feasibility-analysis.md) · [Toolkit overview](research/codebase-overview.md)
+
+| Approach | Innovation and fit with the toolkit | Effort, performance and scaling | Uncertainty that could change the choice |
+| --- | --- | --- | --- |
+| Context-first editing | Infer field roles from labels, values and neighboring context, then run linkage and export. Strong fit with the starter’s per-format handlers and source-preserving edits. Innovation comes from generalizing to unseen labels and names. | Lowest initial effort. The prior estimate is 2–4 person-hours for a focused comparison. Bounded local scans have modest expected memory use. Rules and exceptions add coverage and maintenance cost as formats diversify. | Do unfamiliar labels and mixed-script values still leak, and do value-shape cues mistake treatments for identifiers? |
+| Patient-first identity evidence | Start from trusted links across exports and use cross-record consistency to suggest missing identity evidence. This can recover unlabeled aliases and fragmented records. The starter’s linkage stub leaves this architecture with more integration work. | Medium to high integration effort. The prior estimate for the linkage comparison alone is 3–5 hours. Compact indexes can bound typical candidate work, while common names and shared contacts can create large blocks. Raw evidence increases memory and handling costs. | Does the extra evidence recover more legitimate detections than it creates incorrect edits or False Merges? Can it help people with only one record? |
+| Model-first role recognition | Learn roles or spans from synthetic examples using a sparse classifier or CRF. Better transfer across varied text or labels would differentiate it. Reuse format handlers and evaluation tooling through a span interface. | High upfront effort. The prior narrow-CRF estimate is 6–10 person-hours after labels exist. Expected inference cost is lower than the annotation, packaging and calibration cost. A limited follow-up depends on reusable labels and features. | Does transfer hold on both patient- and template-disjoint samples? A model that generalizes to new names can still memorize note layouts. |
+| Clinical-preservation-first | Identify the observations and fields that must survive and use that evidence to review uncertain edits. A positive check can give integrity evidence beyond a leak score. The starter offers parsers and practice probes, but no reusable clinical span validator. | Medium effort for a narrow check, high for rebuild-by-allowlist across all formats. Applying it only to ambiguous edits limits runtime; reconstructing notes or FHIR carries greater schema, coverage and validation costs. | Can a check protect exact doses and diagnoses while still removing identifiers embedded in plausible clinical fields? What happens to coverage when the two checks disagree? |
+| Release-risk-first | Compare fixed and selective policy against patient-level disclosure and clinical retention across the full release. This addresses rare combinations left by identifier removal. Existing date and age helpers offer examples for a fixed baseline. | Medium to high effort. The prior estimate is 2–4 hours for fixed transformations and 4–7 hours for a selective comparison. Counting patient groups on a few approved fields can scale; repeated policy evaluation adds passes and grouping memory. | Does selective treatment reduce measured risk at comparable coverage and exact temporal utility, given uncertainty in patient grouping? |
+
+Two hybrids merit a bounded comparison. A **contextual detector plus anchor hints** can look for recurring misses where independent patient evidence already exists. A **contextual detector plus a preservation check** can focus extra work on ambiguous edits. The same clinical token can appear in a sensitive context. Test a clinician and patient sharing a name, and a clinical field containing an identifier. Compare the same input and base detector with the proposed addition off and on. [Edge cases](research/outliers-and-edge-cases.md)
+
+Evidence is sufficient to drop hosted inference, aggregate-only releases, query enclaves, and an output rewrite into a single canonical format. The runner and release contract exclude those options. The published all-redaction baseline scored roughly 22/100 across the reported profiles, which rules out blanket redaction as the submission strategy. Selective clinical protection, internal normalization, and patient-level risk measures remain candidates. [Runner and output contract](SPEC.md) · [Published calibration](SCORING.md#calibration)
 
 ```mermaid
 flowchart TD
-    A["Reuse CLI, starter behavior as comparator and official checks"] --> D{"Which evidence extraction improves held-out results?"}
-    D --> D1["Field roles, contextual rules and bounded normalization"]
-    D --> D2["Custom recognizers or small classical model with labeled synthetic spans"]
-    D1 --> L{"Which grouping is precise enough?"}
-    D2 --> L
-    L --> L1["Issuer-scoped anchors, bounded cross-script similarity and group conflicts"]
-    L --> L2["Probabilistic pair scoring with explicit cluster constraints"]
-    L1 --> P{"Which policy preserves utility at lower measured risk?"}
-    L2 --> P
-    P --> P1["Fixed truthful bands, geography and keyed patient date shifts"]
-    P --> P2["Selective coarsening for rare patient groups"]
-    P1 --> R{"Which batch shape meets the resource budget?"}
-    P2 --> R
-    R --> R1["Compact in-memory evidence with a bounded export pass"]
-    R --> R2["Reread or segment input and evaluate encrypted spill only if needed"]
-    R1 --> V["Compare on the same contract, clinical and resource gates"]
-    R2 --> V
+    A["First comparison: field-role inference on common fixtures"] --> D{"Which failure could change the MVP choice?"}
+    D -->|Misses with trusted cross-record evidence| L["Test a bounded pass with independently verified anchor hints"]
+    D -->|Clinical content lost during edits| C["Test a preservation check on ambiguous edits"]
+    D -->|Transfer gaps across unseen schemas| M["Consider a small learned role comparator if labels are ready"]
+    D -->|Residual disclosure from patient profiles| P["Consider selective treatment against the fixed policy"]
+    D -->|No material failure with a feasible follow-up| H["Review current evidence and preserve integration time"]
+    L --> V["Evaluate the selected comparison against the same baseline"]
+    C --> V
+    M --> V
+    P --> V
+    V --> H
+    H --> G["Discuss evidence before choosing the MVP route"]
 ```
 
-The first comparison starts with contextual field-role rules and asks whether additional evidence improves recall without erasing protected clinical spans. The team can use deterministic transliteration and fuzzy matching helpers for bounded linkage comparisons. Any learned model needs synthetic labels, a patient- and template-disjoint holdout, declared provenance and offline packaging. OCR, additional libraries and adaptive policies have to earn their time through measured benefit. [Technical candidates](research/tools-and-technologies.md) · [Evaluation plan](research/feasibility-analysis.md#experiments-for-the-prototype-phase)
+Reuse the [Secret Wards Blind fixtures](datasets/README.md) alongside organizer practice data. Keep truth out of runtime and reserve whole patients and templates for comparison. Evaluate identifier and Canary observations, exact clinical spans and input-based retention, False Merges, and incremental CPU/RSS. Use a common comparator even when a candidate changes which files are quarantined. [Evaluation plan](research/feasibility-analysis.md#experiments-for-the-prototype-phase)
+
+The team selected one follow-up capped at **90 person-minutes**, chosen by the first comparison’s failure pattern. The Grilling decision controls which route to test. The chosen comparison becomes a prerequisite for the MVP cut. The ML branch needs independent occurrence labels and a fair comparison of pipeline-only, model-only and hybrid detection. The adaptive policy remains available through its existing ticket. [Choose the follow-up comparison from held-out failures](https://github.com/baymax-afk/scaler_hackthon/issues/16) · [Compare multilingual detection on unfamiliar field roles](https://github.com/baymax-afk/scaler_hackthon/issues/6) · [Compare fixed and selective privacy policies](https://github.com/baymax-afk/scaler_hackthon/issues/8) · [Dedicated ML detector and score fusion](research/candidate-pipelines.md#dedicated-ml-detector-and-score-fusion)
+
+The two new Prototype tickets specify comparisons with the proposed addition off and on. [Test anchor-guided detection across Patient Records](https://github.com/baymax-afk/scaler_hackthon/issues/17) · [Test whether a preservation check improves ambiguous edits](https://github.com/baymax-afk/scaler_hackthon/issues/18)
 
 ## Critical decision points
 
