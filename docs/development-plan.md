@@ -169,3 +169,41 @@ flowchart LR
     Gate -->|Yes| Next["Updated main for next small slice"]
     Gate -->|Needs revisions| Review
 ```
+
+## Version 2 planning and handoff
+[Developer B handoff](developer-b-v2-handoff.md)
+
+The baseline and Phase A decisions above remain historical. The [Version 2 proposal](research/version-2-improvement-plan.md) records reusable seams and short experiments. The [requirements and failure audit](research/generalization-analysis.md) establishes the order of work. Developer A owns production code and B owns the independently scored corpus. This avoids two developers changing format traversal and the same release module simultaneously. Ownership and estimates remain provisional pending developer capacity and collaboration constraints.
+
+| Priority and owner | Directory | Deliverable and effort | Prerequisite and integration | Acceptance and test |
+| --- | --- | --- | --- | --- |
+| P0 A, run the safety slice | `submission/rakshak/`, `submission/tests/` | Isolated replay/probe for encoding, FHIR and ledger. 1–2 h. | Starts after design approval with public synthetic cases. Share a neutral disposition/locator sample with B. | Reproduce all known boundary cases and show safely handled controls through CLI and output. |
+| P0 B, freeze dataset contracts | `docs/datasets/`, `evaluation/` | Version and annotation schema, quotas, lineage policy, separate custody. 1–2 h. | Independent design with one sample source unit, expected edit and locator reviewed jointly. | Two parties independently join and score shared examples. Demonstrate no lineage crossing and no inputs exposing truth. |
+| P0 B, deliver the corpus and scorer increments | Same open paths, private sealed storage | Open corpus families, partial then independently reviewed annotations, QA and card. 8–14 h estimate, more if independent review is slow. | Start on approved families before detector prototypes finish. Sealed authorship/storage stays with B. Audit tooling can land separately after shared schema agrees. | Exactly 2,000 valid records, 1,000/400/600 splits, counts by format and family, reproducing scripts, separate invalid suite and no private content in shared Git. |
+| P1 A, candidate coverage and protected facts | Detector and adapter tests | Field role and scoped-context vertical slice, compared with V1. 2–4 h implementation after probe. | B can provide a small open subset or A can use finite synthetic fixtures. Needs harness sample and baseline release tests. | Improve targeted exact-span recall without damaging approved clinical negatives, references or disposition. |
+| P1 A, deterministic linkage and temporal policy | Runtime and fixture tests | Small issuer-scoped evidence and privacy slice, with truthful and structure-safe dates/age policy. 3–6 h after probe. | Requires approved patient and privacy policy, output schema decisions and B's first adjudicated linkage fixtures. B owns ground truth and metrics. | Positive eligible-pair recovery, zero false merges on negative/conflict fixtures, keyed output consistency, valid references and exact intervals. |
+| P1 B, independent bench and preflight | `evaluation/`, dataset docs | V1/V2 harness, neutral per-arm snapshots, validation and sealed runner procedure. 2–4 h separate from authoring. | Starts with small public fixtures. Score a frozen pipeline after integration and accept no private tunings. | Report correct namespaces, denominators and undefined scores, platform/limits, hashes, seed and timed reproducibility. |
+| P2 both, handoff | Integration branch and brief | Approve one narrow follow-up, freeze V2, preflight and prepare deliverables. Reserve 4–6 h. | Requires eligible target and runner, same evaluator and release status, reviewed fixes and baseline evidence. | Public regressions and B-only sealed report, release gates and brief verified. |
+
+```mermaid
+flowchart LR
+    Approve["Agree release scope, safe seams and custody"]
+    subgraph A["A · Runtime"]
+        Safety["Release integrity slice"] --> Coverage["Field-role and clinical protection"]
+        Coverage --> Privacy["Linkage and temporal slice"]
+    end
+    subgraph B["B · Dataset and evaluation"]
+        Schema["Schema, lineage and scoring sample"] --> Open["Open fixtures and validation"]
+        Schema --> Sealed["Private sealed families"]
+        Open --> Harness["Independent scorer and integrity checks"]
+    end
+    Approve --> Safety & Schema
+    Schema --> Coverage
+    Open --> Privacy
+    Privacy & Harness --> Freeze["Integrate, preflight and freeze"]
+    Sealed & Freeze --> Test["Teammate-only sealed benchmark"]
+```
+
+The full cycle exceeds the historical 24-person-hour budget at the high end before external reviews. If that budget still binds, prioritize release correctness, one candidate-coverage slice, an evidence-gated exact linkage slice and valid patient-level date handling. Reserve separate effort for completing and independently reviewing the full 2,000 records. Report limited evidence while the corpus is incomplete and reserve the sealed comparison until QA passes. Schedule packaging and runner checks in parallel with the first slices.
+
+Use a separate local feature branch or sibling worktree per owner. Keep prototypes on isolated branches. Both developers review one small interface change and frozen sample before consumer branches rely on it. Merge small independently verified PRs after agreed authorization. Keep evaluation, generated input and private seed assets in distinct locations. Sync from the approved main revision and agree which person resolves any shared contract conflict. Adopt a named immutable V1 Git reference once authorized, using the existing SHA in the meantime. See the [dataset custody protocol](research/dataset-v2-design.md#leakage-and-sealed-ownership) and the [Git collaboration workflow](#git-collaboration).

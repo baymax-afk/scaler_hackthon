@@ -1,0 +1,205 @@
+{
+  "canaries": 7,
+  "canaries_visible": 0,
+  "clean_control_byte_equal": true,
+  "exceptions": {
+    "('FHIR', 'deva', 'email', False, False)": 16,
+    "('FHIR', 'hinglish', 'email', False, False)": 16,
+    "('FHIR', 'latin', 'email', False, False)": 17
+  },
+  "extra_index_entries": 1,
+  "extra_index_output_types": [
+    "misc"
+  ],
+  "formats": {
+    "CSV": {
+      "both_clean": 500,
+      "clinical_clean_records": 500,
+      "clinical_probes": 2500,
+      "date_fields_unchanged": 1000,
+      "identifier_clean_records": 500,
+      "identifier_labels": 1990,
+      "index_present": 500,
+      "observed_date_fields": 1000,
+      "output_clinical": 2500,
+      "output_visible": 0,
+      "records": 500,
+      "records_linked": 0,
+      "source_clinical": 2500,
+      "source_present": 1990
+    },
+    "FHIR": {
+      "both_clean": 50,
+      "clinical_clean_records": 50,
+      "clinical_probes": 250,
+      "date_fields_unchanged": 50,
+      "identifier_clean_records": 50,
+      "identifier_labels": 198,
+      "index_present": 50,
+      "observed_date_fields": 50,
+      "output_clinical": 250,
+      "output_visible": 0,
+      "records": 50,
+      "records_linked": 0,
+      "source_clinical": 250,
+      "source_present": 149
+    },
+    "JSON": {
+      "both_clean": 450,
+      "clinical_clean_records": 450,
+      "clinical_probes": 2250,
+      "date_fields_unchanged": 900,
+      "identifier_clean_records": 450,
+      "identifier_labels": 1796,
+      "index_present": 450,
+      "observed_date_fields": 900,
+      "output_clinical": 2250,
+      "output_visible": 0,
+      "records": 450,
+      "records_linked": 0,
+      "source_clinical": 2250,
+      "source_present": 1796
+    },
+    "TSV": {
+      "both_clean": 500,
+      "clinical_clean_records": 500,
+      "clinical_probes": 2500,
+      "date_fields_unchanged": 1000,
+      "identifier_clean_records": 500,
+      "identifier_labels": 1990,
+      "index_present": 500,
+      "observed_date_fields": 1000,
+      "output_clinical": 2500,
+      "output_visible": 0,
+      "records": 500,
+      "records_linked": 0,
+      "source_clinical": 2500,
+      "source_present": 1990
+    },
+    "TXT": {
+      "both_clean": 500,
+      "clinical_clean_records": 500,
+      "clinical_probes": 2500,
+      "date_fields_unchanged": 1000,
+      "identifier_clean_records": 500,
+      "identifier_labels": 1992,
+      "index_present": 500,
+      "observed_date_fields": 1000,
+      "output_clinical": 2500,
+      "output_visible": 0,
+      "records": 500,
+      "records_linked": 0,
+      "source_clinical": 2500,
+      "source_present": 1992
+    }
+  },
+  "kinds": {
+    "email": {
+      "identifier_labels": 1983,
+      "output_visible": 0,
+      "source_present": 1934
+    },
+    "name": {
+      "identifier_labels": 2000,
+      "output_visible": 0,
+      "source_present": 2000
+    },
+    "phone": {
+      "identifier_labels": 1983,
+      "output_visible": 0,
+      "source_present": 1983
+    },
+    "relative": {
+      "identifier_labels": 2000,
+      "output_visible": 0,
+      "source_present": 2000
+    }
+  },
+  "linkage": {
+    "linked_pairs": 0,
+    "patients_with_multiple_records": 690,
+    "same_patient_pairs": 1502,
+    "synthetic_patients": 940
+  },
+  "scripts": {
+    "deva": {
+      "both_clean": 501,
+      "clinical_clean_records": 501,
+      "clinical_probes": 2505,
+      "date_fields_unchanged": 985,
+      "identifier_clean_records": 501,
+      "identifier_labels": 1992,
+      "index_present": 501,
+      "observed_date_fields": 985,
+      "output_clinical": 2505,
+      "output_visible": 0,
+      "records": 501,
+      "records_linked": 0,
+      "source_clinical": 2505,
+      "source_present": 1976
+    },
+    "hinglish": {
+      "both_clean": 748,
+      "clinical_clean_records": 748,
+      "clinical_probes": 3740,
+      "date_fields_unchanged": 1480,
+      "identifier_clean_records": 748,
+      "identifier_labels": 2982,
+      "index_present": 748,
+      "observed_date_fields": 1480,
+      "output_clinical": 3740,
+      "output_visible": 0,
+      "records": 748,
+      "records_linked": 0,
+      "source_clinical": 3740,
+      "source_present": 2966
+    },
+    "latin": {
+      "both_clean": 751,
+      "clinical_clean_records": 751,
+      "clinical_probes": 3755,
+      "date_fields_unchanged": 1485,
+      "identifier_clean_records": 751,
+      "identifier_labels": 2992,
+      "index_present": 751,
+      "observed_date_fields": 1485,
+      "output_clinical": 3755,
+      "output_visible": 0,
+      "records": 751,
+      "records_linked": 0,
+      "source_clinical": 3755,
+      "source_present": 2975
+    }
+  },
+  "totals": {
+    "age_fields": 1950,
+    "age_unchanged": 1950,
+    "both_clean": 2000,
+    "clinical_clean_records": 2000,
+    "clinical_probes": 10000,
+    "date_fields_unchanged": 3950,
+    "empty_contact_fields": 24,
+    "empty_contacts_kept": 24,
+    "identifier_clean_records": 2000,
+    "identifier_labels": 7966,
+    "index_present": 2000,
+    "observed_date_fields": 3950,
+    "output_clinical": 10000,
+    "output_visible": 0,
+    "records": 2000,
+    "records_linked": 0,
+    "source_clinical": 10000,
+    "source_present": 7917,
+    "structured_aadhaar_fields": 700,
+    "structured_aadhaar_removed": 700
+  },
+  "unlabeled_misc": {
+    "clean/ward_protocol.txt": "sanitized",
+    "misc/deep.json": "json_depth_limit",
+    "misc/export_metadata.json": "sanitized",
+    "misc/invalid_utf8.txt": "sanitized",
+    "misc/truncated.json": "invalid_input",
+    "misc/unsupported.xml": "unsupported_format",
+    "misc/zero_bytes.txt": "empty_file"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "affected_files": 138,
+  "baseline": {
+    "by_script": {
+      "deva": {
+        "labeled": 143,
+        "visible": 114
+      },
+      "hinglish": {
+        "labeled": 111,
+        "visible": 80
+      },
+      "latin": {
+        "labeled": 2976,
+        "visible": 437
+      }
+    },
+    "counts": {
+      "exported_clinical_probes": 4701,
+      "identifier_mentions": 3230,
+      "identifier_mentions_exported": 3172,
+      "input_clinical_probes": 4855,
+      "preserved_clinical_probes": 4701,
+      "required_files": 192,
+      "required_files_exported": 185,
+      "visible_mentions": 631
+    },
+    "quarantine_reasons": {
+      "ambiguous_identifier": 5,
+      "empty_file": 1,
+      "invalid_input": 1,
+      "json_depth_limit": 1,
+      "json_key_collision_or_fhir_key": 1,
+      "unsupported_attachment": 1,
+      "unsupported_format": 3
+    },
+    "report_counts": {
+      "files_quarantined": 13,
+      "files_sanitized": 187,
+      "files_total": 200,
+      "identifiers_detected": 2549,
+      "records_generalized": 0,
+      "records_linked": 0,
+      "records_processed": 772,
+      "records_quarantined": 0,
+      "records_suppressed": 0
+    }
+  },
+  "breakdown": {
+    "channel": {
+      "base64": 9,
+      "content": 599,
+      "filename": 10,
+      "header": 4,
+      "metadata": 9
+    },
+    "format": {
+      ".csv": 23,
+      ".json": 171,
+      ".tsv": 154,
+      ".txt": 233,
+      "FHIR": 50
+    },
+    "script": {
+      "deva": 114,
+      "hinglish": 80,
+      "latin": 437
+    },
+    "type": {
+      "DOB": 30,
+      "HOUSE": 31,
+      "INSURANCE_ID": 10,
+      "LANDMARK": 25,
+      "LOCALITY": 40,
+      "MRN": 82,
+      "PATIENT_NAME": 246,
+      "PIN": 24,
+      "RELATIVE_NAME": 67,
+      "VILLAGE": 76
+    }
+  },
+  "cause_by_type": {
+    "present in structured field without covering candidate": {
+      "DOB": 30,
+      "HOUSE": 31,
+      "INSURANCE_ID": 10,
+      "LANDMARK": 16,
+      "LOCALITY": 21,
+      "MRN": 52,
+      "PATIENT_NAME": 152,
+      "RELATIVE_NAME": 33,
+      "VILLAGE": 38
+    },
+    "present in text or path without covering candidate": {
+      "LANDMARK": 9,
+      "LOCALITY": 19,
+      "MRN": 30,
+      "PATIENT_NAME": 93,
+      "PIN": 24,
+      "RELATIVE_NAME": 34,
+      "VILLAGE": 38
+    },
+    "visibility only outside intended scope": {
+      "PATIENT_NAME": 1
+    }
+  },
+  "failure_locations": {
+    "present in structured field without covering candidate": 383,
+    "present in text or path without covering candidate": 247,
+    "visibility only outside intended scope": 1
+  }
+}
