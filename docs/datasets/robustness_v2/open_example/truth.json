@@ -1,0 +1,23 @@
+[
+  {
+    "id": "unit-open-0001",
+    "annotation_schema": "robustness-v2-open-example-truth/1",
+    "input_version": "robustness-v2-open-example/1",
+    "input_sha256": "6da0cb91cdd7190d8ff3194c035497cd04fe604b3bebf6fc59b2efb0121c86f0",
+    "provenance": {"authoring": "manual synthetic", "source_family": "open-homonym-note/1"},
+    "record_id": "record-open-0001",
+    "locator": "doc",
+    "input_disposition": "sanitize",
+    "gold": [[6, 16, "NAME"]],
+    "protect": [[21, 31], [41, 50], [55, 71]],
+    "occurrences": [
+      {"start": 6, "end": 16, "type": "NAME", "role": "patient", "treatment": "REMOVE", "surface": "Zevra Qiln"},
+      {"start": 21, "end": 31, "type": "NAME", "role": "clinician", "treatment": "PRESERVE", "surface": "Zevra Qiln"}
+    ],
+    "clinical_facts": [
+      {"start": 41, "end": 50, "kind": "vital", "text": "BP 120/80"},
+      {"start": 55, "end": 71, "kind": "medication_and_dose", "text": "metformin 500 mg"}
+    ],
+    "expected_edit": {"start": 6, "end": 16, "replacement": "[REDACTED]"}
+  }
+]
