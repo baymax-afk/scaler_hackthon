@@ -55,7 +55,7 @@ def table_units(relative, raw, delimiter):
             yield unit(relative, "content", f"row:{index}/{column}", value, label=label)
 
 
-def json_units(relative, value, path="", fields=(), resource="", label="", contact_system="",
+def json_units(relative, value, path="", fields=(), resource="", label="", siblings=None,
                unit_of_measure="", depth=0):
     if depth > 80:
         raise ValueError("source_inventory_depth_limit")
@@ -63,7 +63,6 @@ def json_units(relative, value, path="", fields=(), resource="", label="", conta
         declared_resource = value.get("resourceType")
         if resource and isinstance(declared_resource, str):
             resource = declared_resource
-        system = value.get("system", "")
         measure = value.get("unit", "")
         for key, item in value.items():
             child = path + "/" + pointer_segment(key)
@@ -75,14 +74,14 @@ def json_units(relative, value, path="", fields=(), resource="", label="", conta
                 yield unit(relative, "content", child, text)
             else:
                 yield from json_units(relative, item, child, (*fields, key), resource, key,
-                                      system, measure if isinstance(measure, str) else "",
+                                      value, measure if isinstance(measure, str) else "",
                                       depth + 1)
     elif isinstance(value, list):
         for index, item in enumerate(value):
             yield from json_units(relative, item, path + "/" + str(index), (*fields, index), resource,
-                                  label, contact_system, unit_of_measure, depth + 1)
+                                  label, siblings, unit_of_measure, depth + 1)
     elif isinstance(value, str) or type(value) in {int, Decimal}:
-        source_label = structured_label(fields, label, resource, contact_system)
+        source_label = structured_label(fields, label, resource, siblings)
         yield unit(relative, "content", path or "doc", str(value), label=source_label,
                    section=source_section(source_label, resource),
                    unit_of_measure=unit_of_measure)

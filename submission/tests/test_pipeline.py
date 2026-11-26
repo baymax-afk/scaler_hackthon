@@ -80,6 +80,52 @@ class DetectionTest(unittest.TestCase):
 
 
 class FormatTest(unittest.TestCase):
+    def test_keeps_reordered_name_initials_inside_the_identifier_span(self):
+        note = "Patient: Velan, K. R.; dose 5 mg\nDr. Velan, K. R. verified."
+        rendered, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(rendered, "Patient: [NAME]; dose 5 mg\nDr. Velan, K. R. verified.")
+
+    def test_uses_patient_role_and_chart_context_in_structured_fields(self):
+        data = {
+            "referral": {"subject": {"display": "நிலா வேலன்", "email": "patient@example.invalid",
+                                     "medicalRecordReference": "WEST-39A-0021"}},
+            "assessment": {"subject": {"display": "Diabetes Mellitus"}},
+            "attending": {"subject": {"display": "நிலா வேலன்", "email": "provider@example.invalid"}},
+            "diagnosis": {"code": "E11.9"}, "specimen": {"number": "WEST-39A-0021"},
+        }
+        rendered, _ = transform(json.dumps(data), ".json", Rewrite())
+        result = json.loads(rendered)
+        self.assertEqual(result["referral"]["subject"],
+                         {"display": "[NAME]", "email": "[EMAIL]", "medicalRecordReference": "[MRN]"})
+        self.assertEqual(result["attending"]["subject"]["display"], "நிலா வேலன்")
+        for key in ("assessment", "diagnosis", "specimen"):
+            self.assertEqual(result[key], data[key])
+
+    def test_recognizes_explicit_referral_role_in_tables(self):
+        rendered, _ = transform(
+            'Referred Subject,Clinical subject,Sample reference\n"Patel, J.",Pulse Pressure,WD-072B\n',
+            ".csv", Rewrite(),
+        )
+        self.assertEqual(rendered,
+                         "Referred Subject,Clinical subject,Sample reference\n[NAME],Pulse Pressure,WD-072B\n")
+
+    def test_uses_chart_number_cue_without_treating_all_codes_as_mrns(self):
+        note = "Chart # NOR-872B/04\nSpecimen # NOR-872B/04\nDiagnosis: E11.9"
+        rendered, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(rendered, "Chart # [MRN]\nSpecimen # NOR-872B/04\nDiagnosis: E11.9")
+
+    def test_localized_name_cues_and_relationship_lines_preserve_their_neighbors(self):
+        note = ("Mareez ka naam / Nivara Dast\n"
+                "ರೋಗಿಯ ಹೆಸರು: ಕಾವ್ಯ ಸೇನ್\n"
+                "நோயாளியின் பெயர்: நிலா வேலன்\n"
+                "W/o நிலா வேலன் 5 mg\n"
+                "S/o Ahira M. D. Velam\n"
+                "BP: 120/80 mmHg")
+        rendered, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(rendered, "Mareez ka naam / [NAME]\nರೋಗಿಯ ಹೆಸರು: [NAME]\n"
+                         "நோயாளியின் பெயர்: [NAME]\nW/o [RELATIVE] 5 mg\n"
+                         "S/o [RELATIVE]\nBP: 120/80 mmHg")
+
     def test_delimiter_and_original_label_roles(self):
         output, locations = transform('नाम\tDose\n"ईशा राव"\t650 mg\n', ".tsv", Rewrite())
         self.assertEqual(list(csv.reader(io.StringIO(output), delimiter="\t")),
@@ -138,6 +184,22 @@ class FormatTest(unittest.TestCase):
         self.assertEqual(patient["contact"][0]["name"]["text"], "[NAME]")
         self.assertEqual(relative["name"][0]["text"], "[RELATIVE]")
         self.assertEqual(clinician["name"][0]["text"], "Mira Sen")
+
+    def test_fhir_narrative_corroborates_names_across_xhtml_nodes(self):
+        div = ('<div xmlns="http://www.w3.org/1999/xhtml"><p><b>நிலா</b> <em>வேலன்</em></p>'
+               '<p>Dr. நிலா வேலன் documented 5 mg.</p></div>')
+        bundle = {"resourceType": "Bundle", "type": "collection", "entry": [
+            {"resource": {"resourceType": "Patient", "name": [{"given": ["நிலா"], "family": "வேலன்"}],
+                          "text": {"status": "generated", "div": div}}}
+        ]}
+        rendered, _ = transform(json.dumps(bundle), ".json", Rewrite())
+        patient = json.loads(rendered)["entry"][0]["resource"]
+        content = patient["text"]["div"]
+        self.assertEqual(patient["name"], [{"given": ["[NAME]"], "family": "[NAME]"}])
+        self.assertNotIn("<b>நிலா</b>", content)
+        self.assertNotIn("<em>வேலன்</em>", content)
+        self.assertIn("[NAME]", content)
+        self.assertIn("Dr. நிலா வேலன் documented 5 mg.", content)
 
     def test_fhir_birth_date_never_becomes_an_invalid_placeholder(self):
         bundle = {"resourceType": "Bundle", "type": "document", "entry": [

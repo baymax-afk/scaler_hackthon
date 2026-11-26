@@ -237,7 +237,9 @@ class OpenCorpusTest(unittest.TestCase):
                               "telecom": [{"system": "email", "value": "fixture@example.invalid"}]}},
             ]}
             dump(dataset / "input" / "bundle.json", bundle)
-            review = {"Clinician": {"name": "Mira Sen"}, "patientName": "Mira Sen"}
+            contact = {"display": "Mira Sen", "email": "a@example.invalid"}
+            review = {"Clinician": {"name": "Mira Sen"}, "patientName": "Mira Sen",
+                      "subject": contact, "assessment": {"subject": contact}}
             dump(dataset / "input" / "review.json", review)
             units = list(benchmark.source_units(dataset))
             snapshot = predict(json.dumps(units).encode())["units"]
@@ -247,9 +249,14 @@ class OpenCorpusTest(unittest.TestCase):
                 if item["text"] == "fixture@example.invalid":
                     self.assertEqual(snapshot[item["id"]]["accepted"], [(0, 23, "EMAIL")])
             self.assertTrue(any(item.get("label") == "clinician name" for item in units))
+            inferred = [snapshot[item["id"]]["accepted_roles"] for item in units
+                        if item.get("label") == "patient display"]
+            self.assertEqual(inferred, [[(0, 8, "NAME", "patient")]])
             publish_release(dataset / "input", release, b"fixture")
             self.assertEqual(benchmark.read_json(release / "sanitized" / "review.json"),
-                             {"Clinician": {"name": "Mira Sen"}, "patientName": "[NAME]"})
+                             {"Clinician": {"name": "Mira Sen"}, "patientName": "[NAME]",
+                              "subject": {"display": "[NAME]", "email": "[EMAIL]"},
+                              "assessment": {"subject": {"display": "Mira Sen", "email": "[EMAIL]"}}})
             resources = benchmark.read_json(release / "sanitized" / "bundle.json")["entry"]
             self.assertEqual(resources[0]["resource"]["name"], "Example Care")
             self.assertEqual(resources[1]["resource"]["telecom"][0]["value"], "[EMAIL]")
