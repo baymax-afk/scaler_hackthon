@@ -1,5 +1,7 @@
 # robustness_v2 open corpus
 
+Use this guide to reproduce the 1,400-record open benchmark. For a small end-to-end check of the dataset, detector, and evaluator interface, see the [five-record integration slice](OPEN_SLICE.md).
+
 This version materializes 1,000 development and 400 validation Patient Records for evaluating the Secret Wards toolkit. They are fictional. The original Secret Wards Blind corpus remains its own version. The planned 600 sealed records require independent authorship and custody by the teammate. This generator has no sealed split, private seed or private renderer.
 
 | Split | CSV | TSV | JSON | FHIR | Plain text | Total |

@@ -1,0 +1,27 @@
+# Version 2 five-record integration slice
+
+For the larger development and validation datasets, see the [1,400-record open corpus](README.md).
+
+`build_open_slice.py` creates a deterministic, small synthetic corpus to exercise the Version 2 data and evaluator seam. It contains five Patient Records in text, CSV, TSV, JSON, and a FHIR document Bundle, eleven source units, four patient groups, and a clinician/patient homonym. The same synthetic patient appears in the text and JSON files. All records and template families are development material. This slice does not count toward the proposed 2,000-record Version 2 corpus, validation set, or private sealed set.
+
+The output contains `input/` for the runtime, `source_units.json` for detection, `truth/annotations.json` for evaluation, and `manifest.json` with input and annotation digests plus lineage. The truth and manifest must stay outside the runtime input directory. The generator uses only local Python standard-library modules and does not need a network connection.
+
+From the repository root, choose a new output directory:
+
+```sh
+python3 docs/datasets/robustness_v2/build_open_slice.py --output /tmp/secret-wards-v2-open
+python3 docs/datasets/robustness_v2/verify_open_slice.py /tmp/secret-wards-v2-open
+python3 evaluation/evaluate.py predict /tmp/secret-wards-v2-open/source_units.json > /tmp/secret-wards-v2-open/predictions.json
+python3 evaluation/evaluate.py score /tmp/secret-wards-v2-open/source_units.json /tmp/secret-wards-v2-open/truth/annotations.json /tmp/secret-wards-v2-open/predictions.json --strict-v2
+RAKSHA_SECRET=practice python3 submission/main.py --input /tmp/secret-wards-v2-open/input --output /tmp/secret-wards-v2-release
+python3 validate_output.py --input /tmp/secret-wards-v2-open/input --output /tmp/secret-wards-v2-release
+python3 evaluation/evaluate.py open-slice-audit /tmp/secret-wards-v2-open /tmp/secret-wards-v2-release
+```
+
+The verifier checks the generated files, source locations, original code-point spans, clinical facts, hashes, and lineage partition. Its FHIR checker covers document structure, local references, basic dates, and inline base64; it is a smoke check, not full R4 or ABDM profile validation. The release audit counts exact protected facts over all input, including quarantined files. It also reports pseudonym clusters that merge different synthetic patient groups and B-cubed values based on the manifest's complete synthetic group labels; these are diagnostics, not independently adjudicated linkage quality rates. The JSON Patient Record has the `doc` locator required by the toolkit for a single-object JSON document; its field source units use JSON pointers. Strict scoring requires the record ID, source-unit locator, and input digest to agree across artifacts. It reports exact matches and one-to-one same-type span overlaps separately. Its raw counts are useful for debugging, but quality rates remain undefined until units have `annotation_status: "adjudicated"`; negative units also need `negative_scope: "exhaustive"` for false-positive rates. Incomplete predictions are counted separately and excluded from quality rates. This open slice has not undergone independent adjudication. The separate [single-record example](open_example/) includes an illustrative incomplete prediction and its expected quarantine outcome.
+
+The current production pipeline quarantines the FHIR Bundle because it cannot safely transform a `Patient.birthDate` while retaining a valid FHIR date. A prior release emitted an invalid `"[DOB]"` placeholder. The open-slice run therefore exports four files and quarantines one; its all-input clinical fact count is seven, with six found in exported fields. The toolkit's `validate_output.py` prints `CONTRACT OK` for this run, but it does not validate FHIR content. Full FHIR support needs a keyed, consistent date transformation and validation against pinned R4 and ABDM packages.
+
+The common linkage scorer is available as `python3 evaluation/evaluate.py linkage-score MANIFEST PREDICTIONS PAIRS`. `MANIFEST` supplies opaque `id` and `patient_group` for every Patient Record. `PREDICTIONS` is a JSON object mapping every record ID to its released pseudonym or `null`. `PAIRS` is a JSON array of `{ "left": "...", "right": "...", "same_patient": true, "eligible": true, "annotation_status": "adjudicated" }` objects. It scores only eligible adjudicated pairs; eligible same-patient abstentions count as missed links, while negative abstentions are counted separately. Precision, recall, and F0.5 are `null` when their denominators are undefined. Its false-merged-cluster count is diagnostic and assumes complete, correct `patient_group` truth. The command returns aggregate counts only.
+
+When the complete Version 2 manifest exists, run `python3 evaluation/validate_v2_allocation.py MANIFEST` in the manifest's custody environment. It checks the team target of 1,000 development, 400 validation, and 600 sealed records, all five format quotas, unique record locations, and no cross-split patient, file, template, renderer, institution, or near-duplicate family. It reports only aggregate counts. This five-record open slice is intentionally too small to pass that full-corpus gate.
