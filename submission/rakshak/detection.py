@@ -15,7 +15,7 @@ FIELD_GROUPS = {
     "MRN": "mrn|patient id|patientid|patient identifier|uhid|ipd no|opd no|registration no|hospital id|admission id|admission no",
     "ADDRESS": "address|patient address|residence|street|house no|village|village mohalla|mohalla|landmark|पता",
     "PIN": "pin|pin code|pincode|zip|postal code",
-    "DOB": "dob|date of birth|birth date|birthdate|जन्म तिथि|जन्मतिथि",
+    "DOB": "dob|date of birth|birth date|birthdate|janm tithi|janam tithi|जन्म तिथि|जन्मतिथि",
     "PAN": "pan|pan no|pan number",
     "INSURANCE_ID": "insurance id|insurance number|policy number|policy no|member id",
     "PATH": "source path|original path|original filename|input path|original file",

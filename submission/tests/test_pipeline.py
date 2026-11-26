@@ -39,6 +39,10 @@ class DetectionTest(unittest.TestCase):
         self.assertTrue(detect(SourceUnit("NovaPerson10101010.txt", channel="filename")).findings)
         self.assertFalse(detect(SourceUnit("note_1234.txt", channel="filename")).findings)
 
+    def test_clinical_patient_heading_is_not_a_name(self):
+        source = "Patient - received aspirin 75 mg daily"
+        self.assertEqual(transform(source, ".txt", Rewrite())[0], source)
+
 
 class FormatTest(unittest.TestCase):
     def test_delimiter_and_original_label_roles(self):
@@ -46,6 +50,12 @@ class FormatTest(unittest.TestCase):
         self.assertEqual(list(csv.reader(io.StringIO(output), delimiter="\t")),
                          [["नाम", "Dose"], ["[NAME]", "650 mg"]])
         self.assertEqual(locations, ["row:0"])
+
+    def test_transliterated_birth_date_field(self):
+        output, _ = transform("Janm Tithi\tBP\tDose\n1991-02-03\t120/80\t650 mg\n",
+                              ".tsv", Rewrite())
+        self.assertEqual(list(csv.reader(io.StringIO(output), delimiter="\t")),
+                         [["Janm Tithi", "BP", "Dose"], ["[DOB]", "120/80", "650 mg"]])
 
     def test_json_types_precision_and_duplicate_key(self):
         output, _ = transform('{"mobile":9123456789,"measurement":2.00,"flag":true}', ".json", Rewrite())
@@ -96,6 +106,22 @@ class FormatTest(unittest.TestCase):
 
 
 class ReleaseTest(unittest.TestCase):
+    def test_all_output_path_components_are_keyed(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            (source / "patient_synthetic").mkdir(parents=True)
+            (source / "patient_synthetic" / "unlabeled-person.txt").write_text("BP: 120/80")
+            first, second = root / "first", root / "second"
+            publish_release(source, first, b"key-a")
+            publish_release(source, second, b"key-b")
+            paths = [next((out / "sanitized").rglob("*.txt")).relative_to(out / "sanitized")
+                     for out in (first, second)]
+            self.assertNotEqual(paths[0], paths[1])
+            self.assertTrue(all(part.startswith(("directory_", "file_"))
+                                for path in paths for part in path.parts))
+            self.assertEqual(next((first / "sanitized").rglob("*.txt")).read_text(), "BP: 120/80")
+
     def test_repeatable_and_quarantine_does_not_publish_raw(self):
         with TemporaryDirectory() as temporary:
             directory = Path(temporary)
