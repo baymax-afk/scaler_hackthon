@@ -23,6 +23,11 @@ FIELD_GROUPS = {
 FIELDS = {label: kind for kind, labels in FIELD_GROUPS.items() for label in labels.split("|")}
 LABELS = "|".join(re.escape(label).replace(r"\ ", r"[ _-]{1,8}") for label in sorted(FIELDS, key=len, reverse=True))
 LABELED = re.compile(r"(?:^|[\n;,|])[ \t]{0,32}(" + LABELS + r")[ \t]*[:=#][ \t]{0,32}([^\r\n;,|]{1,160})", re.I)
+LABEL_SPACES = str.maketrans({"\u00a0": " ", "\u202f": " "})
+INLINE_DOSE = re.compile(
+    r"(?:^|[ \t])(?:(?:dose|dosage)(?:[ \t]*[:=][ \t]*|[ \t]+))?"
+    r"\d+(?:[.,]\d+)?[ \t]*(?:mg|mcg|[µμ]g|g|ml|iu|units?)\b", re.I,
+)
 NAME_TOKEN = r"[A-Za-z\u0900-\u097f][A-Za-z\u0900-\u097f.'’\-]{0,29}"
 NAME = NAME_TOKEN + r"(?:[ \t]+" + NAME_TOKEN + r"){0,2}"
 CALLER = re.compile(r"(?i:\b(?:called by|visitor|attendant)\b[ \t]{0,8}[:=]?[ \t]{1,8})(" +
@@ -116,9 +121,14 @@ def detect(unit: SourceUnit) -> DetectionResult:
 
     accepted = []
     review = []
-    for match in LABELED.finditer(source):
-        value = match[2].rstrip()
+    # These cue-space substitutions are one-to-one in code points.
+    label_view = source.translate(LABEL_SPACES) if "\u00a0" in source or "\u202f" in source else source
+    for match in LABELED.finditer(label_view):
+        value = match[2]
         kind = FIELDS.get(normalize_label(match[1]))
+        if kind in {"NAME", "RELATIVE"} and (dose := INLINE_DOSE.search(value)):
+            value = value[:dose.start()]
+        value = value.rstrip()
         if kind and value.casefold() not in NULLS:
             accepted.append(Finding(match.start(2), match.start(2) + len(value), kind, .94, "local_label"))
     for pattern, kind in ((HONORIFIC, "NAME"), (INLINE_PHONE, "PHONE")):

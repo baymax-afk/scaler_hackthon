@@ -3,7 +3,10 @@ import csv
 from datetime import date
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 import unittest
 
@@ -18,6 +21,18 @@ class DetectionTest(unittest.TestCase):
         finding, = detect(SourceUnit(source)).findings
         self.assertEqual(source[finding.start:finding.end], "९१२३\u200b४५६७८९")
         self.assertEqual(finding.kind, "PHONE")
+
+    def test_nonbreaking_label_keeps_original_offsets(self):
+        source = "🩺\nPatient Name: ईशा राव\nDose: 5 mg"
+        finding, = detect(SourceUnit(source)).findings
+        self.assertEqual((finding.start, finding.end, finding.kind),
+                         (source.index("ईशा"), source.index("राव") + 3, "NAME"))
+
+    def test_name_candidate_stops_before_dose(self):
+        for suffix in (" dose 5 mg", " 500 mg daily", " dose: 5 mg", " 5 mg/kg"):
+            source = "Name: Mira Sen" + suffix
+            finding, = detect(SourceUnit(source)).findings
+            self.assertEqual(source[finding.start:finding.end], "Mira Sen")
 
     def test_name_roles_and_ambiguous_care_of(self):
         source = "Dr. Mira spoke. S/o Mira"
@@ -96,6 +111,20 @@ class FormatTest(unittest.TestCase):
 
 
 class ReleaseTest(unittest.TestCase):
+    def test_cli_preserves_clinical_neighbors_of_unicode_name_label(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            incoming = root / "input"
+            incoming.mkdir()
+            (incoming / "note.txt").write_text("Patient Name: Mira Sen dose 5 mg\nDr. Mira Sen reviewed.")
+            outgoing = root / "output"
+            cli = Path(__file__).resolve().parents[1] / "main.py"
+            subprocess.run([sys.executable, "-B", str(cli), "--input", str(incoming),
+                            "--output", str(outgoing)], check=True, capture_output=True,
+                           env={**os.environ, "RAKSHA_SECRET": "boundary-fixture"})
+            self.assertEqual((outgoing / "sanitized/note.txt").read_text(),
+                             "Patient Name: [NAME] dose 5 mg\nDr. Mira Sen reviewed.")
+
     def test_repeatable_and_quarantine_does_not_publish_raw(self):
         with TemporaryDirectory() as temporary:
             directory = Path(temporary)
