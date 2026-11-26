@@ -29,12 +29,19 @@ EXPLICIT_NAME_ROLES = {
     "mother name": "relative", "husband name": "relative", "रिश्तेदार": "relative",
 }
 FIELDS = {label: kind for kind, labels in FIELD_GROUPS.items() for label in labels.split("|")}
-LABELS = "|".join(re.escape(label).replace(r"\ ", r"[ _-]{1,8}") for label in sorted(FIELDS, key=len, reverse=True))
-LABELED = re.compile(r"(?:^|[\n;,|])[ \t]{0,32}(" + LABELS + r")[ \t]*[:=#][ \t]{0,32}([^\r\n;,|]{1,160})", re.I)
+LABELS = "|".join(re.escape(label).replace(r"\ ", r"[ \t_-]{1,8}")
+                  for label in sorted(FIELDS, key=len, reverse=True))
+LABELED = re.compile(
+    r"(?:^|[\n;,|])[ \t]{0,32}(" + LABELS +
+    r")[ \t]*[:：=#][ \t]{0,32}((?:[^\r\n;,|]|(?<=\d),(?=\d)){1,160})", re.I,
+)
 LABEL_SPACES = str.maketrans({"\u00a0": " ", "\u202f": " "})
-INLINE_DOSE = re.compile(
-    r"(?:^|[ \t])(?:(?:dose|dosage)(?:[ \t]*[:=][ \t]*|[ \t]+))?"
-    r"\d+(?:[.,]\d+)?[ \t]*(?:mg|mcg|[µμ]g|g|ml|iu|units?)\b", re.I,
+DOSE = r"\d+(?:[.,]\d+)?[ \t]*(?:mg|mcg|[µμ]g|g|ml|iu|units?)\b"
+INLINE_CLINICAL = re.compile(
+    r"(?:^|[ \t])(?:\([ \t]*)?(?:"
+    r"(?:(?:dose|dosage)(?:[ \t]*[:=][ \t]*|[ \t]+))?" + DOSE
+    + r"|(?:(?:medication|rx)[ \t]*[:=][ \t]*[\w-]{1,40}|metformin|amlodipine|salbutamol)[ \t]+" + DOSE
+    + r"|follow[ -]up[ \t]+in[ \t]+\d+[ \t]+(?:hours?|days?|weeks?|months?)\b)", re.I,
 )
 NAME_TOKEN = r"[A-Za-z\u0900-\u097f][A-Za-z\u0900-\u097f.'’\-]{0,29}"
 NAME = NAME_TOKEN + r"(?:[ \t]+" + NAME_TOKEN + r"){0,2}"
@@ -114,6 +121,14 @@ def comparison_view(text):
     return "".join(characters), positions
 
 
+def identifier_prefix(value, kind):
+    if kind in {"NAME", "RELATIVE"}:
+        clinical = INLINE_CLINICAL.search(value)
+        if clinical:
+            value = value[:clinical.start()]
+    return value.rstrip()
+
+
 def detect(unit: SourceUnit) -> DetectionResult:
     source = unit.text
     if len(source) > MAX_UNIT:
@@ -124,24 +139,25 @@ def detect(unit: SourceUnit) -> DetectionResult:
     typed = FIELDS.get(label)
     if unit.section == "fhir":
         typed = FHIR_NAME_TYPES.get(label, typed)
+    accepted = []
     if typed and unit.channel in {"content", "metadata"}:
         value = source.strip()
         start = len(source) - len(source.lstrip())
-        location = Finding(start, start + len(value), typed, .98, "typed_field",
-                           EXPLICIT_NAME_ROLES.get(label))
-        return DetectionResult((location,))
+        prefix = identifier_prefix(value.translate(LABEL_SPACES), typed)
+        if prefix:
+            location = Finding(start, start + len(prefix), typed, .98, "typed_field",
+                               EXPLICIT_NAME_ROLES.get(label))
+            if len(prefix) == len(value):
+                return DetectionResult((location,))
+            accepted.append(location)
 
-    accepted = []
     review = []
     # These cue-space substitutions are one-to-one in code points.
     label_view = source.translate(LABEL_SPACES) if "\u00a0" in source or "\u202f" in source else source
     for match in LABELED.finditer(label_view):
-        value = match[2]
         inline_label = normalize_label(match[1])
         kind = FIELDS.get(inline_label)
-        if kind in {"NAME", "RELATIVE"} and (dose := INLINE_DOSE.search(value)):
-            value = value[:dose.start()]
-        value = value.rstrip()
+        value = identifier_prefix(match[2], kind)
         if kind and value.casefold() not in NULLS:
             accepted.append(Finding(match.start(2), match.start(2) + len(value), kind, .94,
                                     "local_label", EXPLICIT_NAME_ROLES.get(inline_label)))

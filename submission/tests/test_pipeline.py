@@ -34,6 +34,21 @@ class DetectionTest(unittest.TestCase):
             finding, = detect(SourceUnit(source)).findings
             self.assertEqual(source[finding.start:finding.end], "Mira Sen")
 
+    def test_name_boundary_preserves_clinical_tails_in_text_and_cells(self):
+        for tail in (" metformin 5 mg", " Medication: exampledrug 5 mg",
+                     " follow-up in 7 days", " follow up in 2 weeks"):
+            with self.subTest(tail=tail):
+                value = "Mira Sen" + tail
+                note, _ = transform("Patient Name: " + value, ".txt", Rewrite())
+                self.assertEqual(note, "Patient Name: [NAME]" + tail)
+                table, _ = transform(f"Patient Name,Dx\n{value},asthma\n", ".csv", Rewrite())
+                self.assertEqual(table, f"Patient Name,Dx\n[NAME]{tail},asthma\n")
+
+    def test_tabs_and_equivalent_colon_keep_original_name_offsets(self):
+        source = "🩺\nPatient\tName： Mira Sen; Dose: 5 mg"
+        finding, = detect(SourceUnit(source)).findings
+        self.assertEqual((finding.start, finding.end), (source.index("Mira"), source.index(";")))
+
     def test_findings_report_only_roles_supported_by_the_source(self):
         cases = (("Patient Name: Mira Sen", "patient"),
                  ("S/o Mira Sen", "relative"),
@@ -145,14 +160,18 @@ class ReleaseTest(unittest.TestCase):
             root = Path(directory)
             incoming = root / "input"
             incoming.mkdir()
-            (incoming / "note.txt").write_text("Patient Name: Mira Sen dose 5 mg\nDr. Mira Sen reviewed.")
+            (incoming / "note.txt").write_text(
+                "Patient Name: Mira Sen dose 0,5 mg\n"
+                "Patient Name: Mira Sen (dose 5 mg)\nDr. Mira Sen reviewed."
+            )
             outgoing = root / "output"
             cli = Path(__file__).resolve().parents[1] / "main.py"
             subprocess.run([sys.executable, "-B", str(cli), "--input", str(incoming),
                             "--output", str(outgoing)], check=True, capture_output=True,
                            env={**os.environ, "RAKSHA_SECRET": "boundary-fixture"})
             self.assertEqual((outgoing / "sanitized/note.txt").read_text(),
-                             "Patient Name: [NAME] dose 5 mg\nDr. Mira Sen reviewed.")
+                             "Patient Name: [NAME] dose 0,5 mg\n"
+                             "Patient Name: [NAME] (dose 5 mg)\nDr. Mira Sen reviewed.")
 
     def test_repeatable_and_quarantine_does_not_publish_raw(self):
         with TemporaryDirectory() as temporary:

@@ -9,6 +9,7 @@ import re
 import xml.etree.ElementTree as ET
 
 from .detection import NAME, SourceUnit, detect, normalize_label
+from .source_context import source_section, structured_label
 
 
 UUID = re.compile(r"(?:urn:uuid:)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
@@ -130,7 +131,7 @@ def json_document(text, rewrite):
     return encode_json(result) + "\n", locations
 
 
-def walk(value, rewrite, path=(), label="", unit="", resource=""):
+def walk(value, rewrite, path=(), label="", unit="", resource="", contact_system=""):
     if len(path) > 80:
         raise UnsafeInput("json_depth_limit")
     if isinstance(value, dict):
@@ -139,6 +140,7 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
         result = {}
         raw_unit = value.get("unit", "")
         unit = raw_unit if isinstance(raw_unit, str) else ""
+        contact_system = value.get("system", "")
         resource_type = value.get("resourceType")
         if resource and isinstance(resource_type, str):
             resource = resource_type
@@ -153,15 +155,12 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
             updated = rewrite.text(key, channel="key")
             if updated in result or (resource and updated != key):
                 raise UnsafeInput("json_key_collision_or_fhir_key")
-            result[updated] = walk(item, rewrite, (*path, key), key, unit, resource)
+            result[updated] = walk(item, rewrite, (*path, key), key, unit, resource, contact_system)
         return result
     if isinstance(value, list):
-        return [walk(item, rewrite, (*path, index), label, unit, resource)
+        return [walk(item, rewrite, (*path, index), label, unit, resource, contact_system)
                 for index, item in enumerate(value)]
-    if resource:
-        label = fhir_label(path, label, resource)
-    elif label == "name" and any(part in ("doctor", "physician", "provider", "clinician") for part in path):
-        label = "clinician name"
+    label = structured_label(path, label, resource, contact_system)
     if isinstance(value, str):
         if resource and label == "div" and "text" in path:
             return narrative(value, rewrite, resource)
@@ -176,33 +175,12 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
             return value
         if resource and label == "source" and "meta" in path:
             return "urn:rakshak:redacted" if rewrite.findings(value, label="source path") else value
-        if resource and label in {"contact name", "related person name"}:
-            return rewrite.text(value, label=label, section="fhir")
-        return rewrite.text(value, label=label, unit_of_measure=unit)
+        return rewrite.text(value, label=label, section=source_section(label, resource),
+                            unit_of_measure=unit)
     if type(value) in {int, Decimal}:
         if rewrite.findings(str(value), label=label, unit_of_measure=unit):
             return 0 if type(value) is int else Decimal(0)
     return value
-
-
-def fhir_label(path, label, resource):
-    if "identifier" in path and label == "value":
-        return "patient identifier"
-    if resource in {"Patient", "RelatedPerson"}:
-        if "name" in path and label in {"text", "given", "family"}:
-            if resource == "RelatedPerson":
-                return "related person name"
-            return "contact name" if "contact" in path else "patient name"
-        if "telecom" in path and label == "value":
-            return "phone"
-        if "address" in path and label in {"line", "postalCode", "text", "city"}:
-            return "address"
-    if "valueQuantity" in path and label == "value":
-        return "observation value"
-    if label == "name" and isinstance(path[-1], str):
-        # HumanName is a complex element. Scalar name in Organization and Device is not a patient name.
-        return ""
-    return label
 
 
 def attachment(value, content_type, rewrite):
