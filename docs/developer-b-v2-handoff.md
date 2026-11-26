@@ -1,4 +1,5 @@
 # Developer B handoff for Version 2
+[Follow-up handoff for the remaining work](developer-b-v2-remaining-handoff.md)
 
 Own the additional synthetic corpus, its annotation and split integrity, and independent evaluation. Developer A owns production parsing, detection, linkage, privacy transformations and release. Start with the shared annotation example and corpus design while A probes the release boundary. The [Phase A handoff](developer-b-handoff.md) records the earlier division.
 
