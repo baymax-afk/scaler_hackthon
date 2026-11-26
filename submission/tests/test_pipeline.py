@@ -43,8 +43,41 @@ class DetectionTest(unittest.TestCase):
         source = "Patient - received aspirin 75 mg daily"
         self.assertEqual(transform(source, ".txt", Rewrite())[0], source)
 
+    def test_filename_only_inpatient_id(self):
+        self.assertTrue(detect(SourceUnit("nursing_ip-26-00151.txt", channel="filename")).findings)
+        self.assertFalse(detect(SourceUnit("nursing_shift_26_00151.txt", channel="filename")).findings)
+        self.assertFalse(detect(SourceUnit("IP-26-00151", channel="content")).findings)
+
 
 class FormatTest(unittest.TestCase):
+    def test_record_census_is_independent_of_identifier_detection(self):
+        table_output, table_locators = transform("Patient Name,Dose\n,75 mg\n,80 mg\n", ".csv", Rewrite())
+        self.assertEqual(table_locators, ["row:0", "row:1"])
+        self.assertIn(",75 mg", table_output)
+        self.assertEqual(transform("Drug,Dose\naspirin,75 mg\n", ".csv", Rewrite())[1], [])
+        self.assertEqual(transform("BP 120/80", ".txt", Rewrite())[1], ["doc"])
+        self.assertEqual(transform('{"patient_name":"Mira Sen","observation":"stable"}',
+                                   ".json", Rewrite())[1], ["doc"])
+        self.assertEqual(transform('{"visits":[{"status":"stable"}]}', ".json", Rewrite())[1],
+                         ["/visits/0"])
+
+    def test_json_record_locators_follow_patient_records(self):
+        cases = [
+            ('{"patient":{"name":"Mira Sen"},"panels":[{"result":"normal"}]}', ["doc"]),
+            ('{"clinic/queue":[{"subject":{"display":"Mira Sen"}}]}', ["/clinic~1queue/0"]),
+            ('{"round~two":[{"subject":{"display":"Mira Sen"}}]}', ["/round~0two/0"]),
+            ('[{"patient_name":"Mira Sen"},{"patient_name":"Asha Rao"}]', ["/0", "/1"]),
+            ('{"metadata":[{"source":"clinic"}]}', []),
+            ('{"wards":[{"beds":12}]}', []),
+            ('{"registrations":[{"name":"Mira Sen","phone":"9123456789"}]}',
+             ["/registrations/0"]),
+            ('{"registrations":[{"नाम":"मीरा सेन","फोन":"९१२३४५६७८९"}]}',
+             ["/registrations/0"]),
+        ]
+        for source, expected in cases:
+            with self.subTest(expected=expected):
+                self.assertEqual(transform(source, ".json", Rewrite())[1], expected)
+
     def test_delimiter_and_original_label_roles(self):
         output, locations = transform('नाम\tDose\n"ईशा राव"\t650 mg\n', ".tsv", Rewrite())
         self.assertEqual(list(csv.reader(io.StringIO(output), delimiter="\t")),
@@ -56,6 +89,18 @@ class FormatTest(unittest.TestCase):
                               ".tsv", Rewrite())
         self.assertEqual(list(csv.reader(io.StringIO(output), delimiter="\t")),
                          [["Janm Tithi", "BP", "Dose"], ["[DOB]", "120/80", "650 mg"]])
+
+    def test_patient_export_aliases_preserve_clinical_values(self):
+        output, _ = transform("Naam\tGaon\tPata\tDose\nMira Sen\tRampur\tMain Road\t650 mg\n",
+                              ".tsv", Rewrite())
+        self.assertEqual(list(csv.reader(io.StringIO(output), delimiter="\t"))[1],
+                         ["[NAME]", "[ADDRESS]", "[ADDRESS]", "650 mg"])
+        output, _ = transform('{"patient_ref":"MRN123456","hospital_uhid":"UHID123456",'
+                              '"pmjay_id":"PMJAY123456","dose":"650 mg"}', ".json", Rewrite())
+        released = json.loads(output)
+        self.assertEqual([released[key] for key in ("patient_ref", "hospital_uhid", "pmjay_id")],
+                         ["[MRN]", "[MRN]", "[INSURANCE_ID]"])
+        self.assertEqual(released["dose"], "650 mg")
 
     def test_json_types_precision_and_duplicate_key(self):
         output, _ = transform('{"mobile":9123456789,"measurement":2.00,"flag":true}', ".json", Rewrite())
@@ -106,21 +151,37 @@ class FormatTest(unittest.TestCase):
 
 
 class ReleaseTest(unittest.TestCase):
-    def test_all_output_path_components_are_keyed(self):
+    def test_safe_paths_stay_put_and_identifying_filenames_are_keyed(self):
         with TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / "input"
-            (source / "patient_synthetic").mkdir(parents=True)
-            (source / "patient_synthetic" / "unlabeled-person.txt").write_text("BP: 120/80")
+            (source / "ward").mkdir(parents=True)
+            (source / "ward" / "observations.txt").write_text("BP: 120/80")
+            (source / "ward" / "9123456789.txt").write_text("BP: 120/80")
             first, second = root / "first", root / "second"
             publish_release(source, first, b"key-a")
             publish_release(source, second, b"key-b")
-            paths = [next((out / "sanitized").rglob("*.txt")).relative_to(out / "sanitized")
+            self.assertTrue((first / "sanitized" / "ward" / "observations.txt").exists())
+            self.assertTrue((second / "sanitized" / "ward" / "observations.txt").exists())
+            paths = [next((out / "sanitized" / "ward").glob("file_*.txt"))
+                     .relative_to(out / "sanitized")
                      for out in (first, second)]
             self.assertNotEqual(paths[0], paths[1])
-            self.assertTrue(all(part.startswith(("directory_", "file_"))
-                                for path in paths for part in path.parts))
-            self.assertEqual(next((first / "sanitized").rglob("*.txt")).read_text(), "BP: 120/80")
+            self.assertEqual(paths[0].parent, Path("ward"))
+            self.assertEqual((first / "sanitized" / paths[0]).read_text(), "BP: 120/80")
+
+    def test_identifying_directory_is_quarantined(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            (source / "9123456789").mkdir(parents=True)
+            (source / "9123456789" / "observations.txt").write_text("BP: 120/80")
+            output = root / "output"
+            publish_release(source, output, b"key-a")
+            report = json.loads((output / "report.json").read_text())
+            self.assertEqual(report["counts"]["files_quarantined"], 1)
+            self.assertEqual(report["files"][0]["reason"], "unsafe_directory_name")
+            self.assertFalse(list((output / "sanitized").rglob("*.txt")))
 
     def test_repeatable_and_quarantine_does_not_publish_raw(self):
         with TemporaryDirectory() as temporary:

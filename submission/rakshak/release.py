@@ -11,6 +11,7 @@ import tempfile
 import time
 
 from .formats import Rewrite, UnsafeInput, decode, transform
+from .detection import SourceUnit, detect
 import csv
 
 MAX_FILE = 16 * 1024 * 1024
@@ -18,14 +19,17 @@ SUPPORTED = {".csv", ".tsv", ".json", ".txt"}
 
 
 def output_location(relative, secret):
-    directories = []
     for component in relative.parts[:-1]:
-        token = hmac.digest(secret, ("directory/" + "/".join((*directories, component))).encode(),
-                            "sha256").hex()[:24]
-        directories.append("directory_" + token)
+        result = detect(SourceUnit(component, channel="filename"))
+        if result.error or result.review or result.findings:
+            raise UnsafeInput("unsafe_directory_name")
+    result = detect(SourceUnit(relative.name, channel="filename"))
+    if result.error or result.review:
+        raise UnsafeInput("ambiguous_filename")
+    if not result.findings:
+        return relative
     token = hmac.digest(secret, ("file/" + relative.as_posix()).encode(), "sha256").hex()[:24]
-    name = "file_" + token + relative.suffix.lower()
-    return Path(*directories, name)
+    return relative.with_name("file_" + token + relative.suffix.lower())
 
 
 def build_release(input_path, output, secret):
