@@ -176,6 +176,8 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
             return value
         if resource and label == "source" and "meta" in path:
             return "urn:rakshak:redacted" if rewrite.findings(value, label="source path") else value
+        if resource and label in {"contact name", "related person name"}:
+            return rewrite.text(value, label=label, section="fhir")
         return rewrite.text(value, label=label, unit_of_measure=unit)
     if type(value) in {int, Decimal}:
         if rewrite.findings(str(value), label=label, unit_of_measure=unit):
@@ -188,7 +190,9 @@ def fhir_label(path, label, resource):
         return "patient identifier"
     if resource in {"Patient", "RelatedPerson"}:
         if "name" in path and label in {"text", "given", "family"}:
-            return "patient name"
+            if resource == "RelatedPerson":
+                return "related person name"
+            return "contact name" if "contact" in path else "patient name"
         if "telecom" in path and label == "value":
             return "phone"
         if "address" in path and label in {"line", "postalCode", "text", "city"}:

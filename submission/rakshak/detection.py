@@ -20,6 +20,14 @@ FIELD_GROUPS = {
     "INSURANCE_ID": "insurance id|insurance number|policy number|policy no|member id",
     "PATH": "source path|original path|original filename|input path|original file",
 }
+FHIR_NAME_TYPES = {"contact name": "NAME", "related person name": "RELATIVE"}
+EXPLICIT_NAME_ROLES = {
+    "patient": "patient", "patient name": "patient", "patient full name": "patient",
+    "मरीज का नाम": "patient", "रोगी का नाम": "patient",
+    "contact name": "contact", "related person name": "related_person",
+    "relative": "relative", "relative name": "relative", "father name": "relative",
+    "mother name": "relative", "husband name": "relative", "रिश्तेदार": "relative",
+}
 FIELDS = {label: kind for kind, labels in FIELD_GROUPS.items() for label in labels.split("|")}
 LABELS = "|".join(re.escape(label).replace(r"\ ", r"[ _-]{1,8}") for label in sorted(FIELDS, key=len, reverse=True))
 LABELED = re.compile(r"(?:^|[\n;,|])[ \t]{0,32}(" + LABELS + r")[ \t]*[:=#][ \t]{0,32}([^\r\n;,|]{1,160})", re.I)
@@ -76,6 +84,7 @@ class Finding:
     kind: str
     score: float
     reason: str
+    role: str | None = None
 
 
 @dataclass(frozen=True)
@@ -113,10 +122,13 @@ def detect(unit: SourceUnit) -> DetectionResult:
         return DetectionResult()
     label = normalize_label(unit.label)
     typed = FIELDS.get(label)
+    if unit.section == "fhir":
+        typed = FHIR_NAME_TYPES.get(label, typed)
     if typed and unit.channel in {"content", "metadata"}:
         value = source.strip()
         start = len(source) - len(source.lstrip())
-        location = Finding(start, start + len(value), typed, .98, "typed_field")
+        location = Finding(start, start + len(value), typed, .98, "typed_field",
+                           EXPLICIT_NAME_ROLES.get(label))
         return DetectionResult((location,))
 
     accepted = []
@@ -125,12 +137,14 @@ def detect(unit: SourceUnit) -> DetectionResult:
     label_view = source.translate(LABEL_SPACES) if "\u00a0" in source or "\u202f" in source else source
     for match in LABELED.finditer(label_view):
         value = match[2]
-        kind = FIELDS.get(normalize_label(match[1]))
+        inline_label = normalize_label(match[1])
+        kind = FIELDS.get(inline_label)
         if kind in {"NAME", "RELATIVE"} and (dose := INLINE_DOSE.search(value)):
             value = value[:dose.start()]
         value = value.rstrip()
         if kind and value.casefold() not in NULLS:
-            accepted.append(Finding(match.start(2), match.start(2) + len(value), kind, .94, "local_label"))
+            accepted.append(Finding(match.start(2), match.start(2) + len(value), kind, .94,
+                                    "local_label", EXPLICIT_NAME_ROLES.get(inline_label)))
     for pattern, kind in ((HONORIFIC, "NAME"), (INLINE_PHONE, "PHONE")):
         for match in pattern.finditer(source):
             accepted.append(Finding(*match.span(1), kind, .90, "local_role"))
@@ -138,10 +152,11 @@ def detect(unit: SourceUnit) -> DetectionResult:
         for match in pattern.finditer(source):
             accepted.append(Finding(*match.span(1), "RELATIVE", .90, "local_role"))
     for match in INLINE_RELATIVE.finditer(source):
-        accepted.append(Finding(*match.span(2), "RELATIVE", .89, "relationship"))
+        accepted.append(Finding(*match.span(2), "RELATIVE", .89, "relationship", "relative"))
     for match in RELATIVE.finditer(source):
         start, end = match.span(2)
-        finding = Finding(start, end, "RELATIVE", .85, "relationship")
+        role = "contact" if match[1].casefold() == "c/o" else "relative"
+        finding = Finding(start, end, "RELATIVE", .85, "relationship", role)
         prefix = source[max(0, match.start() - 3):match.start()].casefold()
         if prefix.endswith(("k/", "h/")):
             continue

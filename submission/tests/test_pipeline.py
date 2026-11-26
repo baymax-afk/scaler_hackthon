@@ -34,6 +34,15 @@ class DetectionTest(unittest.TestCase):
             finding, = detect(SourceUnit(source)).findings
             self.assertEqual(source[finding.start:finding.end], "Mira Sen")
 
+    def test_findings_report_only_roles_supported_by_the_source(self):
+        cases = (("Patient Name: Mira Sen", "patient"),
+                 ("S/o Mira Sen", "relative"),
+                 ("Name: Mira Sen", None))
+        for note, role in cases:
+            with self.subTest(note=note):
+                finding, = detect(SourceUnit(note)).findings
+                self.assertEqual(finding.role, role)
+
     def test_name_roles_and_ambiguous_care_of(self):
         source = "Dr. Mira spoke. S/o Mira"
         finding, = detect(SourceUnit(source)).findings
@@ -94,6 +103,26 @@ class FormatTest(unittest.TestCase):
         bundle["entry"][0].pop("fullUrl")
         with self.assertRaisesRegex(UnsafeInput, "unresolved_fhir_reference"):
             transform(json.dumps(bundle), ".json", Rewrite())
+
+    def test_fhir_name_roles_use_source_paths_for_identical_surfaces(self):
+        patient_url = "urn:uuid:17ba0c07-910b-4395-a3d1-dd81ad44670b"
+        entries = [
+            {"fullUrl": patient_url,
+             "resource": {"resourceType": "Patient", "name": [{"text": "Mira Sen"}],
+                          "contact": [{"name": {"text": "Mira Sen"}}]}},
+            {"fullUrl": "urn:uuid:17ba0c07-910b-4395-a3d1-dd81ad44670c",
+             "resource": {"resourceType": "RelatedPerson", "name": [{"text": "Mira Sen"}],
+                          "patient": {"reference": patient_url}}},
+            {"fullUrl": "urn:uuid:17ba0c07-910b-4395-a3d1-dd81ad44670d",
+             "resource": {"resourceType": "Practitioner", "name": [{"text": "Mira Sen"}]}},
+        ]
+        rendered, _ = transform(json.dumps({"resourceType": "Bundle", "type": "collection",
+                                            "entry": entries}), ".json", Rewrite())
+        patient, relative, clinician = (entry["resource"] for entry in json.loads(rendered)["entry"])
+        self.assertEqual(patient["name"][0]["text"], "[NAME]")
+        self.assertEqual(patient["contact"][0]["name"]["text"], "[NAME]")
+        self.assertEqual(relative["name"][0]["text"], "[RELATIVE]")
+        self.assertEqual(clinician["name"][0]["text"], "Mira Sen")
 
     def test_fhir_birth_date_never_becomes_an_invalid_placeholder(self):
         bundle = {"resourceType": "Bundle", "type": "document", "entry": [
