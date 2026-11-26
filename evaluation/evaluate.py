@@ -29,6 +29,10 @@ def keyed(raw):
 def predict(raw):
     units = {}
     for key, item in keyed(raw).items():
+        join = {name: item[name] for name in JOIN_FIELDS if name in item}
+        if error := item.get("parse_error"):
+            units[key] = {"status": error, "accepted": [], "review": [], **join}
+            continue
         unit = SourceUnit(**{name: value for name, value in item.items() if name in SOURCE_FIELDS})
         result = detect(unit)
         units[key] = {
@@ -36,7 +40,7 @@ def predict(raw):
             "accepted": [(x.start, x.end, x.kind) for x in result.findings],
             "review": [(x.start, x.end, x.kind) for x in result.review],
             "accepted_roles": [(x.start, x.end, x.kind, x.role) for x in result.findings if x.role],
-            **{name: item[name] for name in JOIN_FIELDS if name in item},
+            **join,
         }
     return {"schema": "phase-a-predictions/1", "input_sha256": hashlib.sha256(raw).hexdigest(),
             "variant": "regex", "units": units}

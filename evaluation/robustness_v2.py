@@ -17,6 +17,7 @@ from generate import FORMATS, SCENARIOS, VERSION
 from evaluation.matching import overlap_matches
 from evaluation.role_metrics import RoleMetrics
 from evaluation.release_evidence import OccurrenceAlignment, reconcile
+from evaluation.release_scan import scan_known_surfaces
 from evaluation.source_inventory import annotated_source_id, source_inventory
 
 
@@ -41,9 +42,16 @@ def digest(path):
 def dereference(value, locator):
     if locator == "doc":
         return value
-    for part in locator.split("/")[1:]:
-        part = part.replace("~1", "/").replace("~0", "~")
-        value = value[int(part)] if isinstance(value, list) else value[part]
+    require(locator.startswith("/"), "invalid_json_pointer")
+    for encoded in locator.split("/")[1:]:
+        part = encoded.replace("~1", "/").replace("~0", "~")
+        require(part.replace("~", "~0").replace("/", "~1") == encoded, "invalid_json_pointer")
+        if isinstance(value, list):
+            index = int(part)
+            require(index >= 0 and part == str(index), "invalid_array_index")
+            value = value[index]
+        else:
+            value = value[part]
     return value
 
 
@@ -70,7 +78,9 @@ def record_value(path, fmt, locator):
     value = read_document(path, fmt)
     if fmt in {"csv", "tsv"}:
         require(locator.startswith("row:"), "invalid_row_locator")
-        return value[int(locator[4:])]
+        index = int(locator[4:])
+        require(index >= 0 and locator == f"row:{index}", "invalid_row_locator")
+        return value[index]
     return dereference(value, locator)
 
 
@@ -331,30 +341,42 @@ def audit(folder, release):
         require(all(isinstance(value, str) and value for value in (*key, row.get("out", key[1]))),
                 "invalid_release_locator")
         require(row.get("patient") is None or isinstance(row["patient"], str), "invalid_pseudonym")
+        require(row.get("status", "sanitized") in ("sanitized", "generalized", "suppressed"),
+                "invalid_record_status")
         require(key not in index, "duplicate_release_locator")
         index[key] = row
     counters = defaultdict(Counter)
     matched = set()
+    occupied = set()
+    known_identifiers = set()
     predicted_by_id = {}
     predicted_groups = defaultdict(list)
     for record in truth:
         original = record_value(folder / "input" / record["file"], record["format"], record["loc"])
-        output = destinations[record["file"]]["output"]
+        file_entry = destinations[record["file"]]
+        output = file_entry["output"]
         by_format = counters[record["format"]]
         by_format["records"] += 1
         by_format["records_in_exported_file"] += bool(output)
         key = output, record["loc"]
         row, destination = matching_index_entry(index, output, record["loc"])
-        if key in index:
+        suppressed = file_entry["status"] == "suppressed" or bool(row and row.get("status") == "suppressed")
+        if suppressed:
+            by_format["records_suppressed"] += 1
+        if key in index and not suppressed:
             by_format["indexed"] += 1
-        predicted = row.get("patient") if row else None
+        predicted = row.get("patient") if row and not suppressed else None
         if row:
             matched.add((row["file"], row["loc"]))
         try:
-            after = record_value(release / output, record["format"], destination) if output else None
+            after = record_value(release / output, record["format"], destination) if output and not suppressed else None
         except (OSError, KeyError, IndexError, TypeError, UnicodeError, csv.Error, ValueError):
             after = None
         by_format["records_locatable"] += after is not None
+        if after is not None:
+            output_record = output, destination
+            require(output_record not in occupied, "reused_output_record")
+            occupied.add(output_record)
         if predicted is not None:
             if after is None or predicted not in json.dumps(after, ensure_ascii=False):
                 by_format["pseudonyms_missing_from_records"] += 1
@@ -371,7 +393,7 @@ def audit(folder, release):
                     rendered = unit_text(after, unit)
                 except (KeyError, IndexError, TypeError, UnicodeError, ValueError):
                     pass
-            coverage = "unexported" if output is None else "unresolved"
+            coverage = "unexported" if output is None or suppressed else "unresolved"
             mapping = OccurrenceAlignment(source, rendered)
             for span in unit["spans"]:
                 start, end, kind = span["start"], span["end"], span["kind"]
@@ -385,6 +407,7 @@ def audit(folder, release):
                     by_format["protected_unresolved"] += outcome == "unresolved"
                     by_format["protected_unexported"] += outcome == "unexported"
                 elif kind in IDENTIFIERS:
+                    known_identifiers.add(span["surface"])
                     by_format["identifier_labels"] += 1
                     by_format["identifier_labels_in_locatable_units"] += rendered is not None
                     by_format["literal_residuals"] += outcome == "visible"
@@ -403,6 +426,7 @@ def audit(folder, release):
     false_links = sum(count_pairs(len(group)) - sum(count_pairs(n) for n in Counter(group).values())
                       for group in predicted_groups.values())
     return {"by_format": counters, "extra_index_entries": len(index.keys() - matched),
+            "release_surface_scan": scan_known_surfaces(release, known_identifiers),
             "files": Counter(row["status"] for row in destinations.values()),
             "linkage_truth_available": linkage_path.is_file(),
             "linkage": {"eligible_pairs": pairs, "true_pairs": true_links, "false_pairs": false_links,
