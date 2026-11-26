@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "19"
+  },
+  "timestamp": "2025-04-10T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:9ebb5b37-bd9b-57ad-9789-1b67acda67fa",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-04-10T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:c263a4b0-e483-52b4-b30d-8f2f1a17ab1d"
+        },
+        "author": [
+          {
+            "display": "Dr. Tanvika"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:247a9b5c-13a0-50dd-9a49-f2de96bd0e1d"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c263a4b0-e483-52b4-b30d-8f2f1a17ab1d",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "तन्विका अंसारी"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700056"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-27"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:247a9b5c-13a0-50dd-9a49-f2de96bd0e1d",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:c263a4b0-e483-52b4-b30d-8f2f1a17ab1d"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDog4KSk4KSo4KWN4KS14KS/4KSV4KS+IOCkheCkguCkuOCkvuCksOClgApSZWxhdGl2ZTog4KSL4KSk4KS14KSoIOCkheCkguCkuOCkvuCksOClgApQaG9uZTogMDAwMzcwMDA1NgpJcm9uIGRlZmljaWVuY3kgYW5lbWlhIChENTAuOSk7IEhiIDkuOCBnL2RMOyBGZXJyb3VzIHN1bGZhdGUgNjAgbWcgT0Q7IERyLiBUYW52aWth"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

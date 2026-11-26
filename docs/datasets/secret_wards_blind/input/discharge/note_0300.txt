@@ -1,0 +1,10 @@
+Patient: Reyansh Sen
+C/O Aaravi Sen
+C/O fever
+Phone: +91 00037-00147
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0147@example.invalid
+Village: Nivarpur-02
+Age: 62
+Admission: 2025-02-06
+Discharge: 2025-02-10

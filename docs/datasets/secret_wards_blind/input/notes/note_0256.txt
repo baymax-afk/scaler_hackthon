@@ -1,0 +1,10 @@
+मरीज़: रेयांश ख़ान
+रिश्तेदार: आरवी ख़ान
+फ़ोन: 0003700447
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0447@example.invalid
+Village: Nivarpur-12
+Age: 59
+Admission: 2025-11-28
+Discharge: 2025-11-29

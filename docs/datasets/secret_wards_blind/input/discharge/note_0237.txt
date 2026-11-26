@@ -1,0 +1,10 @@
+Patient: Meher Bisht
+C/O Mihiran Bisht
+C/O fever
+Phone: +91 00037-00322
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0322@example.invalid
+Village: Nivarpur-03
+Age: 79
+Admission: 2025-05-05
+Discharge: 2025-05-12

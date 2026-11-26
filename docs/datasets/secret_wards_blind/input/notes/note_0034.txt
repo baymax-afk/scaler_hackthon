@@ -1,0 +1,10 @@
+मरीज़: ईशान नाइक
+रिश्तेदार: नायुली नाइक
+फ़ोन: 0003700089
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Ishaan
+Email: 370319.p0089@example.invalid
+Village: Nivarpur-02
+Age: 84
+Admission: 2025-05-15
+Discharge: 2025-05-16

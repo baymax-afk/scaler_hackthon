@@ -1,0 +1,876 @@
+Relative,Mobile,Email,Age,Village,Admission,Discharge,ClinicalNote,FirstName,LastName
+Tanvika Khan,0003700023,370319.p0023@example.invalid,73,Nivarpur-23,06/26/2025,06/28/2025,"Patient: Ritavan Khan
+C/O Tanvika Khan
+C/O fever
+Phone: 0003700023
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Khan
+Meher Joshi,0003700385,370319.p0385@example.invalid,81,Nivarpur-08,07/12/2025,07/19/2025,"Mihiran Joshi ji aaye, W/o Meher Joshi. Phone 0003700385. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Mihiran,Joshi
+Mihiran Naik,+91 00037-00202,370319.p0202@example.invalid,34,Nivarpur-28,04/26/2025,05/02/2025,"Patient: Meher Naik
+C/O Mihiran Naik
+C/O fever
+Phone: +91 00037-00202
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Meher,Naik
+Nivika Bisht,0003700967,370319.p0967@example.invalid,37,Nivarpur-10,05/22/2025,05/23/2025,"Faridan Bisht ji aaye, W/o Nivika Bisht. Phone 0003700967. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Bisht
+Aviraj Ansari,0003700270,370319.p0270@example.invalid,36,Nivarpur-09,11/06/2025,11/08/2025,"Patient: Zarveen Ansari
+C/O Aviraj Ansari
+C/O fever
+Phone: 0003700270
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Ansari
+Ritavan Verma,+91 00037-00440,370319.p0440@example.invalid,18,Nivarpur-05,06/02/2025,06/05/2025,"Tanvika Verma ji aaye, W/o Ritavan Verma. Phone +91 00037-00440. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Tanvika,Verma
+Zarveen Khan,0003700561,370319.p0561@example.invalid,59,Nivarpur-10,04/29/2025,05/01/2025,"Patient: Aviraj Khan
+C/O Zarveen Khan
+C/O fever
+Phone: 0003700561
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aviraj,Khan
+Ishaan Ansari,0003700806,370319.p0806@example.invalid,23,Nivarpur-23,09/25/2025,09/27/2025,"Nayuli Ansari ji aaye, W/o Ishaan Ansari. Phone 0003700806. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Nayuli,Ansari
+Aaravi Sen,+91 00037-00795,370319.p0795@example.invalid,25,Nivarpur-12,02/11/2025,02/12/2025,"Patient: Reyansh Sen
+C/O Aaravi Sen
+C/O fever
+Phone: +91 00037-00795
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Sen
+Tanvika Rathore,0003700575,370319.p0575@example.invalid,38,Nivarpur-24,01/18/2025,01/22/2025,"Ritavan Rathore ji aaye, W/o Tanvika Rathore. Phone 0003700575. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Ritavan,Rathore
+Zarveen Khan,0003700021,370319.p0021@example.invalid,68,Nivarpur-21,01/01/2025,01/10/2025,"Patient: Aviraj Khan
+C/O Zarveen Khan
+C/O fever
+Phone: 0003700021
+Hyponatremia (E87.1); Sodium 109 mmol/L; Levodopa 100 mg 1-0-1; Dr. Aviraj",Aviraj,Khan
+Nivika Khan,+91 00037-00991,370319.p0991@example.invalid,26,Nivarpur-05,02/24/2025,03/02/2025,"Faridan Khan ji aaye, W/o Nivika Khan. Phone +91 00037-00991. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Faridan,Khan
+Ritavan Saha,0003700296,370319.p0296@example.invalid,33,Nivarpur-06,11/15/2025,11/19/2025,"Patient: Tanvika Saha
+C/O Ritavan Saha
+C/O fever
+Phone: 0003700296
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Saha
+Nayuli Naik,0003700845,370319.p0845@example.invalid,30,Nivarpur-04,04/12/2025,04/13/2025,"Ishaan Naik ji aaye, W/o Nayuli Naik. Phone 0003700845. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ishaan,Naik
+Ritavan Joshi,+91 00037-00932,370319.p0932@example.invalid,33,Nivarpur-04,05/28/2025,05/31/2025,"Patient: Tanvika Joshi
+C/O Ritavan Joshi
+C/O fever
+Phone: +91 00037-00932
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Tanvika,Joshi
+Zarveen Rathore,0003700789,370319.p0789@example.invalid,41,Nivarpur-06,01/07/2025,01/10/2025,"Aviraj Rathore ji aaye, W/o Zarveen Rathore. Phone 0003700789. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Aviraj,Rathore
+Reyansh Sen,0003700576,370319.p0576@example.invalid,83,Nivarpur-25,04/28/2025,05/04/2025,"Patient: Aaravi Sen
+C/O Reyansh Sen
+C/O fever
+Phone: 0003700576
+Hyponatremia (E87.1); Sodium 109 mmol/L; Metformin 500 mg 1-0-1; Dr. K. Rao",Aaravi,Sen
+Ishaan Sen,+91 00037-00794,370319.p0794@example.invalid,40,Nivarpur-11,07/26/2025,08/03/2025,"Nayuli Sen ji aaye, W/o Ishaan Sen. Phone +91 00037-00794. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Nayuli,Sen
+Meher Khan,0003700013,370319.p0013@example.invalid,45,Nivarpur-13,04/28/2025,05/01/2025,"Patient: Mihiran Khan
+C/O Meher Khan
+C/O fever
+Phone: 0003700013
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Mihiran,Khan
+Mihiran Bisht,0003700646,370319.p0646@example.invalid,20,Nivarpur-08,01/13/2025,01/21/2025,"Meher Bisht ji aaye, W/o Mihiran Bisht. Phone 0003700646. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Meher,Bisht
+Ritavan Bisht,+91 00037-00428,370319.p0428@example.invalid,69,Nivarpur-22,12/07/2025,12/14/2025,"Patient: Tanvika Bisht
+C/O Ritavan Bisht
+C/O fever
+Phone: +91 00037-00428
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Bisht
+Nivika Rathore,0003700247,370319.p0247@example.invalid,23,Nivarpur-15,01/13/2025,01/20/2025,"Faridan Rathore ji aaye, W/o Nivika Rathore. Phone 0003700247. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Faridan,Rathore
+Zarveen Bisht,0003700753,370319.p0753@example.invalid,41,Nivarpur-28,02/26/2025,02/28/2025,"Patient: Aviraj Bisht
+C/O Zarveen Bisht
+C/O fever
+Phone: 0003700753
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aviraj,Bisht
+Nayuli Verma,+91 00037-00545,370319.p0545@example.invalid,67,Nivarpur-23,07/16/2025,07/20/2025,"Ishaan Verma ji aaye, W/o Nayuli Verma. Phone +91 00037-00545. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Ishaan",Ishaan,Verma
+Ritavan Rathore,0003700572,370319.p0572@example.invalid,46,Nivarpur-21,09/07/2025,09/10/2025,"Patient: Tanvika Rathore
+C/O Ritavan Rathore
+C/O fever
+Phone: 0003700572
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Tanvika,Rathore
+Aaravi Rathore,0003700243,370319.p0243@example.invalid,27,Nivarpur-11,06/06/2025,06/10/2025,"Reyansh Rathore ji aaye, W/o Aaravi Rathore. Phone 0003700243. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Reyansh,Rathore
+Faridan Naik,+91 00037-00196,370319.p0196@example.invalid,86,Nivarpur-22,05/31/2025,06/03/2025,"Patient: Nivika Naik
+C/O Faridan Naik
+C/O fever
+Phone: +91 00037-00196
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nivika,Naik
+Nayuli Ansari,0003700053,370319.p0053@example.invalid,54,Nivarpur-24,12/08/2025,12/15/2025,"Ishaan Ansari ji aaye, W/o Nayuli Ansari. Phone 0003700053. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Ishaan,Ansari
+Tanvika Saha,0003700407,370319.p0407@example.invalid,52,Nivarpur-01,03/14/2025,03/16/2025,"Patient: Ritavan Saha
+C/O Tanvika Saha
+C/O fever
+Phone: 0003700407
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ritavan,Saha
+Zarveen Bisht,+91 00037-00321,370319.p0321@example.invalid,18,Nivarpur-02,02/18/2025,02/20/2025,"Aviraj Bisht ji aaye, W/o Zarveen Bisht. Phone +91 00037-00321. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Aviraj,Bisht
+Aaravi Naik,0003700195,370319.p0195@example.invalid,21,Nivarpur-21,11/12/2025,11/17/2025,"Patient: Reyansh Naik
+C/O Aaravi Naik
+C/O fever
+Phone: 0003700195
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Naik
+Aaravi Bisht,0003700963,370319.p0963@example.invalid,80,Nivarpur-06,08/29/2025,08/31/2025,"Reyansh Bisht ji aaye, W/o Aaravi Bisht. Phone 0003700963. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Bisht
+Reyansh Bisht,+91 00037-00636,370319.p0636@example.invalid,70,Nivarpur-27,02/13/2025,02/20/2025,"Patient: Aaravi Bisht
+C/O Reyansh Bisht
+C/O fever
+Phone: +91 00037-00636
+Hyponatremia (E87.1); Sodium 109 mmol/L; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aaravi,Bisht
+Ishaan Saha,0003700182,370319.p0182@example.invalid,78,Nivarpur-08,02/28/2025,03/01/2025,"Nayuli Saha ji aaye, W/o Ishaan Saha. Phone 0003700182. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Saha
+Mihiran Naik,0003700526,370319.p0526@example.invalid,62,Nivarpur-04,11/25/2025,12/04/2025,"Patient: Meher Naik
+C/O Mihiran Naik
+C/O fever
+Phone: 0003700526
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Meher,Naik
+Ritavan Khan,+91 00037-00128,370319.p0128@example.invalid,19,Nivarpur-12,12/16/2025,12/21/2025,"Tanvika Khan ji aaye, W/o Ritavan Khan. Phone +91 00037-00128. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Tanvika,Khan
+Meher Joshi,0003700709,370319.p0709@example.invalid,53,Nivarpur-13,07/18/2025,07/21/2025,"Patient: Mihiran Joshi
+C/O Meher Joshi
+C/O fever
+Phone: 0003700709
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Mihiran",Mihiran,Joshi
+Aviraj Verma,0003700330,370319.p0330@example.invalid,35,Nivarpur-11,08/14/2025,08/21/2025,"Zarveen Verma ji aaye, W/o Aviraj Verma. Phone 0003700330. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Zarveen,Verma
+Ritavan Sen,+91 00037-00476,370319.p0476@example.invalid,70,Nivarpur-12,04/29/2025,05/01/2025,"Patient: Tanvika Sen
+C/O Ritavan Sen
+C/O fever
+Phone: +91 00037-00476
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Tanvika,Sen
+Meher Khan,0003700553,370319.p0553@example.invalid,41,Nivarpur-02,10/05/2025,10/11/2025,"Mihiran Khan ji aaye, W/o Meher Khan. Phone 0003700553. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Mihiran,Khan
+Ritavan Sen,0003700584,370319.p0584@example.invalid,81,Nivarpur-04,02/21/2025,02/28/2025,"Patient: Tanvika Sen
+C/O Ritavan Sen
+C/O fever
+Phone: 0003700584
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Sen
+Faridan Saha,+91 00037-00400,370319.p0400@example.invalid,46,Nivarpur-23,11/14/2025,11/23/2025,"Nivika Saha ji aaye, W/o Faridan Saha. Phone +91 00037-00400. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nivika,Saha
+Meher Rathore,0003700889,370319.p0889@example.invalid,34,Nivarpur-19,02/08/2025,02/15/2025,"Patient: Mihiran Rathore
+C/O Meher Rathore
+C/O fever
+Phone: 0003700889
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Mihiran,Rathore
+Mihiran Rathore,0003700682,370319.p0682@example.invalid,67,Nivarpur-15,09/09/2025,09/12/2025,"Meher Rathore ji aaye, W/o Mihiran Rathore. Phone 0003700682. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Meher,Rathore
+Tanvika Bisht,+91 00037-00107,370319.p0107@example.invalid,67,Nivarpur-20,08/23/2025,08/31/2025,"Patient: Ritavan Bisht
+C/O Tanvika Bisht
+C/O fever
+Phone: +91 00037-00107
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ritavan,Bisht
+Zarveen Saha,0003700621,370319.p0621@example.invalid,65,Nivarpur-12,03/09/2025,03/14/2025,"Aviraj Saha ji aaye, W/o Zarveen Saha. Phone 0003700621. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aviraj,Saha
+Mihiran Naik,0003700418,370319.p0418@example.invalid,53,Nivarpur-12,08/07/2025,08/10/2025,"Patient: Meher Naik
+C/O Mihiran Naik
+C/O fever
+Phone: 0003700418
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Meher,Naik
+Tanvika Joshi,+91 00037-00071,370319.p0071@example.invalid,18,Nivarpur-13,06/17/2025,06/22/2025,"Ritavan Joshi ji aaye, W/o Tanvika Joshi. Phone +91 00037-00071. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ritavan,Joshi
+Meher Bisht,0003700853,370319.p0853@example.invalid,69,Nivarpur-12,02/06/2025,02/09/2025,"Patient: Mihiran Bisht
+C/O Meher Bisht
+C/O fever
+Phone: 0003700853
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Bisht
+Tanvika Khan,0003700347,370319.p0347@example.invalid,20,Nivarpur-28,03/16/2025,03/19/2025,"Ritavan Khan ji aaye, W/o Tanvika Khan. Phone 0003700347. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Ritavan",Ritavan,Khan
+Aviraj Rathore,+91 00037-00678,370319.p0678@example.invalid,74,Nivarpur-11,09/29/2025,10/04/2025,"Patient: Zarveen Rathore
+C/O Aviraj Rathore
+C/O fever
+Phone: +91 00037-00678
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Rathore
+Nayuli Ansari,0003700485,370319.p0485@example.invalid,53,Nivarpur-21,11/18/2025,11/26/2025,"Ishaan Ansari ji aaye, W/o Nayuli Ansari. Phone 0003700485. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ishaan,Ansari
+Reyansh Khan,0003700768,370319.p0768@example.invalid,43,Nivarpur-14,04/10/2025,04/15/2025,"Patient: Aaravi Khan
+C/O Reyansh Khan
+C/O fever
+Phone: 0003700768
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aaravi,Khan
+Ishaan Rathore,+91 00037-00890,370319.p0890@example.invalid,43,Nivarpur-20,01/28/2025,02/06/2025,"Nayuli Rathore ji aaye, W/o Ishaan Rathore. Phone +91 00037-00890. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Rathore
+Ritavan Naik,0003700848,370319.p0848@example.invalid,66,Nivarpur-07,05/19/2025,05/28/2025,"Patient: Tanvika Naik
+C/O Ritavan Naik
+C/O fever
+Phone: 0003700848
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Tanvika,Naik
+Mihiran Ansari,0003700382,370319.p0382@example.invalid,45,Nivarpur-05,02/22/2025,02/28/2025,"Meher Ansari ji aaye, W/o Mihiran Ansari. Phone 0003700382. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Ansari
+Nivika Joshi,+91 00037-00283,370319.p0283@example.invalid,24,Nivarpur-22,10/16/2025,10/25/2025,"Patient: Faridan Joshi
+C/O Nivika Joshi
+C/O fever
+Phone: +91 00037-00283
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Faridan,Joshi
+Zarveen Naik,0003700957,370319.p0957@example.invalid,80,Nivarpur-00,03/02/2025,03/03/2025,"Aviraj Naik ji aaye, W/o Zarveen Naik. Phone 0003700957. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aviraj,Naik
+Meher Sen,0003700793,370319.p0793@example.invalid,42,Nivarpur-10,07/21/2025,07/29/2025,"Patient: Mihiran Sen
+C/O Meher Sen
+C/O fever
+Phone: 0003700793
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Mihiran,Sen
+Ishaan Rathore,+91 00037-00026,370319.p0026@example.invalid,42,Nivarpur-26,01/11/2025,01/16/2025,"Nayuli Rathore ji aaye, W/o Ishaan Rathore. Phone +91 00037-00026. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nayuli,Rathore
+Mihiran Sen,0003700154,370319.p0154@example.invalid,84,Nivarpur-09,12/11/2025,12/14/2025,"Patient: Meher Sen
+C/O Mihiran Sen
+C/O fever
+Phone: 0003700154
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Meher,Sen
+Tanvika Saha,0003700731,370319.p0731@example.invalid,76,Nivarpur-06,04/07/2025,04/16/2025,"Ritavan Saha ji aaye, W/o Tanvika Saha. Phone 0003700731. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Saha
+Zarveen Verma,+91 00037-00009,370319.p0009@example.invalid,74,Nivarpur-09,04/18/2025,04/27/2025,"Patient: Aviraj Verma
+C/O Zarveen Verma
+C/O fever
+Phone: +91 00037-00009
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Aviraj",Aviraj,Verma
+Aaravi Naik,0003700519,370319.p0519@example.invalid,24,Nivarpur-26,12/02/2025,12/03/2025,"Reyansh Naik ji aaye, W/o Aaravi Naik. Phone 0003700519. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Reyansh,Naik
+Meher Khan,0003700985,370319.p0985@example.invalid,76,Nivarpur-28,04/23/2025,04/25/2025,"Patient: Mihiran Khan
+C/O Meher Khan
+C/O fever
+Phone: 0003700985
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Mihiran,Khan
+Meher Saha,+91 00037-00829,370319.p0829@example.invalid,68,Nivarpur-17,11/27/2025,11/28/2025,"Mihiran Saha ji aaye, W/o Meher Saha. Phone +91 00037-00829. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Mihiran,Saha
+Ishaan Saha,0003700722,370319.p0722@example.invalid,54,Nivarpur-26,08/25/2025,08/27/2025,"Patient: Nayuli Saha
+C/O Ishaan Saha
+C/O fever
+Phone: 0003700722
+Hyponatremia (E87.1); Sodium 109 mmol/L; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Saha
+Ritavan Rathore,0003700140,370319.p0140@example.invalid,41,Nivarpur-24,01/09/2025,01/15/2025,"Tanvika Rathore ji aaye, W/o Ritavan Rathore. Phone 0003700140. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Tanvika,Rathore
+Meher Verma,+91 00037-00649,370319.p0649@example.invalid,86,Nivarpur-11,11/24/2025,11/26/2025,"Patient: Mihiran Verma
+C/O Meher Verma
+C/O fever
+Phone: +91 00037-00649
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Verma
+Aviraj Khan,0003700450,370319.p0450@example.invalid,47,Nivarpur-15,05/09/2025,05/13/2025,"Zarveen Khan ji aaye, W/o Aviraj Khan. Phone 0003700450. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Zarveen,Khan
+Reyansh Rathore,0003700456,370319.p0456@example.invalid,46,Nivarpur-21,10/14/2025,10/23/2025,"Patient: Aaravi Rathore
+C/O Reyansh Rathore
+C/O fever
+Phone: 0003700456
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aaravi,Rathore
+Aviraj Khan,+91 00037-00342,370319.p0342@example.invalid,56,Nivarpur-23,01/11/2025,01/19/2025,"Zarveen Khan ji aaye, W/o Aviraj Khan. Phone +91 00037-00342. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Zarveen,Khan
+Tanvika Bisht,0003700323,370319.p0323@example.invalid,104,Nivarpur-04,08/21/2025,10/01/2025,"Patient: Ritavan Bisht
+C/O Tanvika Bisht
+C/O fever
+Phone: 0003700323
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ritavan,Bisht
+Aviraj Bisht,0003700642,370319.p0642@example.invalid,50,Nivarpur-04,08/27/2025,08/29/2025,"Zarveen Bisht ji aaye, W/o Aviraj Bisht. Phone 0003700642. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Zarveen,Bisht
+Mihiran Bisht,+91 00037-00754,370319.p0754@example.invalid,67,Nivarpur-00,02/08/2025,02/16/2025,"Patient: Meher Bisht
+C/O Mihiran Bisht
+C/O fever
+Phone: +91 00037-00754
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Bisht
+Nivika Verma,0003700871,370319.p0871@example.invalid,61,Nivarpur-01,05/25/2025,06/03/2025,"Faridan Verma ji aaye, W/o Nivika Verma. Phone 0003700871. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Faridan",Faridan,Verma
+Nayuli Sen,0003700905,370319.p0905@example.invalid,82,Nivarpur-06,07/05/2025,07/10/2025,"Patient: Ishaan Sen
+C/O Nayuli Sen
+C/O fever
+Phone: 0003700905
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Ishaan,Sen
+Faridan Rathore,+91 00037-00568,370319.p0568@example.invalid,58,Nivarpur-17,10/03/2025,10/09/2025,"Nivika Rathore ji aaye, W/o Faridan Rathore. Phone +91 00037-00568. C/O dizziness.
+Hyponatremia (E87.1); Sodium 109 mmol/L; Amlodipine 5 mg OD; Dr. K. Rao",Nivika,Rathore
+Meher Verma,0003700973,370319.p0973@example.invalid,38,Nivarpur-16,06/03/2025,06/12/2025,"Patient: Mihiran Verma
+C/O Meher Verma
+C/O fever
+Phone: 0003700973
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Verma
+Ritavan Saha,0003700944,370319.p0944@example.invalid,37,Nivarpur-16,09/13/2025,09/14/2025,"Tanvika Saha ji aaye, W/o Ritavan Saha. Phone 0003700944. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Tanvika,Saha
+Ishaan Joshi,+91 00037-00818,370319.p0818@example.invalid,46,Nivarpur-06,09/01/2025,09/07/2025,"Patient: Nayuli Joshi
+C/O Ishaan Joshi
+C/O fever
+Phone: +91 00037-00818
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Joshi
+Ishaan Rathore,0003700998,370319.p0998@example.invalid,20,Nivarpur-12,04/02/2025,04/08/2025,"Nayuli Rathore ji aaye, W/o Ishaan Rathore. Phone 0003700998. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Nayuli,Rathore
+Mihiran Bisht,0003700538,370319.p0538@example.invalid,75,Nivarpur-16,12/25/2025,12/30/2025,"Patient: Meher Bisht
+C/O Mihiran Bisht
+C/O fever
+Phone: 0003700538
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Meher,Bisht
+Nivika Naik,+91 00037-00847,370319.p0847@example.invalid,86,Nivarpur-06,04/21/2025,04/27/2025,"Faridan Naik ji aaye, W/o Nivika Naik. Phone +91 00037-00847. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Faridan,Naik
+Faridan Saha,0003700184,370319.p0184@example.invalid,23,Nivarpur-10,08/12/2025,08/16/2025,"Patient: Nivika Saha
+C/O Faridan Saha
+C/O fever
+Phone: 0003700184
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Nivika,Saha
+Meher Saha,0003700613,370319.p0613@example.invalid,60,Nivarpur-04,03/07/2025,03/08/2025,"Mihiran Saha ji aaye, W/o Meher Saha. Phone 0003700613. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Saha
+Nayuli Rathore,+91 00037-00029,370319.p0029@example.invalid,47,Nivarpur-00,12/09/2025,12/14/2025,"Patient: Ishaan Rathore
+C/O Nayuli Rathore
+C/O fever
+Phone: +91 00037-00029
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Ishaan,Rathore
+Aaravi Bisht,0003700315,370319.p0315@example.invalid,58,Nivarpur-25,08/17/2025,08/18/2025,"Reyansh Bisht ji aaye, W/o Aaravi Bisht. Phone 0003700315. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Reyansh,Bisht
+Nayuli Rathore,0003700677,370319.p0677@example.invalid,78,Nivarpur-10,12/11/2025,12/17/2025,"Patient: Ishaan Rathore
+C/O Nayuli Rathore
+C/O fever
+Phone: 0003700677
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Ishaan",Ishaan,Rathore
+Aviraj Bisht,+91 00037-00318,370319.p0318@example.invalid,52,Nivarpur-28,02/06/2025,02/07/2025,"Zarveen Bisht ji aaye, W/o Aviraj Bisht. Phone +91 00037-00318. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Zarveen,Bisht
+Mihiran Rathore,0003700790,370319.p0790@example.invalid,21,Nivarpur-07,08/03/2025,08/07/2025,"Patient: Meher Rathore
+C/O Mihiran Rathore
+C/O fever
+Phone: 0003700790
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Rathore
+Aviraj Rathore,0003700030,370319.p0030@example.invalid,68,Nivarpur-01,03/24/2025,03/30/2025,"Zarveen Rathore ji aaye, W/o Aviraj Rathore. Phone 0003700030. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Zarveen,Rathore
+Tanvika Bisht,+91 00037-00863,370319.p0863@example.invalid,69,Nivarpur-22,05/18/2025,05/26/2025,"Patient: Ritavan Bisht
+C/O Tanvika Bisht
+C/O fever
+Phone: +91 00037-00863
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ritavan,Bisht
+Faridan Saha,0003700724,370319.p0724@example.invalid,56,Nivarpur-28,07/13/2025,07/17/2025,"Nivika Saha ji aaye, W/o Faridan Saha. Phone 0003700724. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nivika,Saha
+Tanvika Khan,0003700455,370319.p0455@example.invalid,84,Nivarpur-20,08/19/2025,08/27/2025,"Patient: Khan  Ritavan
+C/O Tanvika Khan
+C/O fever
+Phone: 0003700455
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Khan, Ritavan
+Ishaan Bisht,+91 00037-00314,370319.p0314@example.invalid,76,Nivarpur-24,07/22/2025,07/23/2025,"Nayuli Bisht ji aaye, W/o Ishaan Bisht. Phone +91 00037-00314. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Nayuli,Bisht
+Zarveen Bisht,0003700969,370319.p0969@example.invalid,39,Nivarpur-12,06/04/2025,06/09/2025,"Patient: Aviraj Bisht
+C/O Zarveen Bisht
+C/O fever
+Phone: 0003700969
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aviraj,Bisht
+Faridan Bisht,0003700532,370319.p0532@example.invalid,22,Nivarpur-10,10/01/2025,10/08/2025,"Nivika Bisht ji aaye, W/o Faridan Bisht. Phone 0003700532. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nivika,Bisht
+Faridan Sen,+91 00037-00148,370319.p0148@example.invalid,77,Nivarpur-03,02/13/2025,02/18/2025,"Patient: Nivika Sen
+C/O Faridan Sen
+C/O fever
+Phone: +91 00037-00148
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Nivika,Sen
+Tanvika Ansari,0003700059,370319.p0059@example.invalid,39,Nivarpur-01,10/16/2025,10/21/2025,"Ritavan Ansari ji aaye, W/o Tanvika Ansari. Phone 0003700059. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Ansari
+Aaravi Rathore,0003700135,370319.p0135@example.invalid,62,Nivarpur-19,03/05/2025,03/10/2025,"Patient: Reyansh Rathore
+C/O Aaravi Rathore
+C/O fever
+Phone: 0003700135
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Reyansh,Rathore
+Tanvika Joshi,+91 00037-00719,370319.p0719@example.invalid,20,Nivarpur-23,07/29/2025,08/02/2025,"Ritavan Joshi ji aaye, W/o Tanvika Joshi. Phone +91 00037-00719. C/O dizziness.
+Hyponatremia (E87.1); Sodium 109 mmol/L; Ferrous sulfate 60 mg OD; Dr. Ritavan",Ritavan,Joshi
+Aviraj Saha,0003700726,370319.p0726@example.invalid,27,Nivarpur-01,04/02/2025,04/06/2025,"Patient: Zarveen Saha
+C/O Aviraj Saha
+C/O fever
+Phone: 0003700726
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Saha
+Aviraj Sen,0003700582,370319.p0582@example.invalid,27,Nivarpur-02,06/15/2025,06/20/2025,"Zarveen Sen ji aaye, W/o Aviraj Sen. Phone 0003700582. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Zarveen,Sen
+Faridan Ansari,+91 00037-00916,370319.p0916@example.invalid,54,Nivarpur-17,12/12/2025,12/19/2025,"Patient: Nivika Ansari
+C/O Faridan Ansari
+C/O fever
+Phone: +91 00037-00916
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Nivika,Ansari
+Reyansh Joshi,0003700924,370319.p0924@example.invalid,62,Nivarpur-25,07/12/2025,07/18/2025,"Aaravi Joshi ji aaye, W/o Reyansh Joshi. Phone 0003700924. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aaravi,Joshi
+Reyansh Bisht,0003700960,370319.p0960@example.invalid,66,Nivarpur-03,08/03/2025,08/07/2025,"Patient: Aaravi Bisht
+C/O Reyansh Bisht
+C/O fever
+Phone: 0003700960
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Aaravi,Bisht
+Reyansh Bisht,+91 00037-00528,370319.p0528@example.invalid,61,Nivarpur-06,04/25/2025,05/03/2025,"Aaravi Bisht ji aaye, W/o Reyansh Bisht. Phone +91 00037-00528. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aaravi,Bisht
+Aviraj Naik,0003700846,370319.p0846@example.invalid,31,Nivarpur-05,07/15/2025,07/22/2025,"Patient: Zarveen Naik
+C/O Aviraj Naik
+C/O fever
+Phone: 0003700846
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Naik
+Aviraj Rathore,0003700894,370319.p0894@example.invalid,49,Nivarpur-24,06/30/2025,07/04/2025,"Zarveen Rathore ji aaye, W/o Aviraj Rathore. Phone 0003700894. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Rathore
+Reyansh Saha,+91 00037-00612,370319.p0612@example.invalid,38,Nivarpur-03,03/05/2025,03/06/2025,"Patient: Aaravi Saha
+C/O Reyansh Saha
+C/O fever
+Phone: +91 00037-00612
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aaravi,Saha
+Aaravi Joshi,0003700279,370319.p0279@example.invalid,67,Nivarpur-18,08/13/2025,08/22/2025,"Reyansh Joshi ji aaye, W/o Aaravi Joshi. Phone 0003700279. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Reyansh,Joshi
+Meher Naik,0003700625,370319.p0625@example.invalid,81,Nivarpur-16,09/30/2025,10/01/2025,"Patient: Mihiran Naik
+C/O Meher Naik
+C/O fever
+Phone: 0003700625
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Mihiran,Naik
+Zarveen Joshi,+91 00037-00069,370319.p0069@example.invalid,26,Nivarpur-11,04/14/2025,04/17/2025,"Joshi  Aviraj ji aaye, W/o Zarveen Joshi. Phone +91 00037-00069. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Joshi, Aviraj
+Aaravi Joshi,0003700711,370319.p0711@example.invalid,55,Nivarpur-15,09/27/2025,09/28/2025,"Patient: Reyansh Joshi
+C/O Aaravi Joshi
+C/O fever
+Phone: 0003700711
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Reyansh",Reyansh,Joshi
+Faridan Khan,0003700556,370319.p0556@example.invalid,67,Nivarpur-05,11/19/2025,11/24/2025,"Nivika Khan ji aaye, W/o Faridan Khan. Phone 0003700556. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nivika,Khan
+Reyansh Khan,+91 00037-00552,370319.p0552@example.invalid,42,Nivarpur-01,07/09/2025,07/13/2025,"Patient: Aaravi Khan
+C/O Reyansh Khan
+C/O fever
+Phone: +91 00037-00552
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Aaravi,Khan
+Nayuli Verma,0003700869,370319.p0869@example.invalid,54,Nivarpur-28,05/01/2025,05/05/2025,"Ishaan Verma ji aaye, W/o Nayuli Verma. Phone 0003700869. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ishaan,Verma
+Aaravi Joshi,0003700171,370319.p0171@example.invalid,81,Nivarpur-26,07/03/2025,07/06/2025,"Patient: Reyansh Joshi
+C/O Aaravi Joshi
+C/O fever
+Phone: 0003700171
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Reyansh,Joshi
+Tanvika Khan,+91 00037-00887,370319.p0887@example.invalid,32,Nivarpur-17,10/08/2025,10/10/2025,"Ritavan Khan ji aaye, W/o Tanvika Khan. Phone +91 00037-00887. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Ritavan,Khan
+Ritavan Ansari,0003700164,370319.p0164@example.invalid,72,Nivarpur-19,12/11/2025,12/18/2025,"Patient: Tanvika Ansari
+C/O Ritavan Ansari
+C/O fever
+Phone: 0003700164
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Tanvika,Ansari
+Aviraj Sen,0003700798,370319.p0798@example.invalid,70,Nivarpur-15,06/24/2025,07/01/2025,"Zarveen Sen ji aaye, W/o Aviraj Sen. Phone 0003700798. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Sen
+Nayuli Saha,+91 00037-00077,370319.p0077@example.invalid,73,Nivarpur-19,04/19/2025,04/27/2025,"Patient: Ishaan Saha
+C/O Nayuli Saha
+C/O fever
+Phone: +91 00037-00077
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Ishaan,Saha
+Aaravi Verma,0003700975,370319.p0975@example.invalid,74,Nivarpur-18,09/03/2025,09/05/2025,"Reyansh Verma ji aaye, W/o Aaravi Verma. Phone 0003700975. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Verma
+Ishaan Joshi,0003700602,370319.p0602@example.invalid,60,Nivarpur-22,02/15/2025,02/22/2025,"Patient: Nayuli Joshi
+C/O Ishaan Joshi
+C/O fever
+Phone: 0003700602
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nayuli,Joshi
+Aaravi Saha,+91 00037-00075,370319.p0075@example.invalid,70,Nivarpur-17,05/15/2025,05/17/2025,"Reyansh Saha ji aaye, W/o Aaravi Saha. Phone +91 00037-00075. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Reyansh,Saha
+Tanvika Joshi,0003700395,370319.p0395@example.invalid,42,Nivarpur-18,10/08/2025,10/13/2025,"Patient: Ritavan Joshi
+C/O Tanvika Joshi
+C/O fever
+Phone: 0003700395
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ritavan,Joshi
+Ritavan Ansari,0003700704,370319.p0704@example.invalid,62,Nivarpur-08,10/27/2025,11/04/2025,"Ansari  Tanvika ji aaye, W/o Ritavan Ansari. Phone 0003700704. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Tanvika",Ansari, Tanvika
+Nivika Saha,+91 00037-00079,370319.p0079@example.invalid,20,Nivarpur-21,05/23/2025,05/30/2025,"Patient: Faridan Saha
+C/O Nivika Saha
+C/O fever
+Phone: +91 00037-00079
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Faridan,Saha
+Ritavan Verma,0003700656,370319.p0656@example.invalid,50,Nivarpur-18,02/25/2025,03/06/2025,"Tanvika Verma ji aaye, W/o Ritavan Verma. Phone 0003700656. C/O dizziness.
+Observation only (Z03.9); Pulse 245 bpm; Amlodipine 5 mg OD; Dr. K. Rao",Tanvika,Verma
+Meher Sen,0003700685,370319.p0685@example.invalid,70,Nivarpur-18,10/31/2025,11/08/2025,"Patient: Mihiran Sen
+C/O Meher Sen
+C/O fever
+Phone: 0003700685
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Mihiran,Sen
+Mihiran Joshi,+91 00037-00502,370319.p0502@example.invalid,36,Nivarpur-09,05/22/2025,05/25/2025,"Meher Joshi ji aaye, W/o Mihiran Joshi. Phone +91 00037-00502. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Meher,Joshi
+Mihiran Verma,0003700658,370319.p0658@example.invalid,54,Nivarpur-20,05/19/2025,05/20/2025,"Patient: Meher Verma
+C/O Mihiran Verma
+C/O fever
+Phone: 0003700658
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Meher,Verma
+Aviraj Khan,0003700234,370319.p0234@example.invalid,59,Nivarpur-02,12/30/2025,01/05/2026,"Zarveen Khan ji aaye, W/o Aviraj Khan. Phone 0003700234. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Zarveen,Khan
+Mihiran Joshi,+91 00037-00178,370319.p0178@example.invalid,83,Nivarpur-04,05/18/2025,05/21/2025,"Patient: Meher Joshi
+C/O Mihiran Joshi
+C/O fever
+Phone: +91 00037-00178
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Meher,Joshi
+Meher Khan,0003700661,370319.p0661@example.invalid,48,Nivarpur-23,09/01/2025,09/06/2025,"Mihiran Khan ji aaye, W/o Meher Khan. Phone 0003700661. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Khan
+Ishaan Verma,0003700974,370319.p0974@example.invalid,85,Nivarpur-17,06/29/2025,07/07/2025,"Patient: Nayuli Verma
+C/O Ishaan Verma
+C/O fever
+Phone: 0003700974
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nayuli,Verma
+Nayuli Naik,+91 00037-00953,370319.p0953@example.invalid,84,Nivarpur-25,07/16/2025,07/20/2025,"Ishaan Naik ji aaye, W/o Nayuli Naik. Phone +91 00037-00953. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ishaan,Naik
+Ritavan Joshi,0003700068,370319.p0068@example.invalid,57,Nivarpur-10,05/08/2025,05/15/2025,"Patient: Tanvika Joshi
+C/O Ritavan Joshi
+C/O fever
+Phone: 0003700068
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Joshi
+Meher Ansari,0003700697,370319.p0697@example.invalid,37,Nivarpur-01,11/05/2025,11/13/2025,"Mihiran Ansari ji aaye, W/o Meher Ansari. Phone 0003700697. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Mihiran,Ansari
+Nayuli Rathore,+91 00037-00353,370319.p0353@example.invalid,25,Nivarpur-05,03/28/2025,04/03/2025,"Patient: Ishaan Rathore
+C/O Nayuli Rathore
+C/O fever
+Phone: +91 00037-00353
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Ishaan",Ishaan,Rathore
+Aviraj Verma,0003700438,370319.p0438@example.invalid,27,Nivarpur-03,11/06/2025,11/11/2025,"Zarveen Verma ji aaye, W/o Aviraj Verma. Phone 0003700438. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Zarveen,Verma
+Zarveen Verma,0003700765,370319.p0765@example.invalid,77,Nivarpur-11,07/31/2025,08/01/2025,"Patient: Aviraj Verma
+C/O Zarveen Verma
+C/O fever
+Phone: 0003700765
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Aviraj,Verma
+Tanvika Verma,+91 00037-00443,370319.p0443@example.invalid,104,Nivarpur-08,07/21/2025,08/31/2025,"Ritavan Verma ji aaye, W/o Tanvika Verma. Phone +91 00037-00443. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Verma
+Ishaan Khan,0003700662,370319.p0662@example.invalid,67,Nivarpur-24,08/05/2025,08/13/2025,"Patient: Nayuli Khan
+C/O Ishaan Khan
+C/O fever
+Phone: 0003700662
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Nayuli,Khan
+Mihiran Sen,0003700262,370319.p0262@example.invalid,44,Nivarpur-01,06/21/2025,06/24/2025,"Meher Sen ji aaye, W/o Mihiran Sen. Phone 0003700262. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Meher,Sen
+Nivika Khan,+91 00037-00451,370319.p0451@example.invalid,63,Nivarpur-16,07/06/2025,07/07/2025,"Patient: Faridan Khan
+C/O Nivika Khan
+C/O fever
+Phone: +91 00037-00451
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Khan
+Aviraj Saha,0003700294,370319.p0294@example.invalid,40,Nivarpur-04,05/05/2025,05/09/2025,"Zarveen Saha ji aaye, W/o Aviraj Saha. Phone 0003700294. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Zarveen,Saha
+Tanvika Joshi,0003700179,370319.p0179@example.invalid,104,Nivarpur-05,03/07/2025,04/17/2025,"Patient: Ritavan Joshi
+C/O Tanvika Joshi
+C/O fever
+Phone: 0003700179
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Joshi
+Mihiran Naik,+91 00037-00958,370319.p0958@example.invalid,30,Nivarpur-01,09/11/2025,09/13/2025,"Meher Naik ji aaye, W/o Mihiran Naik. Phone +91 00037-00958. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Meher,Naik
+Zarveen Khan,0003700993,370319.p0993@example.invalid,62,Nivarpur-07,01/09/2025,01/14/2025,"Patient: Aviraj Khan
+C/O Zarveen Khan
+C/O fever
+Phone: 0003700993
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aviraj,Khan
+Aviraj Ansari,0003700162,370319.p0162@example.invalid,48,Nivarpur-17,03/15/2025,03/21/2025,"Zarveen Ansari ji aaye, W/o Aviraj Ansari. Phone 0003700162. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Zarveen,Ansari
+Tanvika Saha,+91 00037-00839,370319.p0839@example.invalid,48,Nivarpur-27,08/05/2025,08/11/2025,"Patient: Ritavan Saha
+C/O Tanvika Saha
+C/O fever
+Phone: +91 00037-00839
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Ritavan,Saha
+Faridan Ansari,0003700268,370319.p0268@example.invalid,70,Nivarpur-07,03/23/2025,03/25/2025,"Nivika Ansari ji aaye, W/o Faridan Ansari. Phone 0003700268. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Nivika",Nivika,Ansari
+Zarveen Ansari,0003700921,370319.p0921@example.invalid,31,Nivarpur-22,11/12/2025,11/14/2025,"Patient: Aviraj Ansari
+C/O Zarveen Ansari
+C/O fever
+Phone: 0003700921
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Aviraj,Ansari
+Reyansh Ansari,+91 00037-00912,370319.p0912@example.invalid,23,Nivarpur-13,03/06/2025,03/10/2025,"Aaravi Ansari ji aaye, W/o Reyansh Ansari. Phone +91 00037-00912. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Aaravi,Ansari
+Aviraj Ansari,0003700594,370319.p0594@example.invalid,23,Nivarpur-14,07/07/2025,07/12/2025,"Patient: Zarveen Ansari
+C/O Aviraj Ansari
+C/O fever
+Phone: 0003700594
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Ansari
+Tanvika Bisht,0003700215,370319.p0215@example.invalid,84,Nivarpur-12,11/25/2025,11/30/2025,"Ritavan Bisht ji aaye, W/o Tanvika Bisht. Phone 0003700215. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Ritavan,Bisht
+Ishaan Joshi,+91 00037-00926,370319.p0926@example.invalid,46,Nivarpur-27,07/18/2025,07/20/2025,"Patient: Nayuli Joshi
+C/O Ishaan Joshi
+C/O fever
+Phone: +91 00037-00926
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Joshi
+Tanvika Joshi,0003700827,370319.p0827@example.invalid,54,Nivarpur-15,06/13/2025,06/19/2025,"Ritavan Joshi ji aaye, W/o Tanvika Joshi. Phone 0003700827. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ritavan,Joshi
+Faridan Saha,0003700292,370319.p0292@example.invalid,82,Nivarpur-02,04/25/2025,04/27/2025,"Patient: Nivika Saha
+C/O Faridan Saha
+C/O fever
+Phone: 0003700292
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nivika,Saha
+Faridan Khan,+91 00037-00232,370319.p0232@example.invalid,58,Nivarpur-00,08/14/2025,08/18/2025,"Nivika Khan ji aaye, W/o Faridan Khan. Phone +91 00037-00232. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nivika,Khan
+Zarveen Bisht,0003700429,370319.p0429@example.invalid,24,Nivarpur-23,03/07/2025,03/08/2025,"Patient: Aviraj Bisht
+C/O Zarveen Bisht
+C/O fever
+Phone: 0003700429
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Aviraj,Bisht
+Ritavan Saha,0003700620,370319.p0620@example.invalid,67,Nivarpur-11,01/06/2025,01/10/2025,"Tanvika Saha ji aaye, W/o Ritavan Saha. Phone 0003700620. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Tanvika,Saha
+Mihiran Sen,+91 00037-00478,370319.p0478@example.invalid,24,Nivarpur-14,01/01/2025,01/10/2025,"Patient: Meher Sen
+C/O Mihiran Sen
+C/O fever
+Phone: +91 00037-00478
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Meher,Sen
+Meher Bisht,0003700745,370319.p0745@example.invalid,78,Nivarpur-20,05/20/2025,05/27/2025,"Mihiran Bisht ji aaye, W/o Meher Bisht. Phone 0003700745. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Bisht
+Meher Ansari,0003700265,370319.p0265@example.invalid,18,Nivarpur-04,03/26/2025,03/28/2025,"Patient: Mihiran Ansari
+C/O Meher Ansari
+C/O fever
+Phone: 0003700265
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. Mihiran",Mihiran,Ansari
+Ishaan Verma,+91 00037-00002,370319.p0002@example.invalid,77,Nivarpur-02,11/07/2025,11/09/2025,"Nayuli Verma ji aaye, W/o Ishaan Verma. Phone +91 00037-00002. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Verma
+Meher Sen,0003700361,370319.p0361@example.invalid,71,Nivarpur-13,11/22/2025,11/27/2025,"Patient: Mihiran Sen
+C/O Meher Sen
+C/O fever
+Phone: 0003700361
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Mihiran,Sen
+Nivika Verma,0003700331,370319.p0331@example.invalid,80,Nivarpur-12,02/10/2025,02/12/2025,"Faridan Verma ji aaye, W/o Nivika Verma. Phone 0003700331. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Verma
+Reyansh Joshi,+91 00037-00384,370319.p0384@example.invalid,33,Nivarpur-07,08/18/2025,08/24/2025,"Patient: Aaravi Joshi
+C/O Reyansh Joshi
+C/O fever
+Phone: +91 00037-00384
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aaravi,Joshi
+Nayuli Saha,0003700941,370319.p0941@example.invalid,35,Nivarpur-13,04/07/2025,04/09/2025,"Ishaan Saha ji aaye, W/o Nayuli Saha. Phone 0003700941. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ishaan,Saha
+Ishaan Ansari,0003700482,370319.p0482@example.invalid,59,Nivarpur-18,05/24/2025,06/02/2025,"Patient: Nayuli Ansari
+C/O Ishaan Ansari
+C/O fever
+Phone: 0003700482
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nayuli,Ansari
+Ritavan Verma,+91 00037-00008,370319.p0008@example.invalid,72,Nivarpur-08,06/29/2025,07/08/2025,"Tanvika Verma ji aaye, W/o Ritavan Verma. Phone +91 00037-00008. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Verma
+Nivika Sen,0003700907,370319.p0907@example.invalid,77,Nivarpur-08,10/10/2025,10/13/2025,"Patient: Faridan Sen
+C/O Nivika Sen
+C/O fever
+Phone: 0003700907
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Faridan,Sen
+Reyansh Ansari,0003700696,370319.p0696@example.invalid,84,Nivarpur-00,08/31/2025,09/06/2025,"Aaravi Ansari ji aaye, W/o Reyansh Ansari. Phone 0003700696. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Aaravi,Ansari
+Nivika Rathore,+91 00037-00787,370319.p0787@example.invalid,70,Nivarpur-04,08/16/2025,08/17/2025,"Patient: Faridan Rathore
+C/O Nivika Rathore
+C/O fever
+Phone: +91 00037-00787
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Rathore
+Reyansh Rathore,0003700564,370319.p0564@example.invalid,84,Nivarpur-13,08/02/2025,08/07/2025,"Aaravi Rathore ji aaye, W/o Reyansh Rathore. Phone 0003700564. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Aaravi,Rathore
+Nivika Naik,0003700739,370319.p0739@example.invalid,104,Nivarpur-14,09/28/2025,11/08/2025,"Patient: Faridan Naik
+C/O Nivika Naik
+C/O fever
+Phone: 0003700739
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Naik
+Tanvika Khan,+91 00037-00131,370319.p0131@example.invalid,75,Nivarpur-15,07/16/2025,07/23/2025,"Ritavan Khan ji aaye, W/o Tanvika Khan. Phone +91 00037-00131. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Ritavan",Ritavan,Khan
+Aviraj Bisht,0003700750,370319.p0750@example.invalid,56,Nivarpur-25,09/15/2025,09/20/2025,"Patient: Zarveen Bisht
+C/O Aviraj Bisht
+C/O fever
+Phone: 0003700750
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Zarveen,Bisht
+Aviraj Naik,0003700090,370319.p0090@example.invalid,79,Nivarpur-03,06/27/2025,07/05/2025,"Zarveen Naik ji aaye, W/o Aviraj Naik. Phone 0003700090. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Naik
+Reyansh Sen,+91 00037-00360,370319.p0360@example.invalid,55,Nivarpur-12,09/17/2025,09/23/2025,"Patient: Aaravi Sen
+C/O Reyansh Sen
+C/O fever
+Phone: +91 00037-00360
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aaravi,Sen
+Nayuli Naik,0003700413,370319.p0413@example.invalid,52,Nivarpur-07,03/11/2025,03/19/2025,"Ishaan Naik ji aaye, W/o Nayuli Naik. Phone 0003700413. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ishaan,Naik
+Aaravi Saha,0003700831,370319.p0831@example.invalid,23,Nivarpur-19,10/02/2025,10/03/2025,"Patient: Reyansh Saha
+C/O Aaravi Saha
+C/O fever
+Phone: 0003700831
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Reyansh,Saha
+Faridan Naik,+91 00037-00952,370319.p0952@example.invalid,86,Nivarpur-24,05/03/2025,05/08/2025,"Nivika Naik ji aaye, W/o Faridan Naik. Phone +91 00037-00952. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Nivika,Naik
+Aaravi Rathore,0003700891,370319.p0891@example.invalid,38,Nivarpur-21,05/11/2025,05/20/2025,"Patient: Reyansh Rathore
+C/O Aaravi Rathore
+C/O fever
+Phone: 0003700891
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Rathore
+Zarveen Khan,0003700237,370319.p0237@example.invalid,31,Nivarpur-05,02/24/2025,03/04/2025,"Aviraj Khan ji aaye, W/o Zarveen Khan. Phone 0003700237. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Aviraj,Khan
+Mihiran Rathore,+91 00037-00358,370319.p0358@example.invalid,81,Nivarpur-10,09/11/2025,09/12/2025,"Patient: Meher Rathore
+C/O Mihiran Rathore
+C/O fever
+Phone: +91 00037-00358
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Rathore
+Tanvika Bisht,0003700755,370319.p0755@example.invalid,66,Nivarpur-01,03/19/2025,03/26/2025,"Ritavan Bisht ji aaye, W/o Tanvika Bisht. Phone 0003700755. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Ritavan,Bisht
+Nivika Verma,0003700655,370319.p0655@example.invalid,71,Nivarpur-17,10/17/2025,10/21/2025,"Patient: Faridan Verma
+C/O Nivika Verma
+C/O fever
+Phone: 0003700655
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Faridan,Verma
+Nivika Bisht,+91 00037-00211,370319.p0211@example.invalid,25,Nivarpur-08,09/04/2025,09/06/2025,"Faridan Bisht ji aaye, W/o Nivika Bisht. Phone +91 00037-00211. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Bisht
+Nayuli Sen,0003700473,370319.p0473@example.invalid,48,Nivarpur-09,05/01/2025,05/05/2025,"Patient: Ishaan Sen
+C/O Nayuli Sen
+C/O fever
+Phone: 0003700473
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Ishaan",Ishaan,Sen
+Ritavan Joshi,0003700500,370319.p0500@example.invalid,37,Nivarpur-07,07/26/2025,08/04/2025,"Tanvika Joshi ji aaye, W/o Ritavan Joshi. Phone 0003700500. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Joshi
+Tanvika Verma,+91 00037-00011,370319.p0011@example.invalid,77,Nivarpur-11,01/26/2025,02/02/2025,"Patient: Ritavan Verma
+C/O Tanvika Verma
+C/O fever
+Phone: +91 00037-00011
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Verma
+Meher Verma,0003700217,370319.p0217@example.invalid,65,Nivarpur-14,04/24/2025,04/27/2025,"Mihiran Verma ji aaye, W/o Meher Verma. Phone 0003700217. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Mihiran,Verma
+Reyansh Naik,0003700840,370319.p0840@example.invalid,28,Nivarpur-28,06/05/2025,06/14/2025,"Patient: Aaravi Naik
+C/O Reyansh Naik
+C/O fever
+Phone: 0003700840
+Hyponatremia (E87.1); Sodium 109 mmol/L; Metformin 500 mg 1-0-1; Dr. K. Rao",Aaravi,Naik
+Ritavan Bisht,+91 00037-00968,370319.p0968@example.invalid,41,Nivarpur-11,04/28/2025,05/03/2025,"Tanvika Bisht ji aaye, W/o Ritavan Bisht. Phone +91 00037-00968. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Tanvika,Bisht
+Faridan Naik,0003700412,370319.p0412@example.invalid,76,Nivarpur-06,09/22/2025,09/24/2025,"Patient: Nivika Naik
+C/O Faridan Naik
+C/O fever
+Phone: 0003700412
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Nivika,Naik
+Nivika Bisht,0003700643,370319.p0643@example.invalid,57,Nivarpur-05,09/07/2025,09/09/2025,"Faridan Bisht ji aaye, W/o Nivika Bisht. Phone 0003700643. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Faridan,Bisht
+Nayuli Joshi,+91 00037-00065,370319.p0065@example.invalid,83,Nivarpur-07,12/15/2025,12/21/2025,"Patient: Ishaan Joshi
+C/O Nayuli Joshi
+C/O fever
+Phone: +91 00037-00065
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ishaan,Joshi
+Tanvika Sen,0003700371,370319.p0371@example.invalid,57,Nivarpur-23,06/22/2025,06/27/2025,"Ritavan Sen ji aaye, W/o Tanvika Sen. Phone 0003700371. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Sen
+Aviraj Joshi,0003700174,370319.p0174@example.invalid,27,Nivarpur-00,01/06/2025,01/12/2025,"Patient: Zarveen Joshi
+C/O Aviraj Joshi
+C/O fever
+Phone: 0003700174
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Zarveen,Joshi
+Nayuli Saha,+91 00037-00617,370319.p0617@example.invalid,66,Nivarpur-08,11/04/2025,11/08/2025,"Ishaan Saha ji aaye, W/o Nayuli Saha. Phone +91 00037-00617. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ishaan,Saha
+Zarveen Khan,0003700777,370319.p0777@example.invalid,104,Nivarpur-23,08/18/2025,09/28/2025,"Patient: Aviraj Khan
+C/O Zarveen Khan
+C/O fever
+Phone: 0003700777
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Aviraj,Khan
+Mihiran Khan,0003700778,370319.p0778@example.invalid,52,Nivarpur-24,05/27/2025,06/04/2025,"Meher Khan ji aaye, W/o Mihiran Khan. Phone 0003700778. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Meher",Meher,Khan
+Zarveen Rathore,+91 00037-00681,370319.p0681@example.invalid,78,Nivarpur-14,09/20/2025,09/28/2025,"Patient: Aviraj Rathore
+C/O Zarveen Rathore
+C/O fever
+Phone: +91 00037-00681
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Aviraj,Rathore
+Mihiran Verma,0003700010,370319.p0010@example.invalid,33,Nivarpur-10,02/05/2025,02/10/2025,"Meher Verma ji aaye, W/o Mihiran Verma. Phone 0003700010. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Verma
+Meher Saha,0003700397,370319.p0397@example.invalid,64,Nivarpur-20,08/06/2025,08/14/2025,"Patient: Mihiran Saha
+C/O Meher Saha
+C/O fever
+Phone: 0003700397
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Mihiran,Saha
+Nayuli Saha,+91 00037-00509,370319.p0509@example.invalid,46,Nivarpur-16,11/07/2025,11/16/2025,"Ishaan Saha ji aaye, W/o Nayuli Saha. Phone +91 00037-00509. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ishaan,Saha
+Mihiran Khan,0003700130,370319.p0130@example.invalid,18,Nivarpur-14,08/03/2025,08/11/2025,"Patient: Meher Khan
+C/O Mihiran Khan
+C/O fever
+Phone: 0003700130
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Khan
+Ritavan Saha,0003700080,370319.p0080@example.invalid,66,Nivarpur-22,02/06/2025,02/15/2025,"Tanvika Saha ji aaye, W/o Ritavan Saha. Phone 0003700080. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Tanvika,Saha
+Aaravi Joshi,+91 00037-00927,370319.p0927@example.invalid,65,Nivarpur-28,09/24/2025,09/27/2025,"Patient: Reyansh Joshi
+C/O Aaravi Joshi
+C/O fever
+Phone: +91 00037-00927
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Reyansh,Joshi
+Meher Sen,0003700145,370319.p0145@example.invalid,66,Nivarpur-00,07/04/2025,07/08/2025,"Mihiran Sen ji aaye, W/o Meher Sen. Phone 0003700145. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Mihiran,Sen
+Nivika Khan,0003700667,370319.p0667@example.invalid,81,Nivarpur-00,02/02/2025,02/07/2025,"Patient: Faridan Khan
+C/O Nivika Khan
+C/O fever
+Phone: 0003700667
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Faridan,Khan
+Nayuli Naik,+91 00037-00521,370319.p0521@example.invalid,75,Nivarpur-28,07/26/2025,07/27/2025,"Ishaan Naik ji aaye, W/o Nayuli Naik. Phone +91 00037-00521. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ishaan,Naik
+Nayuli Rathore,0003700245,370319.p0245@example.invalid,29,Nivarpur-13,07/03/2025,07/08/2025,"Patient: Ishaan Rathore
+C/O Nayuli Rathore
+C/O fever
+Phone: 0003700245
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ishaan,Rathore
+Mihiran Ansari,0003700058,370319.p0058@example.invalid,29,Nivarpur-00,10/27/2025,10/31/2025,"Meher Ansari ji aaye, W/o Mihiran Ansari. Phone 0003700058. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Meher,Ansari
+Meher Joshi,+91 00037-00817,370319.p0817@example.invalid,80,Nivarpur-05,06/14/2025,06/19/2025,"Patient: Mihiran Joshi
+C/O Meher Joshi
+C/O fever
+Phone: +91 00037-00817
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Mihiran",Mihiran,Joshi
+Aaravi Verma,0003700435,370319.p0435@example.invalid,80,Nivarpur-00,01/29/2025,02/02/2025,"Reyansh Verma ji aaye, W/o Aaravi Verma. Phone 0003700435. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Verma
+Mihiran Naik,0003700094,370319.p0094@example.invalid,77,Nivarpur-07,02/22/2025,02/27/2025,"Patient: Meher Naik
+C/O Mihiran Naik
+C/O fever
+Phone: 0003700094
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Meher,Naik
+Reyansh Rathore,+91 00037-00888,370319.p0888@example.invalid,79,Nivarpur-18,09/11/2025,09/13/2025,"Aaravi Rathore ji aaye, W/o Reyansh Rathore. Phone +91 00037-00888. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Aaravi,Rathore
+Nayuli Joshi,0003700605,370319.p0605@example.invalid,46,Nivarpur-25,07/30/2025,07/31/2025,"Patient: Ishaan Joshi
+C/O Nayuli Joshi
+C/O fever
+Phone: 0003700605
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ishaan,Joshi
+Reyansh Verma,0003700216,370319.p0216@example.invalid,58,Nivarpur-13,08/07/2025,08/09/2025,"Aaravi Verma ji aaye, W/o Reyansh Verma. Phone 0003700216. C/O dizziness.
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Aaravi,Verma
+Aaravi Khan,+91 00037-00447,370319.p0447@example.invalid,59,Nivarpur-12,09/26/2025,09/30/2025,"Patient: Reyansh Khan
+C/O Aaravi Khan
+C/O fever
+Phone: +91 00037-00447
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Reyansh,Khan
+Faridan Verma,0003700004,370319.p0004@example.invalid,46,Nivarpur-04,05/15/2025,05/23/2025,"Nivika Verma ji aaye, W/o Faridan Verma. Phone 0003700004. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Nivika,Verma
+Tanvika Joshi,0003700287,370319.p0287@example.invalid,58,Nivarpur-26,01/12/2025,01/19/2025,"Patient: Ritavan Joshi
+C/O Tanvika Joshi
+C/O fever
+Phone: 0003700287
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Ritavan,Joshi
+Tanvika Naik,+91 00037-00635,370319.p0635@example.invalid,86,Nivarpur-26,09/24/2025,09/28/2025,"Ritavan Naik ji aaye, W/o Tanvika Naik. Phone +91 00037-00635. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Ritavan,Naik
+Aaravi Naik,0003700735,370319.p0735@example.invalid,29,Nivarpur-10,11/11/2025,11/15/2025,"Patient: Reyansh Naik
+C/O Aaravi Naik
+C/O fever
+Phone: 0003700735
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Reyansh,Naik
+Aviraj Saha,0003700078,370319.p0078@example.invalid,32,Nivarpur-20,07/25/2025,08/03/2025,"Zarveen Saha ji aaye, W/o Aviraj Saha. Phone 0003700078. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Zarveen,Saha
+Tanvika Saha,+91 00037-00623,370319.p0623@example.invalid,69,Nivarpur-14,09/30/2025,10/05/2025,"Patient: Ritavan Saha
+C/O Tanvika Saha
+C/O fever
+Phone: +91 00037-00623
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Ritavan,Saha
+Ishaan Joshi,0003700062,370319.p0062@example.invalid,24,Nivarpur-04,10/04/2025,10/07/2025,"Nayuli Joshi ji aaye, W/o Ishaan Joshi. Phone 0003700062. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Nayuli",Nayuli,Joshi
+Faridan Rathore,0003700676,370319.p0676@example.invalid,31,Nivarpur-09,09/05/2025,09/10/2025,"Patient: Nivika Rathore
+C/O Faridan Rathore
+C/O fever
+Phone: 0003700676
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Nivika,Rathore
+Aviraj Rathore,+91 00037-00246,370319.p0246@example.invalid,59,Nivarpur-14,12/08/2025,12/15/2025,"Zarveen Rathore ji aaye, W/o Aviraj Rathore. Phone +91 00037-00246. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Zarveen,Rathore
+Nivika Saha,0003700619,370319.p0619@example.invalid,32,Nivarpur-10,01/01/2025,01/08/2025,"Patient: Faridan Saha
+C/O Nivika Saha
+C/O fever
+Phone: 0003700619
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Faridan,Saha
+Mihiran Khan,0003700994,370319.p0994@example.invalid,21,Nivarpur-08,12/13/2025,12/21/2025,"Meher Khan ji aaye, W/o Mihiran Khan. Phone 0003700994. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Meher,Khan
+Nayuli Naik,+91 00037-00089,370319.p0089@example.invalid,84,Nivarpur-02,01/07/2025,01/13/2025,"Patient: Ishaan Naik
+C/O Nayuli Naik
+C/O fever
+Phone: +91 00037-00089
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Ishaan,Naik
+Zarveen Joshi,0003700933,370319.p0933@example.invalid,36,Nivarpur-05,12/14/2025,12/16/2025,"Aviraj Joshi ji aaye, W/o Zarveen Joshi. Phone 0003700933. C/O dizziness.
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao",Aviraj,Joshi
+Zarveen Rathore,0003700141,370319.p0141@example.invalid,53,Nivarpur-25,04/07/2025,04/10/2025,"Patient: Aviraj Rathore
+C/O Zarveen Rathore
+C/O fever
+Phone: 0003700141
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Aviraj,Rathore
+Nivika Rathore,+91 00037-00463,370319.p0463@example.invalid,41,Nivarpur-28,06/21/2025,06/27/2025,"Faridan Rathore ji aaye, W/o Nivika Rathore. Phone +91 00037-00463. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Faridan,Rathore
+Zarveen Ansari,0003700165,370319.p0165@example.invalid,29,Nivarpur-20,09/09/2025,09/11/2025,"Patient: Aviraj Ansari
+C/O Zarveen Ansari
+C/O fever
+Phone: 0003700165
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Aviraj,Ansari
+Aviraj Verma,0003700762,370319.p0762@example.invalid,53,Nivarpur-08,03/13/2025,03/20/2025,"Zarveen Verma ji aaye, W/o Aviraj Verma. Phone 0003700762. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Zarveen,Verma
+Aaravi Bisht,+91 00037-00423,370319.p0423@example.invalid,84,Nivarpur-17,12/01/2025,12/02/2025,"Patient: Reyansh Bisht
+C/O Aaravi Bisht
+C/O fever
+Phone: +91 00037-00423
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao",Reyansh,Bisht
+Ritavan Sen,0003700044,370319.p0044@example.invalid,20,Nivarpur-15,03/25/2025,04/02/2025,"Tanvika Sen ji aaye, W/o Ritavan Sen. Phone 0003700044. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Sen
+Faridan Verma,0003700976,370319.p0976@example.invalid,75,Nivarpur-19,05/27/2025,06/04/2025,"Patient: Nivika Verma
+C/O Faridan Verma
+C/O fever
+Phone: 0003700976
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Nivika",Nivika,Verma
+Zarveen Rathore,+91 00037-00033,370319.p0033@example.invalid,71,Nivarpur-04,02/19/2025,02/25/2025,"Aviraj Rathore ji aaye, W/o Zarveen Rathore. Phone +91 00037-00033. C/O dizziness.
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao",Aviraj,Rathore
+Ritavan Sen,0003700260,370319.p0260@example.invalid,45,Nivarpur-28,04/02/2025,04/05/2025,"Patient: Tanvika Sen
+C/O Ritavan Sen
+C/O fever
+Phone: 0003700260
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Tanvika,Sen
+Aaravi Joshi,0003700063,370319.p0063@example.invalid,73,Nivarpur-05,03/08/2025,03/15/2025,"Reyansh Joshi ji aaye, W/o Aaravi Joshi. Phone 0003700063. C/O dizziness.
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Reyansh,Joshi
+Ritavan Saha,+91 00037-00404,370319.p0404@example.invalid,48,Nivarpur-27,05/30/2025,06/06/2025,"Patient: Tanvika Saha
+C/O Ritavan Saha
+C/O fever
+Phone: +91 00037-00404
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao",Tanvika,Saha
+Reyansh Sen,0003700684,370319.p0684@example.invalid,29,Nivarpur-17,09/17/2025,09/21/2025,"Aaravi Sen ji aaye, W/o Reyansh Sen. Phone 0003700684. C/O dizziness.
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao",Aaravi,Sen

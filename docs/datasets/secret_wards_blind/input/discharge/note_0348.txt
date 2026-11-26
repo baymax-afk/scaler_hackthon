@@ -1,0 +1,10 @@
+Patient: Zarveen Ansari
+C/O Aviraj Ansari
+C/O fever
+Phone: 
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 
+Village: Nivarpur-17
+Age: 48
+Admission: 2025-12-09
+Discharge: 2025-12-12

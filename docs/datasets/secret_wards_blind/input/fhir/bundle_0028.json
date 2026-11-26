@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "28"
+  },
+  "timestamp": "2025-01-28T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:ada92eaf-baa1-5d06-b47e-56bcdcf03a32",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-01-28T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:3301e4b3-cfea-5b10-a11f-a444a2a110c3"
+        },
+        "author": [
+          {
+            "display": "Dr. K. Rao"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:bb33c724-293f-5fc1-b402-03c98e1dc5bb"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3301e4b3-cfea-5b10-a11f-a444a2a110c3",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "मेहर राठौर"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700034"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-05"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:bb33c724-293f-5fc1-b402-03c98e1dc5bb",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:3301e4b3-cfea-5b10-a11f-a444a2a110c3"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDog4KSu4KWH4KS54KSwIOCksOCkvuCkoOCljOCksApSZWxhdGl2ZTog4KSu4KS/4KS54KS/4KSw4KSoIOCksOCkvuCkoOCljOCksApQaG9uZTogMDAwMzcwMDAzNApIeXBlcnRlbnNpb24gKEkxMCk7IEJQIDE1Mi85NCBtbUhnOyBBbWxvZGlwaW5lIDUgbWcgT0Q7IERyLiBLLiBSYW8="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+मरीज़: नायुली ख़ान
+रिश्तेदार: ईशान ख़ान
+फ़ोन: 0003700338
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0338@example.invalid
+Village: Nivarpur-19
+Age: 50
+Admission: 2025-07-13
+Discharge: 2025-07-18

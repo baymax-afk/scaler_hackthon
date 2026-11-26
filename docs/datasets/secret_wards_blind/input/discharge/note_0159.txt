@@ -1,0 +1,10 @@
+Patient: Aaravi Bisht
+C/O Reyansh Bisht
+C/O fever
+Phone: +91 00037-00960
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0960@example.invalid
+Village: Nivarpur-03
+Age: 66
+Admission: 2025-08-03
+Discharge: 2025-08-08

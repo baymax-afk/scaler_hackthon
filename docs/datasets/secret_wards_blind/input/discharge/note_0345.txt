@@ -1,0 +1,10 @@
+Patient: Faridan Joshi
+C/O Nivika Joshi
+C/O fever
+Phone: +91 00037-00499
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0499@example.invalid
+Village: Nivarpur-06
+Age: 82
+Admission: 2025-08-30
+Discharge: 2025-09-07

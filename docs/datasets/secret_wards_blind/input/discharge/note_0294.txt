@@ -1,0 +1,10 @@
+Patient: Reyansh Khan
+C/O Aaravi Khan
+C/O fever
+Phone: +91 00037-00231
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Reyansh
+Email: 370319.p0231@example.invalid
+Village: Nivarpur-28
+Age: 58
+Admission: 2025-06-04
+Discharge: 2025-06-07

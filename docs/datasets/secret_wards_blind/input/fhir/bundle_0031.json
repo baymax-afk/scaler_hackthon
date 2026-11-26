@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "31"
+  },
+  "timestamp": "2025-06-30T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:54daaa60-445f-5930-bc4a-f5932e43f120",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-06-30T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:73018a0a-3c9c-58b2-a69b-79fe03d45b16"
+        },
+        "author": [
+          {
+            "display": "Dr. K. Rao"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:65f2e713-fe1b-57f6-908c-380699c387a7"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:73018a0a-3c9c-58b2-a69b-79fe03d45b16",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "नायुली राठौर"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700026"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-26"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:65f2e713-fe1b-57f6-908c-380699c387a7",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:73018a0a-3c9c-58b2-a69b-79fe03d45b16"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDog4KSo4KS+4KSv4KWB4KSy4KWAIOCksOCkvuCkoOCljOCksApSZWxhdGl2ZTog4KSI4KS24KS+4KSoIOCksOCkvuCkoOCljOCksApQaG9uZTogMDAwMzcwMDAyNgpUeXBlIDIgZGlhYmV0ZXMgKEUxMS45KTsgSGJBMWMgOC40ICU7IE1ldGZvcm1pbiA1MDAgbWcgMS0wLTE7IERyLiBLLiBSYW8="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

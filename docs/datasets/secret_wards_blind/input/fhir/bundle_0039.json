@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "39"
+  },
+  "timestamp": "2025-07-02T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:b1e4d8ea-b799-575d-a072-ce2c78776acf",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-07-02T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:458f6ca0-1245-58c9-acb9-e0d79f53219f"
+        },
+        "author": [
+          {
+            "display": "Dr. K. Rao"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:e34339af-ee87-53fd-a8bb-869d90d26fe1"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:458f6ca0-1245-58c9-acb9-e0d79f53219f",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "Nivika Bisht"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700424"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-18"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e34339af-ee87-53fd-a8bb-869d90d26fe1",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:458f6ca0-1245-58c9-acb9-e0d79f53219f"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDogTml2aWthIEJpc2h0ClJlbGF0aXZlOiBGYXJpZGFuIEJpc2h0ClBob25lOiAwMDAzNzAwNDI0Cklyb24gZGVmaWNpZW5jeSBhbmVtaWEgKEQ1MC45KTsgSGIgOS44IGcvZEw7IEZlcnJvdXMgc3VsZmF0ZSA2MCBtZyBPRDsgRHIuIEsuIFJhbw=="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

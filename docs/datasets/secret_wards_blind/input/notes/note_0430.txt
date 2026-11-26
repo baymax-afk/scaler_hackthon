@@ -1,0 +1,10 @@
+मरीज़: रेयांश सेन
+रिश्तेदार: आरवी सेन
+फ़ोन: 0003700687
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0687@example.invalid
+Village: Nivarpur-20
+Age: 70
+Admission: 2025-01-05
+Discharge: 2025-01-13

@@ -1,0 +1,10 @@
+मरीज़: निविका साहा
+रिश्तेदार: फ़रीदान साहा
+फ़ोन: 0003700832
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0832@example.invalid
+Village: Nivarpur-20
+Age: 23
+Admission: 2025-01-03
+Discharge: 2025-01-11

@@ -1,0 +1,10 @@
+मरीज़: ऋतवन सेन
+रिश्तेदार: तन्विका सेन
+फ़ोन: 0003700695
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0695@example.invalid
+Village: Nivarpur-28
+Age: 44
+Admission: 2025-05-02
+Discharge: 2025-05-10

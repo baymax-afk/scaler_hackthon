@@ -1,0 +1,10 @@
+मरीज़: निविका बिष्ट
+रिश्तेदार: फ़रीदान बिष्ट
+फ़ोन: 0003700856
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0856@example.invalid
+Village: Nivarpur-15
+Age: 71
+Admission: 2025-10-24
+Discharge: 2025-10-29

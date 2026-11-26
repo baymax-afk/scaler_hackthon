@@ -1,0 +1,10 @@
+मरीज़: ऋतवन साहा
+रिश्तेदार: तन्विका साहा
+फ़ोन: 0003700299
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0299@example.invalid
+Village: Nivarpur-09
+Age: 77
+Admission: 2025-02-01
+Discharge: 2025-02-06

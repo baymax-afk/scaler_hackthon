@@ -1,0 +1,10 @@
+Patient: Tanvika Khan
+C/O Ritavan Khan
+C/O fever
+Phone: +91 00037-00992
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Tanvika
+Email: 370319.p0992@example.invalid
+Village: Nivarpur-06
+Age: 68
+Admission: 2025-08-22
+Discharge: 2025-08-28

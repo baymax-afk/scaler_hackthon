@@ -1,0 +1,10 @@
+Patient: Zarveen Naik
+C/O Aviraj Naik
+C/O fever
+Phone: +91 00037-00090
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0090@example.invalid
+Village: Nivarpur-03
+Age: 79
+Admission: 2025-01-15
+Discharge: 2025-01-23

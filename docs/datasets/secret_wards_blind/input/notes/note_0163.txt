@@ -1,0 +1,10 @@
+मरीज़: आरवी वर्मा
+रिश्तेदार: रेयांश वर्मा
+फ़ोन: 0003700216
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0216@example.invalid
+Village: Nivarpur-13
+Age: 58
+Admission: 2025-01-09
+Discharge: 2025-01-17

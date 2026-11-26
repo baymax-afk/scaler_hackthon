@@ -1,0 +1,10 @@
+Patient: Faridan Khan
+C/O Nivika Khan
+C/O fever
+Phone: +91 00037-00019
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0019@example.invalid
+Village: Nivarpur-19
+Age: 36
+Admission: 2025-08-26
+Discharge: 2025-09-04

@@ -1,0 +1,10 @@
+Patient: Nivika Saha
+C/O Faridan Saha
+C/O fever
+Phone: +91 00037-00400
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0400@example.invalid
+Village: Nivarpur-23
+Age: 46
+Admission: 2025-10-07
+Discharge: 2025-10-16

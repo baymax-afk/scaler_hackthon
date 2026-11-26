@@ -1,0 +1,10 @@
+Patient: Mihiran Saha
+C/O Meher Saha
+C/O fever
+Phone: +91 00037-00181
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0181@example.invalid
+Village: Nivarpur-07
+Age: 39
+Admission: 2025-09-06
+Discharge: 2025-09-15

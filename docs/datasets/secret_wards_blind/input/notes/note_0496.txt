@@ -1,0 +1,10 @@
+मरीज़: फ़रीदान वर्मा
+रिश्तेदार: निविका वर्मा
+फ़ोन: 0003700223
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0223@example.invalid
+Village: Nivarpur-20
+Age: 69
+Admission: 2025-10-17
+Discharge: 2025-10-19

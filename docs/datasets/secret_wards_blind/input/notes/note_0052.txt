@@ -1,0 +1,10 @@
+मरीज़: निविका अंसारी
+रिश्तेदार: फ़रीदान अंसारी
+फ़ोन: 0003700052
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0052@example.invalid
+Village: Nivarpur-23
+Age: 63
+Admission: 2025-08-04
+Discharge: 2025-08-10

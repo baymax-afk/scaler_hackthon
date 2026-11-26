@@ -1,0 +1,10 @@
+Patient: Reyansh Khan
+C/O Aaravi Khan
+C/O fever
+Phone: +91 00037-00987
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0987@example.invalid
+Village: Nivarpur-01
+Age: 35
+Admission: 2025-11-21
+Discharge: 2025-11-29

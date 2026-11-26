@@ -1,0 +1,10 @@
+Patient: Mihiran Saha
+C/O Meher Saha
+C/O fever
+Phone: +91 00037-00937
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0937@example.invalid
+Village: Nivarpur-09
+Age: 104
+Admission: 2025-05-23
+Discharge: 2025-07-03

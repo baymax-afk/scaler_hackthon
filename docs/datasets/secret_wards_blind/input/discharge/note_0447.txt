@@ -1,0 +1,10 @@
+Patient: Aviraj Verma
+C/O Zarveen Verma
+C/O fever
+Phone: +91 00037-00981
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0981@example.invalid
+Village: Nivarpur-24
+Age: 54
+Admission: 2025-08-09
+Discharge: 2025-08-14

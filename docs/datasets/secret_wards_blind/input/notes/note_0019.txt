@@ -1,0 +1,10 @@
+मरीज़: ऋतवन ख़ान
+रिश्तेदार: तन्विका ख़ान
+फ़ोन: 0003700779
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0779@example.invalid
+Village: Nivarpur-25
+Age: 67
+Admission: 2025-11-10
+Discharge: 2025-11-16

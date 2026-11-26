@@ -1,0 +1,10 @@
+मरीज़: ईशान सेन
+रिश्तेदार: नायुली सेन
+फ़ोन: 0003700581
+शिकायत: चक्कर
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. Ishaan
+Email: 370319.p0581@example.invalid
+Village: Nivarpur-01
+Age: 65
+Admission: 2025-06-02
+Discharge: 2025-06-03

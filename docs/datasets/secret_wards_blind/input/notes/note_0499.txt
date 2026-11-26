@@ -1,0 +1,10 @@
+मरीज़: मिहिरन अंसारी
+रिश्तेदार: मेहर अंसारी
+फ़ोन: 0003700373
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0373@example.invalid
+Village: Nivarpur-25
+Age: 59
+Admission: 2025-01-07
+Discharge: 2025-01-12

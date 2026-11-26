@@ -1,0 +1,10 @@
+Patient: Tanvika Rathore
+C/O Ritavan Rathore
+C/O fever
+Phone: +91 00037-00788
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0788@example.invalid
+Village: Nivarpur-05
+Age: 51
+Admission: 2025-09-06
+Discharge: 2025-09-14

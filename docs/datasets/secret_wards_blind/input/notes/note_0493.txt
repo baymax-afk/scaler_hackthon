@@ -1,0 +1,10 @@
+मरीज़: ऋतवन साहा
+रिश्तेदार: तन्विका साहा
+फ़ोन: 0003700515
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0515@example.invalid
+Village: Nivarpur-22
+Age: 55
+Admission: 2025-10-02
+Discharge: 2025-10-11

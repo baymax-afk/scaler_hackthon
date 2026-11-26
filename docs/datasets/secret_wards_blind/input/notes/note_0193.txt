@@ -1,0 +1,10 @@
+मरीज़: ईशान बिष्ट
+रिश्तेदार: नायुली बिष्ट
+फ़ोन: 0003700641
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0641@example.invalid
+Village: Nivarpur-03
+Age: 38
+Admission: 2025-01-16
+Discharge: 2025-01-19

@@ -1,0 +1,10 @@
+मरीज़: रेयांश वर्मा
+रिश्तेदार: आरवी वर्मा
+फ़ोन: 0003700435
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0435@example.invalid
+Village: Nivarpur-00
+Age: 80
+Admission: 2025-02-17
+Discharge: 2025-02-25

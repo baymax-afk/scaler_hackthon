@@ -1,0 +1,10 @@
+Patient: Aaravi Naik
+C/O Reyansh Naik
+C/O fever
+Phone: +91 00037-00948
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0948@example.invalid
+Village: Nivarpur-20
+Age: 25
+Admission: 2025-09-11
+Discharge: 2025-09-12

@@ -1,0 +1,10 @@
+मरीज़: मेहर बिष्ट
+रिश्तेदार: मिहिरन बिष्ट
+फ़ोन: 0003700754
+शिकायत: चक्कर
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0754@example.invalid
+Village: Nivarpur-00
+Age: 67
+Admission: 2025-02-17
+Discharge: 2025-02-18

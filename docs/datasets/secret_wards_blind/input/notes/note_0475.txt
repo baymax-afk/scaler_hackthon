@@ -1,0 +1,10 @@
+मरीज़: ऋतवन ख़ान
+रिश्तेदार: तन्विका ख़ान
+फ़ोन: 0003700671
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0671@example.invalid
+Village: Nivarpur-04
+Age: 74
+Admission: 2025-08-07
+Discharge: 2025-08-10

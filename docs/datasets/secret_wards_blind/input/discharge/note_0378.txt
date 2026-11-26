@@ -1,0 +1,10 @@
+Patient: Tanvika Saha
+C/O Ritavan Saha
+C/O fever
+Phone: +91 00037-00512
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0512@example.invalid
+Village: Nivarpur-19
+Age: 49
+Admission: 2025-05-13
+Discharge: 2025-05-21

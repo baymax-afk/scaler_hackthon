@@ -1,0 +1,10 @@
+मरीज़: मेहर नाइक
+रिश्तेदार: मिहिरन नाइक
+फ़ोन: 0003700202
+शिकायत: चक्कर
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Meher
+Email: 370319.p0202@example.invalid
+Village: Nivarpur-28
+Age: 34
+Admission: 2025-11-05
+Discharge: 2025-11-14

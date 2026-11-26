@@ -1,0 +1,10 @@
+Patient: Nivika Saha
+C/O Faridan Saha
+C/O fever
+Phone: +91 00037-00184
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0184@example.invalid
+Village: Nivarpur-10
+Age: 23
+Admission: 2025-10-17
+Discharge: 2025-10-22

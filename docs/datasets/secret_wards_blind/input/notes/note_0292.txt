@@ -1,0 +1,10 @@
+मरीज़: रेयांश साहा
+रिश्तेदार: आरवी साहा
+फ़ोन: 0003700939
+शिकायत: चक्कर
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0939@example.invalid
+Village: Nivarpur-11
+Age: 34
+Admission: 2025-03-23
+Discharge: 2025-03-25

@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन बिष्ट
+रिश्तेदार: अविराज बिष्ट
+फ़ोन: 0003700750
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Zarveen
+Email: 370319.p0750@example.invalid
+Village: Nivarpur-25
+Age: 56
+Admission: 2025-12-09
+Discharge: 2025-12-10

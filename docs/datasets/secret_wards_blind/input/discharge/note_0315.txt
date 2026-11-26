@@ -1,0 +1,10 @@
+Patient: Zarveen Sen
+C/O Aviraj Sen
+C/O fever
+Phone: +91 00037-00798
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0798@example.invalid
+Village: Nivarpur-15
+Age: 70
+Admission: 2025-10-04
+Discharge: 2025-10-05

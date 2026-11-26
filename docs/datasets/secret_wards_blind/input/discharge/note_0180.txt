@@ -1,0 +1,10 @@
+Patient: Faridan Saha
+C/O Nivika Saha
+C/O fever
+Phone: +91 00037-00727
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0727@example.invalid
+Village: Nivarpur-02
+Age: 68
+Admission: 2025-12-27
+Discharge: 2026-01-03

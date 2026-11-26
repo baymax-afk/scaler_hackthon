@@ -1,0 +1,10 @@
+मरीज़: ऋतवन जोशी
+रिश्तेदार: तन्विका जोशी
+फ़ोन: 0003700395
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0395@example.invalid
+Village: Nivarpur-18
+Age: 42
+Admission: 2025-08-29
+Discharge: 2025-09-07

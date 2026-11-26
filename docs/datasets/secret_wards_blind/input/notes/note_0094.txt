@@ -1,0 +1,10 @@
+मरीज़: ऋतवन नाइक
+रिश्तेदार: तन्विका नाइक
+फ़ोन: 0003700959
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0959@example.invalid
+Village: Nivarpur-02
+Age: 78
+Admission: 2025-05-08
+Discharge: 2025-05-11

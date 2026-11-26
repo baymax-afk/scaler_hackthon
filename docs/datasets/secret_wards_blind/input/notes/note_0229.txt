@@ -1,0 +1,10 @@
+मरीज़: नायुली वर्मा
+रिश्तेदार: ईशान वर्मा
+फ़ोन: 0003700866
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Nayuli
+Email: 370319.p0866@example.invalid
+Village: Nivarpur-25
+Age: 52
+Admission: 2025-08-29
+Discharge: 2025-08-31

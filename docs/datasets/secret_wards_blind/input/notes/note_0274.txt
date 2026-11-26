@@ -1,0 +1,10 @@
+मरीज़: रेयांश बिष्ट
+रिश्तेदार: आरवी बिष्ट
+फ़ोन: 0003700207
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0207@example.invalid
+Village: Nivarpur-04
+Age: 44
+Admission: 2025-07-19
+Discharge: 2025-07-27

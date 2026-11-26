@@ -1,0 +1,10 @@
+मरीज़: मिहिरन जोशी
+रिश्तेदार: मेहर जोशी
+फ़ोन: 0003700385
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0385@example.invalid
+Village: Nivarpur-08
+Age: 81
+Admission: 2025-08-24
+Discharge: 2025-08-25

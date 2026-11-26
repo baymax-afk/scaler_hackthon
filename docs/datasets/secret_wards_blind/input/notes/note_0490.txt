@@ -1,0 +1,10 @@
+मरीज़: ईशान वर्मा
+रिश्तेदार: नायुली वर्मा
+फ़ोन: 0003700545
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0545@example.invalid
+Village: Nivarpur-23
+Age: 67
+Admission: 2025-02-07
+Discharge: 2025-02-13

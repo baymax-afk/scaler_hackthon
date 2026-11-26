@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "45"
+  },
+  "timestamp": "2025-11-14T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:ecc81d78-dd66-5b51-a7ac-51fd7e628b9e",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-11-14T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:54423d2f-c249-57ef-bc2c-54bb6cafbcb2"
+        },
+        "author": [
+          {
+            "display": "Dr. Zarveen"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:7c82c8de-5a38-5111-8b2e-fb0f2d61121a"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:54423d2f-c249-57ef-bc2c-54bb6cafbcb2",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "Zarveen Verma"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700762"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-08"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7c82c8de-5a38-5111-8b2e-fb0f2d61121a",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:54423d2f-c249-57ef-bc2c-54bb6cafbcb2"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDogWmFydmVlbiBWZXJtYQpSZWxhdGl2ZTogQXZpcmFqIFZlcm1hClBob25lOiAwMDAzNzAwNzYyCkFjdXRlIHBoYXJ5bmdpdGlzIChKMDIuOSk7IFRlbXBlcmF0dXJlIDM4LjUgwrBDOyBQYXJhY2V0YW1vbCA1MDAgbWcgUFJOOyBEci4gWmFydmVlbg=="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

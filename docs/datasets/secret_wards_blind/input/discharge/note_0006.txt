@@ -1,0 +1,10 @@
+Patient: Faridan Rathore
+C/O Nivika Rathore
+C/O fever
+Phone: +91 00037-00031
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0031@example.invalid
+Village: Nivarpur-02
+Age: 67
+Admission: 2025-09-20
+Discharge: 2025-09-24

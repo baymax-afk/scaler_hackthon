@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "46"
+  },
+  "timestamp": "2025-01-22T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:47171fdf-b76f-5342-99e1-b3816b74e510",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-01-22T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:27a69c90-d587-542d-9311-3f6bf824c169"
+        },
+        "author": [
+          {
+            "display": "Dr. K. Rao"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:061abc89-037f-525a-80da-e1cb95713d7b"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:27a69c90-d587-542d-9311-3f6bf824c169",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "नायुली सेन"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700902"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-03"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:061abc89-037f-525a-80da-e1cb95713d7b",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:27a69c90-d587-542d-9311-3f6bf824c169"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDog4KSo4KS+4KSv4KWB4KSy4KWAIOCkuOClh+CkqApSZWxhdGl2ZTog4KSI4KS24KS+4KSoIOCkuOClh+CkqApQaG9uZTogMDAwMzcwMDkwMgpJcm9uIGRlZmljaWVuY3kgYW5lbWlhIChENTAuOSk7IEhiIDkuOCBnL2RMOyBGZXJyb3VzIHN1bGZhdGUgNjAgbWcgT0Q7IERyLiBLLiBSYW8="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

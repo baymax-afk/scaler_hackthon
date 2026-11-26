@@ -1,0 +1,251 @@
+﻿Name,Relative,Mobile,Email,Age,Village,Admission,Discharge,ClinicalNote,Aadhaar
+Zarveen Rathore,Aviraj Rathore,+91 00037-00570,370319.p0570@example.invalid,76,Nivarpur-19,31/08/2025,01/09/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Zarveen,137031000570
+Reyansh Joshi,Aaravi Joshi,0003700495,370319.p0495@example.invalid,28,Nivarpur-02,11/04/2025,17/04/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000495
+Ishaan Verma,Nayuli Verma,0003700005,370319.p0005@example.invalid,52,Nivarpur-05,29/06/2025,01/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000005
+Reyansh Saha,Aaravi Saha,+91 00037-00291,370319.p0291@example.invalid,78,Nivarpur-01,22/02/2025,03/03/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000291
+Zarveen Saha,Aviraj Saha,0003700402,370319.p0402@example.invalid,31,Nivarpur-25,16/06/2025,17/06/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000402
+Ishaan Ansari,Nayuli Ansari,0003700269,370319.p0269@example.invalid,51,Nivarpur-08,29/03/2025,02/04/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000269
+Nivika Saha,Faridan Saha,+91 00037-00076,370319.p0076@example.invalid,75,Nivarpur-18,30/10/2025,02/11/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000076
+Nayuli Verma,Ishaan Verma,0003700866,370319.p0866@example.invalid,52,Nivarpur-25,19/11/2025,21/11/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000866
+Nivika Saha,Faridan Saha,0003700940,370319.p0940@example.invalid,72,Nivarpur-12,13/05/2025,16/05/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000940
+Faridan Sen,Nivika Sen,+91 00037-00799,370319.p0799@example.invalid,39,Nivarpur-16,26/08/2025,29/08/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000799
+Tanvika Saha,Ritavan Saha,0003700188,370319.p0188@example.invalid,42,Nivarpur-14,16/05/2025,19/05/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000188
+Mihiran Joshi,Meher Joshi,0003700925,370319.p0925@example.invalid,51,Nivarpur-26,29/06/2025,02/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000925
+Aaravi Rathore,Reyansh Rathore,+91 00037-00348,370319.p0348@example.invalid,85,Nivarpur-00,24/01/2025,26/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000348
+Mihiran Saha,Meher Saha,0003700721,370319.p0721@example.invalid,75,Nivarpur-25,13/06/2025,17/06/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. Mihiran,137031000721
+Faridan Naik,Nivika Naik,0003700955,370319.p0955@example.invalid,39,Nivarpur-27,07/06/2025,11/06/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000955
+Faridan Sen,Nivika Sen,+91 00037-00691,370319.p0691@example.invalid,42,Nivarpur-24,17/10/2025,24/10/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000691
+Nayuli Rathore,Ishaan Rathore,0003700350,370319.p0350@example.invalid,54,Nivarpur-02,26/05/2025,27/05/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000350
+Ritavan Rathore,Tanvika Rathore,0003700683,370319.p0683@example.invalid,82,Nivarpur-16,12/01/2025,18/01/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000683
+Meher Joshi,Mihiran Joshi,+91 00037-00826,370319.p0826@example.invalid,26,Nivarpur-14,16/12/2025,23/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000826
+Ishaan Sen,Nayuli Sen,0003700365,370319.p0365@example.invalid,63,Nivarpur-17,30/05/2025,05/06/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000365
+Aaravi Bisht,Reyansh Bisht,0003700744,370319.p0744@example.invalid,21,Nivarpur-19,06/08/2025,09/08/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000744
+Aviraj Sen,Zarveen Sen,+91 00037-00369,370319.p0369@example.invalid,80,Nivarpur-21,12/12/2025,16/12/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000369
+Meher Bisht,Mihiran Bisht,0003700862,370319.p0862@example.invalid,42,Nivarpur-21,12/06/2025,21/06/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000862
+Mihiran Khan,Meher Khan,0003700229,370319.p0229@example.invalid,22,Nivarpur-26,16/10/2025,25/10/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000229
+Nayuli Naik,Ishaan Naik,+91 00037-00734,370319.p0734@example.invalid,20,Nivarpur-09,07/11/2025,14/11/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000734
+Zarveen Rathore,Aviraj Rathore,0003700138,370319.p0138@example.invalid,52,Nivarpur-22,16/01/2025,19/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000138
+Aaravi Naik,Reyansh Naik,0003700624,370319.p0624@example.invalid,72,Nivarpur-15,03/05/2025,09/05/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Aaravi,137031000624
+Zarveen Naik,Aviraj Naik,+91 00037-00306,370319.p0306@example.invalid,28,Nivarpur-16,07/02/2025,13/02/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000306
+Aviraj Naik,Zarveen Naik,0003700633,370319.p0633@example.invalid,36,Nivarpur-24,22/09/2025,26/09/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000633
+Aaravi Saha,Reyansh Saha,0003700828,370319.p0828@example.invalid,84,Nivarpur-16,20/05/2025,21/05/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000828
+Mihiran Joshi,Meher Joshi,+91 00037-00169,370319.p0169@example.invalid,58,Nivarpur-24,31/10/2025,06/11/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000169
+Ritavan Rathore,Tanvika Rathore,0003700251,370319.p0251@example.invalid,53,Nivarpur-19,13/11/2025,18/11/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000251
+Aviraj Saha,Zarveen Saha,0003700405,370319.p0405@example.invalid,59,Nivarpur-28,21/02/2025,02/03/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000405
+Aaravi Ansari,Reyansh Ansari,+91 00037-00804,370319.p0804@example.invalid,36,Nivarpur-21,22/06/2025,25/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000804
+Tanvika Sen,Ritavan Sen,0003700152,370319.p0152@example.invalid,43,Nivarpur-07,29/05/2025,30/05/2025,Hyponatremia (E87.1); Sodium 109 mmol/L; Amlodipine 5 mg OD; Dr. K. Rao,137031000152
+Reyansh Ansari,Aaravi Ansari,0003700159,370319.p0159@example.invalid,61,Nivarpur-14,24/01/2025,30/01/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000159
+Nayuli Naik,Ishaan Naik,+91 00037-00410,370319.p0410@example.invalid,67,Nivarpur-04,01/01/2025,08/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000410
+Reyansh Rathore,Aaravi Rathore,0003700783,370319.p0783@example.invalid,70,Nivarpur-00,09/02/2025,14/02/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000783
+Ishaan Joshi,Nayuli Joshi,0003700497,370319.p0497@example.invalid,25,Nivarpur-04,09/12/2025,18/12/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000497
+Ishaan Khan,Nayuli Khan,+91 00037-00449,370319.p0449@example.invalid,25,Nivarpur-14,25/11/2025,01/12/2025,Hyponatremia (E87.1); Sodium 109 mmol/L; Paracetamol 500 mg PRN; Dr. Ishaan,137031000449
+Ishaan Bisht,Nayuli Bisht,0003700533,370319.p0533@example.invalid,21,Nivarpur-11,11/04/2025,19/04/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000533
+Nivika Khan,Faridan Khan,0003700124,370319.p0124@example.invalid,48,Nivarpur-08,27/07/2025,03/08/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000124
+Tanvika Joshi,Ritavan Joshi,+91 00037-00716,370319.p0716@example.invalid,69,Nivarpur-20,06/12/2025,14/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000716
+Reyansh Sen,Aaravi Sen,0003700363,370319.p0363@example.invalid,26,Nivarpur-15,11/07/2025,16/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000363
+Nivika Verma,Faridan Verma,0003700112,370319.p0112@example.invalid,25,Nivarpur-25,22/11/2025,01/12/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000112
+Aaravi Sen,Reyansh Sen,+91 00037-00252,370319.p0252@example.invalid,40,Nivarpur-20,23/11/2025,24/11/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000252
+Nayuli Verma,Ishaan Verma,0003700542,370319.p0542@example.invalid,71,Nivarpur-20,31/10/2025,02/11/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000542
+Nivika Naik,Faridan Naik,0003700088,370319.p0088@example.invalid,55,Nivarpur-01,15/08/2025,24/08/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000088
+Nivika Joshi,Faridan Joshi,+91 00037-00928,370319.p0928@example.invalid,68,Nivarpur-00,22/04/2025,23/04/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000928
+Nivika Rathore,Faridan Rathore,0003700136,370319.p0136@example.invalid,61,Nivarpur-20,12/01/2025,16/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000136
+Ishaan Ansari,Nayuli Ansari,0003700161,370319.p0161@example.invalid,30,Nivarpur-16,10/05/2025,14/05/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000161
+Mihiran Verma,Meher Verma,+91 00037-00757,370319.p0757@example.invalid,64,Nivarpur-03,08/11/2025,17/11/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000757
+Ishaan Saha,Nayuli Saha,0003700401,370319.p0401@example.invalid,36,Nivarpur-24,28/05/2025,04/06/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Ishaan,137031000401
+Aviraj Bisht,Zarveen Bisht,0003700645,370319.p0645@example.invalid,75,Nivarpur-07,12/07/2025,14/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000645
+Faridan Khan,Nivika Khan,+91 00037-00883,370319.p0883@example.invalid,84,Nivarpur-13,18/07/2025,24/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000883
+Meher Khan,Mihiran Khan,0003700346,370319.p0346@example.invalid,65,Nivarpur-27,05/11/2025,06/11/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000346
+Ritavan Rathore,Tanvika Rathore,0003700791,370319.p0791@example.invalid,78,Nivarpur-08,01/09/2025,04/09/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000791
+Nayuli Bisht,Ishaan Bisht,+91 00037-00638,370319.p0638@example.invalid,78,Nivarpur-00,05/08/2025,07/08/2025,Hyponatremia (E87.1); Sodium 109 mmol/L; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000638
+Aviraj Bisht,Zarveen Bisht,0003700105,370319.p0105@example.invalid,73,Nivarpur-18,08/06/2025,12/06/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000105
+Faridan Verma,Nivika Verma,0003700007,370319.p0007@example.invalid,80,Nivarpur-07,02/10/2025,03/10/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000007
+Zarveen Khan,Aviraj Khan,+91 00037-00018,370319.p0018@example.invalid,79,Nivarpur-18,04/03/2025,12/03/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000018
+Tanvika Joshi,Ritavan Joshi,0003700392,370319.p0392@example.invalid,27,Nivarpur-15,15/07/2025,17/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000392
+Nayuli Naik,Ishaan Naik,0003700302,370319.p0302@example.invalid,25,Nivarpur-12,26/03/2025,29/03/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000302
+Nayuli Khan,Ishaan Khan,+91 00037-00014,370319.p0014@example.invalid,31,Nivarpur-14,11/04/2025,19/04/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000014
+Zarveen Khan,Aviraj Khan,0003700126,370319.p0126@example.invalid,83,Nivarpur-10,10/12/2025,11/12/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000126
+Faridan Naik,Nivika Naik,0003700631,370319.p0631@example.invalid,49,Nivarpur-22,25/10/2025,26/10/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Faridan,137031000631
+Aaravi Khan,Reyansh Khan,+91 00037-00336,370319.p0336@example.invalid,104,Nivarpur-17,27/01/2025,09/03/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000336
+Ritavan Verma,Tanvika Verma,0003700767,370319.p0767@example.invalid,27,Nivarpur-13,03/12/2025,11/12/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000767
+Aaravi Ansari,Reyansh Ansari,0003700048,370319.p0048@example.invalid,67,Nivarpur-19,25/12/2025,30/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000048
+Tanvika Sen,Ritavan Sen,+91 00037-00800,370319.p0800@example.invalid,54,Nivarpur-17,22/02/2025,27/02/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000800
+Reyansh Rathore,Aaravi Rathore,0003700027,370319.p0027@example.invalid,34,Nivarpur-27,13/06/2025,20/06/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000027
+Faridan Rathore,Nivika Rathore,0003700571,370319.p0571@example.invalid,40,Nivarpur-20,09/10/2025,12/10/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000571
+Tanvika Verma,Ritavan Verma,+91 00037-00980,370319.p0980@example.invalid,76,Nivarpur-23,31/01/2025,02/02/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000980
+Aaravi Bisht,Reyansh Bisht,0003700096,370319.p0096@example.invalid,44,Nivarpur-09,18/06/2025,24/06/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000096
+Aviraj Sen,Zarveen Sen,0003700477,370319.p0477@example.invalid,71,Nivarpur-13,07/03/2025,15/03/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000477
+Zarveen Saha,Aviraj Saha,+91 00037-00618,370319.p0618@example.invalid,42,Nivarpur-09,22/10/2025,30/10/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000618
+Ritavan Khan,Tanvika Khan,0003700563,370319.p0563@example.invalid,34,Nivarpur-12,14/07/2025,23/07/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000563
+Nayuli Ansari,Ishaan Ansari,0003700698,370319.p0698@example.invalid,21,Nivarpur-02,18/03/2025,23/03/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000698
+Mihiran Bisht,Meher Bisht,+91 00037-00529,370319.p0529@example.invalid,47,Nivarpur-07,04/01/2025,11/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Mihiran,137031000529
+Ishaan Naik,Nayuli Naik,0003700737,370319.p0737@example.invalid,40,Nivarpur-12,26/06/2025,29/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000737
+Aaravi Khan,Reyansh Khan,0003700876,370319.p0876@example.invalid,34,Nivarpur-06,12/06/2025,21/06/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000876
+Aviraj Ansari,Zarveen Ansari,+91 00037-00381,370319.p0381@example.invalid,55,Nivarpur-04,15/08/2025,19/08/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000381
+Ritavan Bisht,Tanvika Bisht,0003700539,370319.p0539@example.invalid,29,Nivarpur-17,19/06/2025,28/06/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000539
+Ishaan Bisht,Nayuli Bisht,0003700425,370319.p0425@example.invalid,59,Nivarpur-19,31/12/2025,07/01/2026,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000425
+Faridan Joshi,Nivika Joshi,+91 00037-00931,370319.p0931@example.invalid,75,Nivarpur-03,09/08/2025,10/08/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000931
+Mihiran Joshi,Meher Joshi,0003700061,370319.p0061@example.invalid,32,Nivarpur-03,02/05/2025,04/05/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000061
+Mihiran Naik,Meher Naik,0003700841,370319.p0841@example.invalid,82,Nivarpur-00,28/02/2025,06/03/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000841
+Meher Khan,Mihiran Khan,+91 00037-00238,370319.p0238@example.invalid,74,Nivarpur-06,20/06/2025,28/06/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000238
+Meher Saha,Mihiran Saha,0003700730,370319.p0730@example.invalid,44,Nivarpur-05,06/06/2025,09/06/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000730
+Faridan Ansari,Nivika Ansari,0003700595,370319.p0595@example.invalid,62,Nivarpur-15,08/04/2025,17/04/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000595
+Ritavan Rathore,Tanvika Rathore,+91 00037-00143,370319.p0143@example.invalid,43,Nivarpur-27,19/12/2025,22/12/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000143
+Aviraj Ansari,Zarveen Ansari,0003700273,370319.p0273@example.invalid,20,Nivarpur-12,04/01/2025,12/01/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Aviraj,137031000273
+Reyansh Rathore,Aaravi Rathore,0003700675,370319.p0675@example.invalid,61,Nivarpur-08,01/08/2025,03/08/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000675
+Tanvika Joshi,Ritavan Joshi,+91 00037-00824,370319.p0824@example.invalid,24,Nivarpur-12,25/07/2025,03/08/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000824
+Aaravi Ansari,Reyansh Ansari,0003700480,370319.p0480@example.invalid,49,Nivarpur-16,04/05/2025,13/05/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000480
+Aaravi Saha,Reyansh Saha,0003700504,370319.p0504@example.invalid,29,Nivarpur-11,15/10/2025,23/10/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000504
+Mihiran Verma,Meher Verma,+91 00037-00865,370319.p0865@example.invalid,77,Nivarpur-24,28/04/2025,01/05/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000865
+Nivika Rathore,Faridan Rathore,0003700892,370319.p0892@example.invalid,65,Nivarpur-22,01/12/2025,03/12/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000892
+Nayuli Bisht,Ishaan Bisht,0003700854,370319.p0854@example.invalid,83,Nivarpur-13,11/07/2025,19/07/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000854
+Zarveen Joshi,Aviraj Joshi,+91 00037-00822,370319.p0822@example.invalid,45,Nivarpur-10,19/07/2025,26/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000822
+Reyansh Bisht,Aaravi Bisht,0003700855,370319.p0855@example.invalid,28,Nivarpur-14,29/06/2025,06/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000855
+Ritavan Ansari,Tanvika Ansari,0003700383,370319.p0383@example.invalid,68,Nivarpur-06,19/05/2025,21/05/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000383
+Faridan Joshi,Nivika Joshi,+91 00037-00715,370319.p0715@example.invalid,76,Nivarpur-19,01/05/2025,10/05/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000715
+Mihiran Ansari,Meher Ansari,0003700481,370319.p0481@example.invalid,86,Nivarpur-17,08/11/2025,13/11/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000481
+Zarveen Joshi,Aviraj Joshi,0003700714,370319.p0714@example.invalid,20,Nivarpur-18,08/03/2025,09/03/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Zarveen,137031000714
+Faridan Sen,Nivika Sen,+91 00037-00475,370319.p0475@example.invalid,42,Nivarpur-11,22/12/2025,25/12/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000475
+Zarveen Bisht,Aviraj Bisht,0003700426,370319.p0426@example.invalid,79,Nivarpur-20,21/09/2025,22/09/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000426
+Nivika Ansari,Faridan Ansari,0003700700,370319.p0700@example.invalid,40,Nivarpur-04,09/08/2025,12/08/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000700
+Zarveen Khan,Aviraj Khan,+91 00037-00774,370319.p0774@example.invalid,37,Nivarpur-20,04/09/2025,05/09/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000774
+Aviraj Ansari,Zarveen Ansari,0003700489,370319.p0489@example.invalid,53,Nivarpur-25,15/03/2025,20/03/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000489
+Meher Ansari,Mihiran Ansari,0003700274,370319.p0274@example.invalid,39,Nivarpur-13,10/06/2025,14/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000274
+Nayuli Ansari,Ishaan Ansari,+91 00037-00590,370319.p0590@example.invalid,51,Nivarpur-10,18/07/2025,27/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000590
+Zarveen Sen,Aviraj Sen,0003700258,370319.p0258@example.invalid,39,Nivarpur-26,18/02/2025,25/02/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000258
+Faridan Rathore,Nivika Rathore,0003700679,370319.p0679@example.invalid,78,Nivarpur-12,19/07/2025,26/07/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000679
+Zarveen Rathore,Aviraj Rathore,+91 00037-00354,370319.p0354@example.invalid,27,Nivarpur-06,16/01/2025,17/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000354
+Nayuli Naik,Ishaan Naik,0003700842,370319.p0842@example.invalid,45,Nivarpur-01,28/07/2025,01/08/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000842
+Nayuli Joshi,Ishaan Joshi,0003700494,370319.p0494@example.invalid,66,Nivarpur-01,06/12/2025,12/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000494
+Meher Naik,Mihiran Naik,+91 00037-00742,370319.p0742@example.invalid,76,Nivarpur-17,19/12/2025,21/12/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Meher,137031000742
+Ishaan Saha,Nayuli Saha,0003700185,370319.p0185@example.invalid,64,Nivarpur-11,17/07/2025,20/07/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000185
+Nayuli Verma,Ishaan Verma,0003700110,370319.p0110@example.invalid,68,Nivarpur-23,24/03/2025,01/04/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000110
+Ritavan Ansari,Tanvika Ansari,+91 00037-00599,370319.p0599@example.invalid,49,Nivarpur-19,16/12/2025,23/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000599
+Sen  Aviraj,Zarveen Sen,0003700801,370319.p0801@example.invalid,37,Nivarpur-18,24/01/2025,27/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000801
+Aviraj Rathore,Zarveen Rathore,0003700465,370319.p0465@example.invalid,83,Nivarpur-01,06/01/2025,09/01/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000465
+Zarveen Joshi,Aviraj Joshi,+91 00037-00390,370319.p0390@example.invalid,31,Nivarpur-13,28/06/2025,06/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000390
+Nayuli Sen,Ishaan Sen,0003700146,370319.p0146@example.invalid,63,Nivarpur-01,13/04/2025,16/04/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000146
+Meher Ansari,Mihiran Ansari,0003700814,370319.p0814@example.invalid,65,Nivarpur-02,21/07/2025,25/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000814
+Nayuli Sen,Ishaan Sen,+91 00037-00578,370319.p0578@example.invalid,82,Nivarpur-27,07/08/2025,15/08/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000578
+Nayuli Saha,Ishaan Saha,,,46,Nivarpur-00,01/05/2025,10/05/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000290
+Zarveen Khan,Aviraj Khan,0003700882,370319.p0882@example.invalid,80,Nivarpur-12,22/03/2025,27/03/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000882
+Aaravi Sen,Reyansh Sen,+91 00037-00036,370319.p0036@example.invalid,54,Nivarpur-07,05/12/2025,10/12/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000036
+Tanvika Joshi,Ritavan Joshi,0003700284,370319.p0284@example.invalid,77,Nivarpur-23,13/08/2025,15/08/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. Tanvika,137031000284
+Zarveen Joshi,Aviraj Joshi,0003700282,370319.p0282@example.invalid,63,Nivarpur-21,08/04/2025,11/04/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000282
+Aviraj Rathore,Zarveen Rathore,+91 00037-00249,370319.p0249@example.invalid,104,Nivarpur-17,08/02/2025,21/03/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000249
+Faridan Bisht,Nivika Bisht,0003700535,370319.p0535@example.invalid,78,Nivarpur-13,25/04/2025,04/05/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000535
+Nivika Ansari,Faridan Ansari,0003700160,370319.p0160@example.invalid,20,Nivarpur-15,28/09/2025,02/10/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000160
+Nivika Ansari,Faridan Ansari,+91 00037-00376,370319.p0376@example.invalid,36,Nivarpur-28,20/05/2025,21/05/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000376
+Faridan Ansari,Nivika Ansari,0003700271,370319.p0271@example.invalid,73,Nivarpur-10,16/08/2025,20/08/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000271
+Nayuli Sen,Ishaan Sen,0003700470,370319.p0470@example.invalid,23,Nivarpur-06,06/02/2025,09/02/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000470
+Mihiran Naik,Meher Naik,+91 00037-00949,370319.p0949@example.invalid,104,Nivarpur-21,25/03/2025,05/05/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000949
+Ishaan Joshi,Nayuli Joshi,0003700929,370319.p0929@example.invalid,41,Nivarpur-01,06/06/2025,11/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000929
+Nayuli Naik,Ishaan Naik,0003700194,370319.p0194@example.invalid,86,Nivarpur-20,08/09/2025,12/09/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000194
+Aviraj Joshi,Zarveen Joshi,+91 00037-00609,370319.p0609@example.invalid,37,Nivarpur-00,14/06/2025,20/06/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000609
+Meher Verma,Mihiran Verma,0003700118,370319.p0118@example.invalid,47,Nivarpur-02,22/01/2025,30/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000118
+Reyansh Rathore,Aaravi Rathore,0003700999,370319.p0999@example.invalid,45,Nivarpur-13,07/08/2025,16/08/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Reyansh,137031000999
+Zarveen Bisht,Aviraj Bisht,+91 00037-00210,370319.p0210@example.invalid,74,Nivarpur-07,21/11/2025,24/11/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000210
+Reyansh Khan,Aaravi Khan,0003700879,370319.p0879@example.invalid,33,Nivarpur-09,27/02/2025,28/02/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000879
+Mihiran Khan,Meher Khan,0003700877,370319.p0877@example.invalid,82,Nivarpur-07,08/03/2025,16/03/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000877
+Ishaan Bisht,Nayuli Bisht,+91 00037-00749,370319.p0749@example.invalid,67,Nivarpur-24,05/08/2025,09/08/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000749
+Faridan Ansari,Nivika Ansari,0003700055,370319.p0055@example.invalid,21,Nivarpur-26,01/02/2025,08/02/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000055
+Faridan Bisht,Nivika Bisht,0003700319,370319.p0319@example.invalid,21,Nivarpur-00,20/04/2025,25/04/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000319
+Reyansh Saha,Aaravi Saha,+91 00037-00183,370319.p0183@example.invalid,55,Nivarpur-09,03/08/2025,05/08/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000183
+Ishaan Bisht,Nayuli Bisht,0003700317,370319.p0317@example.invalid,69,Nivarpur-27,23/03/2025,31/03/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000317
+Faridan Rathore,Nivika Rathore,0003700895,370319.p0895@example.invalid,57,Nivarpur-25,13/08/2025,20/08/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000895
+Mihiran Verma,Meher Verma,,,73,Nivarpur-06,21/01/2025,29/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000325
+Reyansh Saha,Aaravi Saha,0003700939,370319.p0939@example.invalid,34,Nivarpur-11,21/06/2025,23/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000939
+Reyansh Khan,Aaravi Khan,0003700015,370319.p0015@example.invalid,18,Nivarpur-15,08/01/2025,12/01/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000015
+Nayuli Saha,Ishaan Saha,,,67,Nivarpur-18,06/05/2025,08/05/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Nayuli,137031000830
+Mihiran Rathore,Meher Rathore,0003700997,370319.p0997@example.invalid,58,Nivarpur-11,18/11/2025,19/11/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000997
+Aviraj Khan,Zarveen Khan,0003700129,370319.p0129@example.invalid,75,Nivarpur-13,16/05/2025,19/05/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000129
+Ishaan Joshi,Nayuli Joshi,+91 00037-00173,370319.p0173@example.invalid,23,Nivarpur-28,13/03/2025,14/03/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000173
+Ishaan Naik,Nayuli Naik,0003700305,370319.p0305@example.invalid,79,Nivarpur-15,19/05/2025,21/05/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000305
+Nayuli Khan,Ishaan Khan,0003700122,370319.p0122@example.invalid,45,Nivarpur-06,19/03/2025,24/03/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000122
+Ritavan Rathore,Tanvika Rathore,+91 00037-00467,370319.p0467@example.invalid,64,Nivarpur-03,12/08/2025,19/08/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000467
+Mihiran Ansari,Meher Ansari,0003700157,370319.p0157@example.invalid,29,Nivarpur-12,23/06/2025,24/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000157
+Khan  Ishaan,Nayuli Khan,0003700125,370319.p0125@example.invalid,85,Nivarpur-09,13/06/2025,21/06/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000125
+Tanvika Verma,Ritavan Verma,+91 00037-00224,370319.p0224@example.invalid,21,Nivarpur-21,02/09/2025,07/09/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000224
+Tanvika Ansari,Ritavan Ansari,0003700488,370319.p0488@example.invalid,27,Nivarpur-24,10/04/2025,15/04/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000488
+Aviraj Joshi,Zarveen Joshi,0003700177,370319.p0177@example.invalid,76,Nivarpur-03,13/07/2025,18/07/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000177
+Mihiran Verma,Meher Verma,+91 00037-00433,370319.p0433@example.invalid,53,Nivarpur-27,28/10/2025,31/10/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000433
+Mihiran Ansari,Meher Ansari,0003700805,370319.p0805@example.invalid,34,Nivarpur-22,12/12/2025,20/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Mihiran,137031000805
+Mihiran Sen,Meher Sen,0003700901,370319.p0901@example.invalid,76,Nivarpur-02,07/02/2025,11/02/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000901
+Meher Sen,Mihiran Sen,+91 00037-00370,370319.p0370@example.invalid,44,Nivarpur-22,05/02/2025,12/02/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000370
+Nivika Joshi,Faridan Joshi,0003700064,370319.p0064@example.invalid,49,Nivarpur-06,05/11/2025,07/11/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000064
+Faridan Saha,Nivika Saha,0003700943,370319.p0943@example.invalid,61,Nivarpur-15,26/10/2025,04/11/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000943
+Tanvika Bisht,Ritavan Bisht,+91 00037-00536,370319.p0536@example.invalid,72,Nivarpur-14,09/11/2025,15/11/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000536
+Ishaan Saha,Nayuli Saha,0003700725,370319.p0725@example.invalid,24,Nivarpur-00,30/05/2025,01/06/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000725
+Zarveen Sen,Aviraj Sen,0003700690,370319.p0690@example.invalid,45,Nivarpur-23,07/01/2025,15/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000690
+Nivika Bisht,Faridan Bisht,+91 00037-00748,370319.p0748@example.invalid,82,Nivarpur-23,31/01/2025,07/02/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000748
+Aviraj Verma,Zarveen Verma,0003700333,370319.p0333@example.invalid,46,Nivarpur-14,21/08/2025,27/08/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000333
+Zarveen Verma,Aviraj Verma,0003700978,370319.p0978@example.invalid,42,Nivarpur-21,22/07/2025,28/07/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000978
+Tanvika Verma,Ritavan Verma,+91 00037-00548,370319.p0548@example.invalid,47,Nivarpur-26,17/12/2025,22/12/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000548
+Ishaan Verma,Nayuli Verma,0003700761,370319.p0761@example.invalid,73,Nivarpur-07,01/02/2025,07/02/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000761
+Zarveen Bisht,Aviraj Bisht,0003700858,370319.p0858@example.invalid,20,Nivarpur-17,10/04/2025,13/04/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Zarveen,137031000858
+Nayuli Rathore,Ishaan Rathore,+91 00037-00242,370319.p0242@example.invalid,66,Nivarpur-10,08/03/2025,13/03/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000242
+Nivika Verma,Faridan Verma,0003700652,370319.p0652@example.invalid,19,Nivarpur-14,20/09/2025,26/09/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000652
+Ishaan Joshi,Nayuli Joshi,0003700713,370319.p0713@example.invalid,56,Nivarpur-17,01/10/2025,03/10/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000713
+Nayuli Naik,Ishaan Naik,+91 00037-00086,370319.p0086@example.invalid,56,Nivarpur-28,01/10/2025,10/10/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000086
+Ritavan Khan,Tanvika Khan,0003700671,370319.p0671@example.invalid,74,Nivarpur-04,28/04/2025,06/05/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000671
+Reyansh Ansari,Aaravi Ansari,0003700591,370319.p0591@example.invalid,80,Nivarpur-11,09/01/2025,17/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000591
+Ishaan Ansari,Nayuli Ansari,+91 00037-00701,370319.p0701@example.invalid,31,Nivarpur-05,19/12/2025,23/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000701
+Meher Verma,Mihiran Verma,0003700550,370319.p0550@example.invalid,25,Nivarpur-28,21/07/2025,23/07/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000550
+Nivika Khan,Faridan Khan,0003700340,370319.p0340@example.invalid,65,Nivarpur-21,31/01/2025,05/02/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000340
+Nivika Naik,Faridan Naik,+91 00037-00736,370319.p0736@example.invalid,46,Nivarpur-11,15/04/2025,17/04/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000736
+Tanvika Khan,Ritavan Khan,0003700344,370319.p0344@example.invalid,37,Nivarpur-25,24/06/2025,03/07/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000344
+Faridan Khan,Nivika Khan,0003700235,370319.p0235@example.invalid,59,Nivarpur-03,30/09/2025,03/10/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000235
+Zarveen Bisht,Aviraj Bisht,+91 00037-00102,370319.p0102@example.invalid,60,Nivarpur-15,16/05/2025,20/05/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Zarveen,137031000102
+Faridan Bisht,Nivika Bisht,0003700751,370319.p0751@example.invalid,44,Nivarpur-26,28/01/2025,31/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000751
+Tanvika Bisht,Ritavan Bisht,0003700104,370319.p0104@example.invalid,59,Nivarpur-17,22/12/2025,25/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000104
+Bisht  Ritavan,Tanvika Bisht,+91 00037-00647,370319.p0647@example.invalid,28,Nivarpur-09,17/02/2025,18/02/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000647
+Mihiran Verma,Meher Verma,0003700541,370319.p0541@example.invalid,72,Nivarpur-19,20/02/2025,22/02/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000541
+Nayuli Saha,Ishaan Saha,0003700614,370319.p0614@example.invalid,18,Nivarpur-05,28/04/2025,01/05/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000614
+Tanvika Rathore,Ritavan Rathore,+91 00037-00680,370319.p0680@example.invalid,78,Nivarpur-13,29/08/2025,06/09/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000680
+Mihiran Khan,Meher Khan,0003700769,370319.p0769@example.invalid,45,Nivarpur-15,14/09/2025,15/09/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000769
+Faridan Joshi,Nivika Joshi,0003700499,370319.p0499@example.invalid,82,Nivarpur-06,28/10/2025,04/11/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000499
+Zarveen Joshi,Aviraj Joshi,+91 00037-00498,370319.p0498@example.invalid,104,Nivarpur-05,23/11/2025,03/01/2026,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000498
+Zarveen Naik,Aviraj Naik,0003700738,370319.p0738@example.invalid,23,Nivarpur-13,02/07/2025,05/07/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000738
+Ritavan Ansari,Tanvika Ansari,0003700707,370319.p0707@example.invalid,80,Nivarpur-11,29/11/2025,07/12/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000707
+Aviraj Sen,Zarveen Sen,+91 00037-00153,370319.p0153@example.invalid,78,Nivarpur-08,20/09/2025,29/09/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000153
+Nivika Verma,Faridan Verma,0003700436,370319.p0436@example.invalid,37,Nivarpur-01,19/07/2025,20/07/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Nivika,137031000436
+Ritavan Naik,Tanvika Naik,0003700743,370319.p0743@example.invalid,21,Nivarpur-18,17/03/2025,21/03/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000743
+Ishaan Verma,Nayuli Verma,+91 00037-00977,370319.p0977@example.invalid,63,Nivarpur-20,10/01/2025,11/01/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000977
+Nivika Saha,Faridan Saha,0003700616,370319.p0616@example.invalid,84,Nivarpur-07,11/04/2025,19/04/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000616
+Nayuli Joshi,Ishaan Joshi,0003700386,370319.p0386@example.invalid,18,Nivarpur-09,30/07/2025,07/08/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000386
+Mihiran Rathore,Meher Rathore,+91 00037-00673,370319.p0673@example.invalid,18,Nivarpur-06,08/10/2025,09/10/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000673
+Aaravi Joshi,Reyansh Joshi,0003700816,370319.p0816@example.invalid,24,Nivarpur-04,18/09/2025,27/09/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000816
+Ishaan Rathore,Nayuli Rathore,0003700785,370319.p0785@example.invalid,59,Nivarpur-02,02/10/2025,10/10/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000785
+Aaravi Khan,Reyansh Khan,+91 00037-00444,370319.p0444@example.invalid,68,Nivarpur-09,01/10/2025,02/10/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000444
+Meher Sen,Mihiran Sen,0003700586,370319.p0586@example.invalid,20,Nivarpur-06,19/06/2025,23/06/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000586
+Aviraj Ansari,Zarveen Ansari,0003700597,370319.p0597@example.invalid,33,Nivarpur-17,11/10/2025,19/10/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000597
+Faridan Rathore,Nivika Rathore,+91 00037-00031,370319.p0031@example.invalid,67,Nivarpur-02,15/04/2025,23/04/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000031
+Zarveen Bisht,Aviraj Bisht,0003700966,370319.p0966@example.invalid,25,Nivarpur-09,31/10/2025,04/11/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000966
+Nayuli Rathore,Ishaan Rathore,0003700674,370319.p0674@example.invalid,39,Nivarpur-07,12/01/2025,20/01/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Nayuli,137031000674
+Nivika Rathore,Faridan Rathore,+91 00037-00028,370319.p0028@example.invalid,56,Nivarpur-28,07/04/2025,12/04/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000028
+Mihiran Joshi,Meher Joshi,,,46,Nivarpur-16,15/08/2025,16/08/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000277
+Aaravi Verma,Reyansh Verma,0003700540,370319.p0540@example.invalid,78,Nivarpur-18,22/06/2025,24/06/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000540
+Faridan Joshi,Nivika Joshi,+91 00037-00607,370319.p0607@example.invalid,22,Nivarpur-27,08/10/2025,12/10/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000607
+Meher Verma,Mihiran Verma,0003700982,370319.p0982@example.invalid,23,Nivarpur-25,23/03/2025,29/03/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000982
+Aaravi Khan,Reyansh Khan,0003700660,370319.p0660@example.invalid,77,Nivarpur-22,01/07/2025,08/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000660
+Aaravi Ansari,Reyansh Ansari,+91 00037-00156,370319.p0156@example.invalid,27,Nivarpur-11,25/09/2025,29/09/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000156
+Aviraj Bisht,Zarveen Bisht,0003700537,370319.p0537@example.invalid,43,Nivarpur-15,01/07/2025,02/07/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000537
+Meher Rathore,Mihiran Rathore,0003700034,370319.p0034@example.invalid,64,Nivarpur-05,05/02/2025,14/02/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000034
+Tanvika Verma,Ritavan Verma,+91 00037-00116,370319.p0116@example.invalid,36,Nivarpur-00,28/08/2025,05/09/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000116
+Ritavan Joshi,Tanvika Joshi,0003700503,370319.p0503@example.invalid,41,Nivarpur-10,30/03/2025,02/04/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000503
+Reyansh Rathore,Aaravi Rathore,0003700567,370319.p0567@example.invalid,66,Nivarpur-16,08/08/2025,12/08/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000567
+Nayuli Khan,Ishaan Khan,+91 00037-00338,370319.p0338@example.invalid,50,Nivarpur-19,10/11/2025,11/11/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Nayuli,137031000338
+Nayuli Khan,Ishaan Khan,0003700770,370319.p0770@example.invalid,33,Nivarpur-16,19/11/2025,21/11/2025,Hyponatremia (E87.1); Sodium 109 mmol/L; Amlodipine 5 mg OD; Dr. K. Rao,137031000770
+Mihiran Sen,Meher Sen,0003700577,370319.p0577@example.invalid,25,Nivarpur-26,27/11/2025,02/12/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000577
+Ritavan Bisht,Tanvika Bisht,+91 00037-00971,370319.p0971@example.invalid,22,Nivarpur-14,08/09/2025,15/09/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000971
+Meher Ansari,Mihiran Ansari,0003700706,370319.p0706@example.invalid,31,Nivarpur-10,27/06/2025,05/07/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000706
+Ritavan Naik,Tanvika Naik,0003700311,370319.p0311@example.invalid,75,Nivarpur-21,27/12/2025,29/12/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000311
+Tanvika Naik,Ritavan Naik,+91 00037-00524,370319.p0524@example.invalid,19,Nivarpur-02,10/12/2025,15/12/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000524
+Nivika Rathore,Faridan Rathore,0003700244,370319.p0244@example.invalid,57,Nivarpur-12,06/11/2025,07/11/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000244
+Meher Rathore,Mihiran Rathore,0003700142,370319.p0142@example.invalid,65,Nivarpur-26,19/01/2025,24/01/2025,Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao,137031000142
+Aaravi Bisht,Reyansh Bisht,,,56,Nivarpur-22,11/06/2025,19/06/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000312
+Nayuli Saha,Ishaan Saha,0003700938,370319.p0938@example.invalid,29,Nivarpur-10,20/01/2025,21/01/2025,Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao,137031000938
+Tanvika Naik,Ritavan Naik,0003700956,370319.p0956@example.invalid,49,Nivarpur-28,30/07/2025,06/08/2025,Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao,137031000956
+Zarveen Naik,Aviraj Naik,+91 00037-00414,370319.p0414@example.invalid,26,Nivarpur-08,16/08/2025,25/08/2025,Hyponatremia (E87.1); Sodium 109 mmol/L; Levodopa 100 mg 1-0-1; Dr. K. Rao,137031000414
+Nivika Verma,Faridan Verma,0003700328,370319.p0328@example.invalid,18,Nivarpur-09,01/12/2025,08/12/2025,Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. Nivika,137031000328
+Tanvika Rathore,Ritavan Rathore,0003700356,370319.p0356@example.invalid,45,Nivarpur-08,25/11/2025,27/11/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000356
+Meher Khan,Mihiran Khan,+91 00037-00022,370319.p0022@example.invalid,58,Nivarpur-22,10/08/2025,18/08/2025,Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao,137031000022

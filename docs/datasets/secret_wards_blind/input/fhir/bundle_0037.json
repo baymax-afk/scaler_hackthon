@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "37"
+  },
+  "timestamp": "2025-05-12T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:5acb7d3a-e345-5b3a-b05a-c17a0c75f5ac",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-05-12T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:9102f907-5f22-5b2b-8c1e-320be68f4b53"
+        },
+        "author": [
+          {
+            "display": "Dr. K. Rao"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:7e52a114-7ac6-540f-8bb1-e65aef75d761"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9102f907-5f22-5b2b-8c1e-320be68f4b53",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "अविराज वर्मा"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700549"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-27"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7e52a114-7ac6-540f-8bb1-e65aef75d761",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:9102f907-5f22-5b2b-8c1e-320be68f4b53"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDog4KSF4KS14KS/4KSw4KS+4KScIOCkteCksOCljeCkruCkvgpSZWxhdGl2ZTog4KSc4KS84KSw4KS14KWA4KSoIOCkteCksOCljeCkruCkvgpQaG9uZTogMDAwMzcwMDU0OQpJcm9uIGRlZmljaWVuY3kgYW5lbWlhIChENTAuOSk7IEhiIDkuOCBnL2RMOyBGZXJyb3VzIHN1bGZhdGUgNjAgbWcgT0Q7IERyLiBLLiBSYW8="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

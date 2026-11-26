@@ -1,0 +1,10 @@
+मरीज़: तन्विका अंसारी
+रिश्तेदार: ऋतवन अंसारी
+फ़ोन: 0003700812
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0812@example.invalid
+Village: Nivarpur-00
+Age: 67
+Admission: 2025-05-02
+Discharge: 2025-05-05

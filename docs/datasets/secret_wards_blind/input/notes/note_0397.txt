@@ -1,0 +1,10 @@
+मरीज़: अविराज जोशी
+रिश्तेदार: ज़रवीन जोशी
+फ़ोन: 0003700177
+शिकायत: चक्कर
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0177@example.invalid
+Village: Nivarpur-03
+Age: 76
+Admission: 2025-05-26
+Discharge: 2025-05-30

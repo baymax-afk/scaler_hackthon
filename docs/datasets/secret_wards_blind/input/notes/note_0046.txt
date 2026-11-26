@@ -1,0 +1,10 @@
+मरीज़: फ़रीदान नाइक
+रिश्तेदार: निविका नाइक
+फ़ोन: 0003700199
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0199@example.invalid
+Village: Nivarpur-25
+Age: 53
+Admission: 2025-05-17
+Discharge: 2025-05-20

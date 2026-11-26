@@ -1,0 +1,10 @@
+Patient: Ritavan Sen
+C/O Tanvika Sen
+C/O fever
+Phone: +91 00037-00047
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0047@example.invalid
+Village: Nivarpur-18
+Age: 59
+Admission: 2025-02-08
+Discharge: 2025-02-17

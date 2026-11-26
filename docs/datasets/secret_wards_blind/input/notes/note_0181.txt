@@ -1,0 +1,10 @@
+मरीज़: तन्विका साहा
+रिश्तेदार: ऋतवन साहा
+फ़ोन: 0003700620
+शिकायत: चक्कर
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0620@example.invalid
+Village: Nivarpur-11
+Age: 67
+Admission: 2025-09-18
+Discharge: 2025-09-20

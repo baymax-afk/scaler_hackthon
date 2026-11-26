@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "32"
+  },
+  "timestamp": "2025-04-29T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:3cca6931-da22-5cc2-82ed-9b4c4c0b6591",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-04-29T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:b630e95f-372a-5757-b336-db06da7f02e9"
+        },
+        "author": [
+          {
+            "display": "Dr. Nivika"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:07608bf0-13bb-5fe0-80a2-529763521d14"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b630e95f-372a-5757-b336-db06da7f02e9",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "Nivika Naik"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+91 00037-00088"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-01"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:07608bf0-13bb-5fe0-80a2-529763521d14",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:b630e95f-372a-5757-b336-db06da7f02e9"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDogTml2aWthIE5haWsKUmVsYXRpdmU6IEZhcmlkYW4gTmFpawpQaG9uZTogKzkxIDAwMDM3LTAwMDg4CkFjdXRlIHBoYXJ5bmdpdGlzIChKMDIuOSk7IFRlbXBlcmF0dXJlIDM4LjUgwrBDOyBQYXJhY2V0YW1vbCA1MDAgbWcgUFJOOyBEci4gTml2aWth"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

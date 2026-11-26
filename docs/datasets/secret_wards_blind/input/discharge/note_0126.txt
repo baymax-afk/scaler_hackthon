@@ -1,0 +1,10 @@
+Patient: Tanvika Joshi
+C/O Ritavan Joshi
+C/O fever
+Phone: +91 00037-00608
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0608@example.invalid
+Village: Nivarpur-28
+Age: 83
+Admission: 2025-10-28
+Discharge: 2025-10-30

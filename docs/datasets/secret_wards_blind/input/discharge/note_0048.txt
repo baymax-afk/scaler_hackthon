@@ -1,0 +1,10 @@
+Patient: Aaravi Saha
+C/O Reyansh Saha
+C/O fever
+Phone: +91 00037-00936
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0936@example.invalid
+Village: Nivarpur-08
+Age: 51
+Admission: 2025-07-14
+Discharge: 2025-07-19

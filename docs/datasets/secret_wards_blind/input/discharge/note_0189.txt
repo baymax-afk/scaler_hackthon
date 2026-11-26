@@ -1,0 +1,10 @@
+Patient: Ritavan Sen
+C/O Tanvika Sen
+C/O fever
+Phone: +91 00037-00479
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0479@example.invalid
+Village: Nivarpur-15
+Age: 19
+Admission: 2025-07-17
+Discharge: 2025-07-20

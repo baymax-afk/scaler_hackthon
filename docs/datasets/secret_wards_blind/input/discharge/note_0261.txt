@@ -1,0 +1,10 @@
+Patient: Nayuli Naik
+C/O Ishaan Naik
+C/O fever
+Phone: +91 00037-00842
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0842@example.invalid
+Village: Nivarpur-01
+Age: 45
+Admission: 2025-11-11
+Discharge: 2025-11-19

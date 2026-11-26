@@ -1,0 +1,11 @@
+Patient: Aviraj Saha
+C/O Zarveen Saha
+C/O fever
+Phone: +91 00037-00081
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Alternate patient name: Veyruna37031903
+Email: 370319.p0081@example.invalid
+Village: Nivarpur-23
+Age: 60
+Admission: 2025-02-14
+Discharge: 2025-02-16
