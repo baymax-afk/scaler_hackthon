@@ -1,0 +1,14 @@
+{
+  "schema": "phase-a-predictions/1",
+  "input_sha256": "6da0cb91cdd7190d8ff3194c035497cd04fe604b3bebf6fc59b2efb0121c86f0",
+  "variant": "open-example-partial-scan",
+  "units": {
+    "unit-open-0001": {
+      "record_id": "record-open-0001",
+      "locator": "doc",
+      "status": "input_limit",
+      "accepted": [[6, 16, "NAME"]],
+      "review": []
+    }
+  }
+}

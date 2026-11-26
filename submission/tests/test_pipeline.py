@@ -1,5 +1,6 @@
 import base64
 import csv
+from datetime import date
 import io
 import json
 from pathlib import Path
@@ -78,6 +79,20 @@ class FormatTest(unittest.TestCase):
         bundle["entry"][0].pop("fullUrl")
         with self.assertRaisesRegex(UnsafeInput, "unresolved_fhir_reference"):
             transform(json.dumps(bundle), ".json", Rewrite())
+
+    def test_fhir_birth_date_never_becomes_an_invalid_placeholder(self):
+        bundle = {"resourceType": "Bundle", "type": "document", "entry": [
+            {"fullUrl": "urn:uuid:22222222-2222-4222-8222-222222222222",
+             "resource": {"resourceType": "Patient", "id": "22222222-2222-4222-8222-222222222222",
+                          "birthDate": "1991-02-03"}}]}
+        try:
+            output, _ = transform(json.dumps(bundle), ".json", Rewrite())
+        except UnsafeInput as exc:
+            self.assertEqual(exc.args[0], "unsupported_fhir_date_transform")
+        else:
+            released = json.loads(output)["entry"][0]["resource"]["birthDate"]
+            date.fromisoformat(released)
+            self.assertNotEqual(released, "[DOB]")
 
 
 class ReleaseTest(unittest.TestCase):

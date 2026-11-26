@@ -13,6 +13,8 @@ from .detection import NAME, SourceUnit, detect, normalize_label
 
 UUID = re.compile(r"(?:urn:uuid:)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
 XHTML = "http://www.w3.org/1999/xhtml"
+FHIR_DATE_FIELDS = {"birthDate", "date", "effectiveDateTime", "issued", "timestamp",
+                    "start", "end", "recordedDate"}
 ET.register_namespace("", XHTML)
 
 
@@ -163,6 +165,10 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
     if isinstance(value, str):
         if resource and label == "div" and "text" in path:
             return narrative(value, rewrite, resource)
+        if resource and label in FHIR_DATE_FIELDS:
+            if rewrite.findings(value, label=label):
+                raise UnsafeInput("unsupported_fhir_date_transform")
+            return value
         if resource and label in {"fullUrl", "reference", "id", "system", "url", "resourceType"}:
             reference_id = value.partition("/")[2] if label == "reference" and "/" in value else value
             if not UUID.fullmatch(reference_id.lstrip("#")) and rewrite.findings(value):

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 GROUP_FIELDS = ("patient_group", "file_family", "template_family")
+OPTIONAL_GROUP_FIELDS = ("institution", "near_duplicate_family", "renderer_family")
 
 
 def split(raw, seed, holdout_percent):
@@ -25,12 +26,16 @@ def split(raw, seed, holdout_percent):
         return index
 
     for index, record in enumerate(records):
-        for field in GROUP_FIELDS:
+        for field in GROUP_FIELDS + OPTIONAL_GROUP_FIELDS:
             if field not in record:
+                if field in OPTIONAL_GROUP_FIELDS:
+                    continue
                 raise ValueError("missing_lineage")
             value = record[field]
             if not value:
                 if field == "patient_group" and record.get("channel") in {"filename", "header", "key", "metadata"}:
+                    continue
+                if field in OPTIONAL_GROUP_FIELDS and value is None:
                     continue
                 raise ValueError("missing_lineage")
             group = field, value
