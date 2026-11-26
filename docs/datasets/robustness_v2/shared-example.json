@@ -1,0 +1,34 @@
+{
+  "purpose": "Public synthetic handshake for original-source scoring",
+  "id": "demo01",
+  "record_locator": "doc",
+  "source_unit": {
+    "id": "demo01/0",
+    "text": "Relative: Aviren. Dr. Aviren checked pulse 74.",
+    "label": ""
+  },
+  "annotations": {
+    "gold": [
+      [
+        10,
+        16,
+        "RELATIVE"
+      ]
+    ],
+    "protect": [
+      [
+        22,
+        28
+      ],
+      [
+        43,
+        45
+      ]
+    ]
+  },
+  "incomplete_prediction": {
+    "status": "input_limit",
+    "accepted": [],
+    "review": []
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "dataset": "robustness_v2-open/1",
+  "open_splits": {
+    "development": {
+      "challenging_negative_pairs": 167,
+      "families": 11,
+      "fhir_schema": "hl7_r4_json_schema",
+      "files": 456,
+      "formats": {
+        "csv": 200,
+        "fhir": 200,
+        "json": 200,
+        "tsv": 150,
+        "txt": 250
+      },
+      "language": {
+        "en": 303,
+        "hi": 322,
+        "hi-Latn": 269,
+        "kn": 55,
+        "ta": 51
+      },
+      "linkable_cross_format_pairs": 57,
+      "manifest_sha256": "a851dae281ca341910235037e0b9c0340b53ef4cc6efc5eae4b60e3a8cdaf51b",
+      "patients": 943,
+      "records": 1000,
+      "scenarios": {
+        "ambiguous": 125,
+        "clinical_negatives": 125,
+        "combined": 100,
+        "institutions": 150,
+        "longitudinal": 125,
+        "messy": 125,
+        "multilingual": 125,
+        "nested": 125
+      },
+      "spans": {
+        "EMAIL": 1000,
+        "EVENT_DATE": 634,
+        "MRN": 834,
+        "NAME": 1140,
+        "PROTECT": 1448,
+        "RELATIVE": 183
+      }
+    },
+    "validation": {
+      "challenging_negative_pairs": 83,
+      "families": 6,
+      "fhir_schema": "hl7_r4_json_schema",
+      "files": 183,
+      "formats": {
+        "csv": 80,
+        "fhir": 80,
+        "json": 80,
+        "tsv": 60,
+        "txt": 100
+      },
+      "language": {
+        "en": 128,
+        "hi": 119,
+        "hi-Latn": 115,
+        "kn": 18,
+        "ta": 20
+      },
+      "linkable_cross_format_pairs": 21,
+      "manifest_sha256": "4e338ce5b494b21cdbb4cfb0f0dea0f716a150ed1b28713e25959f97aa6ca772",
+      "patients": 379,
+      "records": 400,
+      "scenarios": {
+        "ambiguous": 50,
+        "clinical_negatives": 50,
+        "combined": 40,
+        "institutions": 60,
+        "longitudinal": 50,
+        "messy": 50,
+        "multilingual": 50,
+        "nested": 50
+      },
+      "spans": {
+        "EMAIL": 480,
+        "EVENT_DATE": 320,
+        "MRN": 140,
+        "NAME": 454,
+        "PROTECT": 552,
+        "RELATIVE": 160
+      }
+    }
+  },
+  "rejection_fixtures": 9
+}

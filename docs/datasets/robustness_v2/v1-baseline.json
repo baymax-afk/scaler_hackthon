@@ -1,0 +1,262 @@
+{
+  "baseline_submission_revision": "095c854a4a2740e049e1db65a601a90a16e868a8",
+  "indexing_comparator_revision": "d25e72a",
+  "rejection_suite": {
+    "fixtures": 9,
+    "mismatches": {
+      "invalid-utf8.txt": {
+        "expected": "quarantined",
+        "observed": "sanitized"
+      }
+    }
+  },
+  "splits": {
+    "development": {
+      "indexing_comparator": {
+        "extra_index_entries": 0,
+        "indexed": 200,
+        "indexed_by_format": {
+          "csv": 0,
+          "fhir": 200,
+          "json": 0,
+          "tsv": 0,
+          "txt": 0
+        },
+        "sanitized_bytes_equal": true
+      },
+      "manifest_sha256": "a851dae281ca341910235037e0b9c0340b53ef4cc6efc5eae4b60e3a8cdaf51b",
+      "release": {
+        "by_format": {
+          "csv": {
+            "identifier_labels": 600,
+            "identifier_labels_in_locatable_units": 600,
+            "indexed": 200,
+            "literal_residuals": 399,
+            "protected_preserved": 200,
+            "protected_spans": 200,
+            "records": 200,
+            "records_in_exported_file": 200,
+            "records_locatable": 200
+          },
+          "fhir": {
+            "identifier_labels": 746,
+            "identifier_labels_in_locatable_units": 746,
+            "indexed": 200,
+            "literal_residuals": 46,
+            "protected_preserved": 100,
+            "protected_spans": 100,
+            "records": 200,
+            "records_in_exported_file": 200,
+            "records_locatable": 200
+          },
+          "json": {
+            "identifier_labels": 600,
+            "identifier_labels_in_locatable_units": 600,
+            "indexed": 200,
+            "literal_residuals": 398,
+            "protected_preserved": 300,
+            "protected_spans": 300,
+            "records": 200,
+            "records_in_exported_file": 200,
+            "records_locatable": 200
+          },
+          "tsv": {
+            "identifier_labels": 450,
+            "identifier_labels_in_locatable_units": 450,
+            "indexed": 150,
+            "literal_residuals": 298,
+            "protected_preserved": 150,
+            "protected_spans": 150,
+            "records": 150,
+            "records_in_exported_file": 150,
+            "records_locatable": 150
+          },
+          "txt": {
+            "identifier_labels": 761,
+            "identifier_labels_in_locatable_units": 761,
+            "indexed": 250,
+            "literal_residuals": 417,
+            "protected_preserved": 698,
+            "protected_spans": 698,
+            "records": 250,
+            "records_in_exported_file": 250,
+            "records_locatable": 250
+          }
+        },
+        "extra_index_entries": 0,
+        "files": {
+          "sanitized": 456
+        },
+        "linkage": {
+          "eligible_pairs": 57,
+          "false_pairs": 0,
+          "pair_precision": null,
+          "pair_recall": 0.0,
+          "true_pairs": 0
+        },
+        "scope": "literal annotated input surfaces at mapped output coordinates"
+      },
+      "span_replay": {
+        "annotation_status": "generated_unreviewed",
+        "by_category": {
+          "EMAIL": {
+            "annotated": 1000,
+            "exact_hits": 1000,
+            "incomplete": 0,
+            "overlap_hits": 1000
+          },
+          "MRN": {
+            "annotated": 834,
+            "exact_hits": 200,
+            "incomplete": 0,
+            "overlap_hits": 200
+          },
+          "NAME": {
+            "annotated": 1140,
+            "exact_hits": 200,
+            "incomplete": 0,
+            "overlap_hits": 200
+          },
+          "RELATIVE": {
+            "annotated": 183,
+            "exact_hits": 100,
+            "incomplete": 0,
+            "overlap_hits": 100
+          }
+        },
+        "counts": {
+          "incomplete_units": 0,
+          "protected_overlaps": 0,
+          "protected_spans": 1448,
+          "units": 3846,
+          "units_with_review_candidates": 0
+        },
+        "overlap_semantics": "typed overlap per annotated span, without precision or FPR"
+      }
+    },
+    "validation": {
+      "indexing_comparator": {
+        "extra_index_entries": 0,
+        "indexed": 162,
+        "indexed_by_format": {
+          "csv": 0,
+          "fhir": 80,
+          "json": 0,
+          "tsv": 0,
+          "txt": 82
+        },
+        "sanitized_bytes_equal": true
+      },
+      "manifest_sha256": "4e338ce5b494b21cdbb4cfb0f0dea0f716a150ed1b28713e25959f97aa6ca772",
+      "release": {
+        "by_format": {
+          "csv": {
+            "identifier_labels": 240,
+            "identifier_labels_in_locatable_units": 240,
+            "indexed": 80,
+            "literal_residuals": 160,
+            "protected_preserved": 80,
+            "protected_spans": 80,
+            "records": 80,
+            "records_in_exported_file": 80,
+            "records_locatable": 80
+          },
+          "fhir": {
+            "identifier_labels": 340,
+            "identifier_labels_in_locatable_units": 340,
+            "indexed": 80,
+            "literal_residuals": 20,
+            "protected_preserved": 80,
+            "protected_spans": 80,
+            "records": 80,
+            "records_in_exported_file": 80,
+            "records_locatable": 80
+          },
+          "json": {
+            "identifier_labels": 240,
+            "identifier_labels_in_locatable_units": 240,
+            "indexed": 80,
+            "literal_residuals": 80,
+            "protected_preserved": 80,
+            "protected_spans": 80,
+            "records": 80,
+            "records_in_exported_file": 80,
+            "records_locatable": 80
+          },
+          "tsv": {
+            "identifier_labels": 180,
+            "identifier_labels_in_locatable_units": 180,
+            "indexed": 60,
+            "literal_residuals": 120,
+            "protected_preserved": 60,
+            "protected_spans": 60,
+            "records": 60,
+            "records_in_exported_file": 60,
+            "records_locatable": 60
+          },
+          "txt": {
+            "identifier_labels": 234,
+            "identifier_labels_in_locatable_units": 234,
+            "indexed": 100,
+            "literal_residuals": 77,
+            "protected_preserved": 252,
+            "protected_spans": 252,
+            "records": 100,
+            "records_in_exported_file": 100,
+            "records_locatable": 100
+          }
+        },
+        "extra_index_entries": 0,
+        "files": {
+          "sanitized": 183
+        },
+        "linkage": {
+          "eligible_pairs": 21,
+          "false_pairs": 0,
+          "pair_precision": null,
+          "pair_recall": 0.0,
+          "true_pairs": 0
+        },
+        "scope": "literal annotated input surfaces at mapped output coordinates"
+      },
+      "span_replay": {
+        "annotation_status": "generated_unreviewed",
+        "by_category": {
+          "EMAIL": {
+            "annotated": 480,
+            "exact_hits": 480,
+            "incomplete": 0,
+            "overlap_hits": 480
+          },
+          "MRN": {
+            "annotated": 140,
+            "exact_hits": 80,
+            "incomplete": 0,
+            "overlap_hits": 80
+          },
+          "NAME": {
+            "annotated": 454,
+            "exact_hits": 101,
+            "incomplete": 0,
+            "overlap_hits": 103
+          },
+          "RELATIVE": {
+            "annotated": 160,
+            "exact_hits": 0,
+            "incomplete": 0,
+            "overlap_hits": 0
+          }
+        },
+        "counts": {
+          "incomplete_units": 0,
+          "protected_overlaps": 0,
+          "protected_spans": 552,
+          "units": 1540,
+          "units_with_review_candidates": 0
+        },
+        "overlap_semantics": "typed overlap per annotated span, without precision or FPR"
+      }
+    }
+  },
+  "status": "open_generated_preliminary"
+}
