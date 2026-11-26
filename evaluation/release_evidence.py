@@ -1,5 +1,5 @@
 """Independent release reconciliation and conservative occurrence alignment."""
-from collections import Counter
+from collections import Counter, defaultdict
 from difflib import SequenceMatcher
 import json
 from pathlib import PurePosixPath
@@ -16,12 +16,7 @@ REDACTION_MARKER = re.compile(
 def reconcile(release, expected):
     report = json.loads((release / "report.json").read_bytes())
     entries = report["files"]
-    if len({row["input_sha256"] for row in entries}) != len(entries):
-        raise ValueError("duplicate_report_entry")
-    if len(set(expected.values())) != len(expected):
-        raise ValueError("ambiguous_input_digest")
-    by_hash = {row["input_sha256"]: row for row in entries}
-    if by_hash.keys() != set(expected.values()):
+    if Counter(row["input_sha256"] for row in entries) != Counter(expected.values()):
         raise ValueError("unmatched_report_file")
     sanitized = release / "sanitized"
     if not sanitized.is_dir() or sanitized.is_symlink():
@@ -57,7 +52,33 @@ def reconcile(release, expected):
                           ("files_quarantined", statuses["quarantined"])):
         if key in counts and counts[key] != observed:
             raise ValueError("incorrect_report_total")
-    return {relative: by_hash[digest] for relative, digest in expected.items()}
+    return join_by_hash(entries, expected)
+
+
+def join_by_hash(entries, expected):
+    paths_by_hash = defaultdict(list)
+    entries_by_hash = defaultdict(list)
+    for relative, digest in expected.items():
+        paths_by_hash[digest].append(relative)
+    for entry in entries:
+        entries_by_hash[entry["input_sha256"]].append(entry)
+
+    joined = {}
+    for digest, paths in paths_by_hash.items():
+        rows = entries_by_hash[digest]
+        reported_paths = {entry["output"]: entry for entry in rows if entry["output"]}
+        known_paths = set()
+        for relative in paths:
+            target = "sanitized/" + relative
+            if target in reported_paths:
+                joined[relative] = reported_paths[target]
+                known_paths.add(target)
+        remaining_paths = [relative for relative in paths if relative not in joined]
+        remaining_rows = [entry for entry in rows if entry["output"] not in known_paths]
+        if len(remaining_rows) > 1 and not all(entry == remaining_rows[0] for entry in remaining_rows):
+            raise ValueError("ambiguous_input_digest")
+        joined.update(zip(remaining_paths, remaining_rows, strict=True))
+    return joined
 
 
 def alignment(original, rendered, *, reverse=False):

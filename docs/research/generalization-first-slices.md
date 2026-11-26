@@ -39,3 +39,5 @@ python3 -B evaluation/evaluate.py predict "$scratch/units.json" > "$scratch/pred
 python3 -B evaluation/robustness_v2.py score "$dataset/development" "$scratch/units.json" "$scratch/predictions.json"
 python3 -B evaluation/robustness_v2.py release "$dataset/development" "$scratch/release"
 ```
+
+[Source-derived role follow-up](generalization-role-followup.md) documents the later prediction extension and field-role challenge.

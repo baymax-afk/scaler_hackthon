@@ -52,7 +52,9 @@ def table_units(relative, raw, delimiter):
 def structured_label(label, fields, resource, contact_system):
     if resource in {"Patient", "RelatedPerson"}:
         if "name" in fields and label in {"text", "given", "family"}:
-            return "relative name" if resource == "RelatedPerson" or "contact" in fields else "patient name"
+            if resource == "RelatedPerson":
+                return "related person name"
+            return "contact name" if "contact" in fields else "patient name"
         if "telecom" in fields and label == "value":
             return {"phone": "phone", "email": "email"}.get(contact_system, label)
         if "identifier" in fields and label == "value":
@@ -94,8 +96,9 @@ def json_units(relative, value, path="", fields=(), resource="", label="", conta
             yield from json_units(relative, item, path + "/" + str(index), fields, resource,
                                   label, contact_system, unit_of_measure, depth + 1)
     elif isinstance(value, str) or type(value) in {int, Decimal}:
-        yield unit(relative, "content", path or "doc", str(value),
-                   label=structured_label(label, fields, resource, contact_system),
+        source_label = structured_label(label, fields, resource, contact_system)
+        yield unit(relative, "content", path or "doc", str(value), label=source_label,
+                   section="fhir" if resource and source_label in {"contact name", "related person name"} else "",
                    unit_of_measure=unit_of_measure)
 
 

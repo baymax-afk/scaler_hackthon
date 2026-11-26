@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "docs/datasets/robustness_v2")]
 from generate import FORMATS, SCENARIOS, VERSION
 from evaluation.matching import overlap_matches
+from evaluation.role_metrics import RoleMetrics
 from evaluation.release_evidence import OccurrenceAlignment, reconcile
 from evaluation.source_inventory import annotated_source_id, source_inventory
 
@@ -250,6 +251,7 @@ def score_spans(folder, raw, predictions):
             "prediction_join")
     totals = Counter()
     by_kind = defaultdict(Counter)
+    role_metrics = RoleMetrics()
     for key, result in predictions["units"].items():
         selected = {tuple(item) for item in result["accepted"]}
         require(all(0 <= s < e <= len(source[key]) for s, e, _ in selected), "invalid_prediction_span")
@@ -259,9 +261,12 @@ def score_spans(folder, raw, predictions):
         totals["units_with_review_candidates"] += bool(result["review"])
         if key not in truth_units:
             totals["unannotated_units"] += 1
-            continue
+        explicit_roles = {(span["start"], span["end"], span["kind"]): span["role"]
+                          for span in truth_units.get(key, ())
+                          if span["kind"] in IDENTIFIERS and span.get("role")}
+        role_metrics.update(explicit_roles, selected, result)
         gold = defaultdict(set)
-        for span in truth_units[key]:
+        for span in truth_units.get(key, ()):
             start, end, kind = span["start"], span["end"], span["kind"]
             require(0 <= start < end <= len(source[key]), "invalid_annotation_span")
             require(source[key][start:end] == span["surface"], "annotation_source_mismatch")
@@ -279,7 +284,7 @@ def score_spans(folder, raw, predictions):
             bucket["overlap_hits"] += overlap_matches(expected, observed) if not incomplete else 0
             bucket["incomplete"] += len(expected) if incomplete else 0
     return {"counts": totals, "by_category": by_kind, "annotation_status": "generated_unreviewed",
-            "role_prediction_support": "unavailable_in_phase_a_snapshots",
+            "role_metrics": role_metrics.summary(),
             "overlap_semantics": "one-to-one typed overlap without precision or FPR"}
 
 

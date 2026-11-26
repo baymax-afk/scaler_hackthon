@@ -110,6 +110,47 @@ class OpenCorpusTest(unittest.TestCase):
             self.assertEqual(result["exact_hits"], 0)
             self.assertEqual(result["overlap_hits"], 1)
 
+    def test_fhir_role_predictions_use_actor_paths_not_annotation_roles(self):
+        from evaluate import predict
+        with TemporaryDirectory() as directory:
+            folder = Path(directory)
+            (folder / "input").mkdir()
+            dump(folder / "input" / "actors.json", {
+                "resourceType": "Bundle", "type": "collection", "entry": [
+                    {"resource": {"resourceType": "Patient", "name": [{"text": "Mira Sen"}],
+                                  "contact": [{"name": {"text": "Mira Sen"}}]}},
+                    {"resource": {"resourceType": "RelatedPerson", "name": [{"text": "Mira Sen"}]}},
+                    {"resource": {"resourceType": "Practitioner", "name": [{"text": "Mira Sen"}]}},
+                ],
+            })
+            inputs = list(benchmark.source_units(folder))
+            snapshot = predict(json.dumps(inputs).encode())["units"]
+            actors = {unit["label"]: snapshot[unit["id"]]["accepted_roles"] for unit in inputs
+                      if unit["text"] == "Mira Sen"}
+            self.assertEqual(actors, {
+                "patient name": [(0, 8, "NAME", "patient")],
+                "contact name": [(0, 8, "NAME", "contact")],
+                "related person name": [(0, 8, "RELATIVE", "related_person")],
+                "clinician name": [],
+            })
+
+    def test_release_reconciles_identical_inputs_when_reported_paths_distinguish_them(self):
+        from evaluation.release_evidence import reconcile
+        with TemporaryDirectory() as directory:
+            release = Path(directory)
+            (release / "sanitized").mkdir()
+            expected = {"one.txt": "same", "two.txt": "same"}
+            for path in expected:
+                (release / "sanitized" / path).write_text("same")
+            rows = [{"input_sha256": "same", "output": "sanitized/" + path,
+                     "status": "sanitized"} for path in reversed(expected)]
+            dump(release / "report.json", {"files": rows})
+            self.assertEqual(reconcile(release, expected)["one.txt"]["output"], "sanitized/one.txt")
+            rows[1]["output"] = rows[0]["output"]
+            dump(release / "report.json", {"files": rows})
+            with self.assertRaisesRegex(ValueError, "reused_release_artifact"):
+                reconcile(release, expected)
+
     def test_incomplete_predictions_are_counted_without_accuracy_or_precision(self):
         with TemporaryDirectory() as directory:
             folder = Path(directory)

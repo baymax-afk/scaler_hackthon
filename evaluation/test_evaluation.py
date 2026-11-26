@@ -51,6 +51,26 @@ class EvaluationTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "invalid_unit_join"):
             score(raw, truth, predict(raw))
 
+    def test_exact_role_mismatch_is_separate_from_category_match(self):
+        raw = json.dumps([{"id": "a", "record_id": "fixture", "locator": "doc",
+                           "text": "Patient: Mira Sen"}]).encode()
+        expected = {"record_id": "fixture", "locator": "doc",
+                    "input_sha256": hashlib.sha256(raw).hexdigest(), "gold": [[9, 17, "NAME"]],
+                    "occurrences": [{"start": 9, "end": 17, "type": "NAME", "role": "patient",
+                                     "treatment": "REMOVE"}],
+                    "annotation_status": "adjudicated", "negative_scope": "exhaustive"}
+        snapshot = predict(raw)
+        result = score(raw, {"a": expected}, snapshot, strict_v2=True)
+        self.assertEqual(result["role_metrics"]["correct_exact"], 1)
+        snapshot["units"]["a"]["accepted_roles"] = [[9, 17, "NAME", "relative"]]
+        result = score(raw, {"a": expected}, snapshot, strict_v2=True)
+        self.assertEqual(result["precision"], 1.0)
+        self.assertEqual(result["role_metrics"]["wrong_role_exact"], 1)
+        snapshot["units"]["a"].pop("accepted_roles")
+        result = score(raw, {"a": expected}, snapshot, strict_v2=True)
+        self.assertEqual(result["role_metrics"]["exact_missing_role"], 1)
+        self.assertIsNone(result["role_metrics"]["known_role_recall"])
+
     def test_strict_v2_requires_all_join_fields(self):
         raw = json.dumps([{"id": "a", "text": "No identifiers"}]).encode()
         truth = keyed(b'[{"id":"a","gold":[],"protect":[]}]')

@@ -11,6 +11,7 @@ sys.path[:0] = [str(ROOT), str(ROOT / "submission")]
 from check_dev import all_text_under, norm, read_text
 from evaluation.linkage import score_linkage
 from evaluation.matching import overlap_matches
+from evaluation.role_metrics import RoleMetrics
 from rakshak.detection import SourceUnit, detect
 
 SOURCE_FIELDS = {"text", "label", "channel", "section", "unit_of_measure"}
@@ -34,6 +35,7 @@ def predict(raw):
             "status": result.error or "complete",
             "accepted": [(x.start, x.end, x.kind) for x in result.findings],
             "review": [(x.start, x.end, x.kind) for x in result.review],
+            "accepted_roles": [(x.start, x.end, x.kind, x.role) for x in result.findings if x.role],
             **{name: item[name] for name in JOIN_FIELDS if name in item},
         }
     return {"schema": "phase-a-predictions/1", "input_sha256": hashlib.sha256(raw).hexdigest(),
@@ -66,6 +68,7 @@ def score(raw, truth, snapshot, *, strict_v2=False):
     adjudicated_overlap = Counter()
     exhaustive_negative = Counter()
     known_positive = Counter()
+    role_metrics = RoleMetrics()
     for key, annotations in truth.items():
         if strict_v2 and ("input_sha256" not in annotations or
                           any(name not in annotations for name in JOIN_FIELDS)):
@@ -87,6 +90,10 @@ def score(raw, truth, snapshot, *, strict_v2=False):
             raise ValueError("invalid_span")
         if any(not (0 <= start < end <= length) for start, end in protected):
             raise ValueError("invalid_protected_span")
+        explicit_roles = {(item["start"], item["end"], item["type"]): item["role"]
+                          for item in annotations.get("occurrences", ())
+                          if item.get("role") and (item["start"], item["end"], item["type"]) in gold}
+        role_metrics.update(explicit_roles, actual, pred)
         unit_class = ("tp" if gold & actual else "fn") if gold else ("fp" if actual else "tn")
         counts[unit_class + "_units"] += 1
         matches = overlap_matches(gold, actual)
@@ -118,7 +125,7 @@ def score(raw, truth, snapshot, *, strict_v2=False):
             "counts": dict(counts), "precision": ratio(tp, tp + fp), "recall": ratio(tp, tp + fn),
             "f1": ratio(2 * tp, 2 * tp + fp + fn), "accuracy": ratio(utp + utn, len(truth)),
             "fpr": ratio(ufp, ufp + utn), "fnr": ratio(ufn, ufn + utp),
-            "overlap_counts": dict(overlap_counts),
+            "overlap_counts": dict(overlap_counts), "role_metrics": role_metrics.summary(),
             "overlap_precision": ratio(otp, otp + ofp),
             "overlap_recall": ratio(otp, otp + ofn),
             "overlap_f1": ratio(2 * otp, 2 * otp + ofp + ofn)}
