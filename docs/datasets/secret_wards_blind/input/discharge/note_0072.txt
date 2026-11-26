@@ -1,0 +1,10 @@
+Patient: Nivika Naik
+C/O Faridan Naik
+C/O fever
+Phone: +91 00037-00304
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0304@example.invalid
+Village: Nivarpur-14
+Age: 19
+Admission: 2025-05-02
+Discharge: 2025-05-08

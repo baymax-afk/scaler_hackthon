@@ -1,0 +1,10 @@
+मरीज़: नायुली वर्मा
+रिश्तेदार: ईशान वर्मा
+फ़ोन: 0003700218
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. Nayuli
+Email: 370319.p0218@example.invalid
+Village: Nivarpur-15
+Age: 18
+Admission: 2025-10-01
+Discharge: 2025-10-07

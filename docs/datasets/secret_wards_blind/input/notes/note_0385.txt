@@ -1,0 +1,10 @@
+मरीज़: निविका बिष्ट
+रिश्तेदार: फ़रीदान बिष्ट
+फ़ोन: 0003700748
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. Nivika
+Email: 370319.p0748@example.invalid
+Village: Nivarpur-23
+Age: 82
+Admission: 2025-03-22
+Discharge: 2025-03-27

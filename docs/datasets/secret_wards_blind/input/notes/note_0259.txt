@@ -1,0 +1,10 @@
+मरीज़: मेहर सेन
+रिश्तेदार: मिहिरन सेन
+फ़ोन: 0003700478
+शिकायत: चक्कर
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0478@example.invalid
+Village: Nivarpur-14
+Age: 24
+Admission: 2025-05-05
+Discharge: 2025-05-09

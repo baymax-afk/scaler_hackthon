@@ -1,0 +1,10 @@
+Patient: Ritavan Rathore
+C/O Tanvika Rathore
+C/O fever
+Phone: +91 00037-00467
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0467@example.invalid
+Village: Nivarpur-03
+Age: 64
+Admission: 2025-04-08
+Discharge: 2025-04-14

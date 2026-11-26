@@ -1,0 +1,10 @@
+मरीज़: ऋतवन बिष्ट
+रिश्तेदार: तन्विका बिष्ट
+फ़ोन: 0003700215
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0215@example.invalid
+Village: Nivarpur-12
+Age: 84
+Admission: 2025-01-16
+Discharge: 2025-01-21

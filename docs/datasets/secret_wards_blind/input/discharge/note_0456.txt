@@ -1,0 +1,10 @@
+Patient: Zarveen Joshi
+C/O Aviraj Joshi
+C/O fever
+Phone: +91 00037-00498
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0498@example.invalid
+Village: Nivarpur-05
+Age: 66
+Admission: 2025-08-11
+Discharge: 2025-08-20

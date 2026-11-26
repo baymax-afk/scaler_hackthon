@@ -1,0 +1,10 @@
+मरीज़: आरवी राठौर
+रिश्तेदार: रेयांश राठौर
+फ़ोन: 0003700024
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Aaravi
+Email: 370319.p0024@example.invalid
+Village: Nivarpur-24
+Age: 22
+Admission: 2025-04-10
+Discharge: 2025-04-14

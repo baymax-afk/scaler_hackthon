@@ -1,0 +1,10 @@
+Patient: Ritavan Sen
+C/O Tanvika Sen
+C/O fever
+Phone: +91 00037-00911
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0911@example.invalid
+Village: Nivarpur-12
+Age: 60
+Admission: 2025-03-07
+Discharge: 2025-03-10

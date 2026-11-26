@@ -1,0 +1,10 @@
+Patient: Zarveen Saha
+C/O Aviraj Saha
+C/O fever
+Phone: +91 00037-00402
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0402@example.invalid
+Village: Nivarpur-25
+Age: 31
+Admission: 2025-01-05
+Discharge: 2025-01-12

@@ -1,0 +1,10 @@
+Patient: Tanvika Ansari
+C/O Ritavan Ansari
+C/O fever
+Phone: +91 00037-00704
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0704@example.invalid
+Village: Nivarpur-08
+Age: 62
+Admission: 2025-02-26
+Discharge: 2025-02-27

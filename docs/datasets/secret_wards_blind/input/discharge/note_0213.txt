@@ -1,0 +1,10 @@
+Patient: Faridan Khan
+C/O Nivika Khan
+C/O fever
+Phone: +91 00037-00451
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0451@example.invalid
+Village: Nivarpur-16
+Age: 63
+Admission: 2025-08-09
+Discharge: 2025-08-16

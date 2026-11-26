@@ -1,0 +1,10 @@
+मरीज़: तन्विका वर्मा
+रिश्तेदार: ऋतवन वर्मा
+फ़ोन: 0003700548
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0548@example.invalid
+Village: Nivarpur-26
+Age: 47
+Admission: 2025-05-12
+Discharge: 2025-05-15

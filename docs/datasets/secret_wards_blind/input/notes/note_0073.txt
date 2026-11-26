@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन वर्मा
+रिश्तेदार: अविराज वर्मा
+फ़ोन: 0003700114
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Zarveen
+Email: 370319.p0114@example.invalid
+Village: Nivarpur-27
+Age: 58
+Admission: 2025-08-31
+Discharge: 2025-09-08

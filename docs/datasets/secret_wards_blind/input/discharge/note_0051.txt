@@ -1,0 +1,10 @@
+Patient: Faridan Verma
+C/O Nivika Verma
+C/O fever
+Phone: +91 00037-00007
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0007@example.invalid
+Village: Nivarpur-07
+Age: 80
+Admission: 2025-09-17
+Discharge: 2025-09-26

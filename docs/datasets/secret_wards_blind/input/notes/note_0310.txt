@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन सेन
+रिश्तेदार: अविराज सेन
+फ़ोन: 0003700474
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0474@example.invalid
+Village: Nivarpur-10
+Age: 70
+Admission: 2025-12-31
+Discharge: 2026-01-02

@@ -1,0 +1,10 @@
+Patient: Ritavan Ansari
+C/O Tanvika Ansari
+C/O fever
+Phone: +91 00037-00599
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0599@example.invalid
+Village: Nivarpur-19
+Age: 49
+Admission: 2025-07-08
+Discharge: 2025-07-10

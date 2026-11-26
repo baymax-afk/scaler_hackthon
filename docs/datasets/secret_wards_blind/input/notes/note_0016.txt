@@ -1,0 +1,10 @@
+मरीज़: अविराज राठौर
+रिश्तेदार: ज़रवीन राठौर
+फ़ोन: 0003700789
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0789@example.invalid
+Village: Nivarpur-06
+Age: 41
+Admission: 2025-07-13
+Discharge: 2025-07-22

@@ -1,0 +1,11 @@
+Patient: Aaravi Verma
+C/O Reyansh Verma
+C/O fever
+Phone: +91 00037-00432
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Alternate patient name: Veyruna37031900
+Email: 370319.p0432@example.invalid
+Village: Nivarpur-26
+Age: 38
+Admission: 2025-06-20
+Discharge: 2025-06-28

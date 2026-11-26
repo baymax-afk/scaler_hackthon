@@ -1,0 +1,10 @@
+Patient: Ishaan Sen
+C/O Nayuli Sen
+C/O fever
+Phone: +91 00037-00905
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0905@example.invalid
+Village: Nivarpur-06
+Age: 82
+Admission: 2025-11-03
+Discharge: 2025-11-10

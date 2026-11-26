@@ -1,0 +1,10 @@
+Patient: Meher Ansari
+C/O Mihiran Ansari
+C/O fever
+Phone: +91 00037-00274
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0274@example.invalid
+Village: Nivarpur-13
+Age: 39
+Admission: 2025-10-01
+Discharge: 2025-10-08

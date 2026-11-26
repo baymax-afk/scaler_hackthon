@@ -1,0 +1,10 @@
+मरीज़: नायुली ख़ान
+रिश्तेदार: ईशान ख़ान
+फ़ोन: 0003700554
+शिकायत: चक्कर
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0554@example.invalid
+Village: Nivarpur-03
+Age: 71
+Admission: 2025-01-19
+Discharge: 2025-01-26

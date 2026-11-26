@@ -1,0 +1,10 @@
+मरीज़: मिहिरन ख़ान
+रिश्तेदार: मेहर ख़ान
+फ़ोन: 0003700661
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0661@example.invalid
+Village: Nivarpur-23
+Age: 48
+Admission: 2025-11-12
+Discharge: 2025-11-16

@@ -1,0 +1,10 @@
+मरीज़: मिहिरन सेन
+रिश्तेदार: मेहर सेन
+फ़ोन: 0003700469
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0469@example.invalid
+Village: Nivarpur-05
+Age: 85
+Admission: 2025-04-26
+Discharge: 2025-04-29

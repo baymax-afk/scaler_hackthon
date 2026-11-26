@@ -1,0 +1,10 @@
+Patient: Reyansh Sen
+C/O Aaravi Sen
+C/O fever
+Phone: +91 00037-00795
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0795@example.invalid
+Village: Nivarpur-12
+Age: 25
+Admission: 2025-04-01
+Discharge: 2025-04-05

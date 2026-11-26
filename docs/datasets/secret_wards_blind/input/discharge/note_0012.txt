@@ -1,0 +1,10 @@
+Patient: Faridan Bisht
+C/O Nivika Bisht
+C/O fever
+Phone: +91 00037-00103
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0103@example.invalid
+Village: Nivarpur-16
+Age: 61
+Admission: 2025-04-28
+Discharge: 2025-05-02

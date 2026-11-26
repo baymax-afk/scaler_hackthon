@@ -1,0 +1,80 @@
+{
+  "resourceType": "Bundle",
+  "type": "document",
+  "identifier": {
+    "system": "https://example.invalid/bundles",
+    "value": "6"
+  },
+  "timestamp": "2025-11-08T09:00:00Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:d6a6e1e6-cdf2-5563-9334-2e0df78ab996",
+      "resource": {
+        "resourceType": "Composition",
+        "status": "final",
+        "type": {
+          "text": "Discharge summary"
+        },
+        "date": "2025-11-08T09:00:00Z",
+        "subject": {
+          "reference": "urn:uuid:8090be58-62ad-5403-b52a-040d26314d97"
+        },
+        "author": [
+          {
+            "display": "Dr. Aviraj"
+          }
+        ],
+        "title": "Clinical summary",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:e614c51b-2efe-59ac-9956-b52d00667f37"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8090be58-62ad-5403-b52a-040d26314d97",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "text": "Aviraj Joshi"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "0003700069"
+          }
+        ],
+        "address": [
+          {
+            "city": "Nivarpur-11"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e614c51b-2efe-59ac-9956-b52d00667f37",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "subject": {
+          "reference": "urn:uuid:8090be58-62ad-5403-b52a-040d26314d97"
+        },
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "UGF0aWVudDogQXZpcmFqIEpvc2hpClJlbGF0aXZlOiBaYXJ2ZWVuIEpvc2hpClBob25lOiAwMDAzNzAwMDY5ClR5cGUgMiBkaWFiZXRlcyAoRTExLjkpOyBIYkExYyA4LjQgJTsgTWV0Zm9ybWluIDUwMCBtZyAxLTAtMTsgRHIuIEF2aXJhag=="
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

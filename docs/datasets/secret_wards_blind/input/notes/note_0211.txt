@@ -1,0 +1,10 @@
+मरीज़: निविका जोशी
+रिश्तेदार: फ़रीदान जोशी
+फ़ोन: 0003700064
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0064@example.invalid
+Village: Nivarpur-06
+Age: 49
+Admission: 2025-11-04
+Discharge: 2025-11-05

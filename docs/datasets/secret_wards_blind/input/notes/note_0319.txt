@@ -1,0 +1,10 @@
+मरीज़: रेयांश नाइक
+रिश्तेदार: आरवी नाइक
+फ़ोन: 0003700303
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0303@example.invalid
+Village: Nivarpur-13
+Age: 40
+Admission: 2025-12-11
+Discharge: 2025-12-13

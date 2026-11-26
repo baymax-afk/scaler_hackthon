@@ -1,0 +1,10 @@
+Patient: Mihiran Rathore
+C/O Meher Rathore
+C/O fever
+Phone: +91 00037-00349
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0349@example.invalid
+Village: Nivarpur-01
+Age: 79
+Admission: 2025-07-18
+Discharge: 2025-07-19

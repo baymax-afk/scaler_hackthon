@@ -1,0 +1,10 @@
+Patient: Nayuli Khan
+C/O Ishaan Khan
+C/O fever
+Phone: +91 00037-00770
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0770@example.invalid
+Village: Nivarpur-16
+Age: 33
+Admission: 2025-12-19
+Discharge: 2025-12-24

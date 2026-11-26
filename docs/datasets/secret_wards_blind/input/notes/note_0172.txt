@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन अंसारी
+रिश्तेदार: अविराज अंसारी
+फ़ोन: 0003700486
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0486@example.invalid
+Village: Nivarpur-22
+Age: 41
+Admission: 2025-08-17
+Discharge: 2025-08-23

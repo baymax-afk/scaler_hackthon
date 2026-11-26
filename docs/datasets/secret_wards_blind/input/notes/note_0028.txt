@@ -1,0 +1,10 @@
+मरीज़: ईशान सेन
+रिश्तेदार: नायुली सेन
+फ़ोन: 0003700473
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0473@example.invalid
+Village: Nivarpur-09
+Age: 48
+Admission: 2025-08-27
+Discharge: 2025-09-03

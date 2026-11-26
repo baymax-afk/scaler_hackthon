@@ -1,0 +1,10 @@
+Patient: Nivika Naik
+C/O Faridan Naik
+C/O fever
+Phone: +91 00037-00412
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0412@example.invalid
+Village: Nivarpur-06
+Age: 76
+Admission: 2025-05-20
+Discharge: 2025-05-21

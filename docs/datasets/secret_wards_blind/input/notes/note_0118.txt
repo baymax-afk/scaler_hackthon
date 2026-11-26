@@ -1,0 +1,10 @@
+मरीज़: ईशान वर्मा
+रिश्तेदार: नायुली वर्मा
+फ़ोन: 0003700653
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0653@example.invalid
+Village: Nivarpur-15
+Age: 61
+Admission: 2025-09-23
+Discharge: 2025-09-29

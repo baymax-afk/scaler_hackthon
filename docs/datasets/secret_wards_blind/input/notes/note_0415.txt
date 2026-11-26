@@ -1,0 +1,10 @@
+मरीज़: ऋतवन सेन
+रिश्तेदार: तन्विका सेन
+फ़ोन: 0003700371
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0371@example.invalid
+Village: Nivarpur-23
+Age: 57
+Admission: 2025-11-10
+Discharge: 2025-11-14

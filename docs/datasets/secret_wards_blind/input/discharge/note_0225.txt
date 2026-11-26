@@ -1,0 +1,10 @@
+Patient: Meher Saha
+C/O Mihiran Saha
+C/O fever
+Phone: +91 00037-00838
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0838@example.invalid
+Village: Nivarpur-26
+Age: 51
+Admission: 2025-08-01
+Discharge: 2025-08-06

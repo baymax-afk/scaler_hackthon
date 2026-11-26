@@ -1,0 +1,10 @@
+Patient: Aaravi Saha
+C/O Reyansh Saha
+C/O fever
+Phone: +91 00037-00828
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0828@example.invalid
+Village: Nivarpur-16
+Age: 84
+Admission: 2025-08-20
+Discharge: 2025-08-29

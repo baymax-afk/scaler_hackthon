@@ -1,0 +1,10 @@
+Patient: Aviraj Bisht
+C/O Zarveen Bisht
+C/O fever
+Phone: +91 00037-00213
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0213@example.invalid
+Village: Nivarpur-10
+Age: 85
+Admission: 2025-04-06
+Discharge: 2025-04-12

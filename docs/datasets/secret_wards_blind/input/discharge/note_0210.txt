@@ -1,0 +1,10 @@
+Patient: Naik  Aviraj
+C/O Zarveen Naik
+C/O fever
+Phone: +91 00037-00309
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0309@example.invalid
+Village: Nivarpur-19
+Age: 53
+Admission: 2025-06-26
+Discharge: 2025-06-28

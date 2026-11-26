@@ -1,0 +1,10 @@
+मरीज़: नायुली बिष्ट
+रिश्तेदार: ईशान बिष्ट
+फ़ोन: 0003700746
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0746@example.invalid
+Village: Nivarpur-21
+Age: 58
+Admission: 2025-01-12
+Discharge: 2025-01-13

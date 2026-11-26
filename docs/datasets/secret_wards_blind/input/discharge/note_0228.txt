@@ -1,0 +1,10 @@
+Patient: Mihiran Khan
+C/O Meher Khan
+C/O fever
+Phone: +91 00037-00985
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0985@example.invalid
+Village: Nivarpur-28
+Age: 76
+Admission: 2025-12-19
+Discharge: 2025-12-25

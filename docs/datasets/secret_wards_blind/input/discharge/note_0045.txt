@@ -1,0 +1,10 @@
+Patient: Aviraj Bisht
+C/O Zarveen Bisht
+C/O fever
+Phone: +91 00037-00753
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0753@example.invalid
+Village: Nivarpur-28
+Age: 41
+Admission: 2025-06-14
+Discharge: 2025-06-23

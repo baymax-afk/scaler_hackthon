@@ -1,0 +1,10 @@
+मरीज़: अविराज बिष्ट
+रिश्तेदार: ज़रवीन बिष्ट
+फ़ोन: 0003700105
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0105@example.invalid
+Village: Nivarpur-18
+Age: 73
+Admission: 2025-05-31
+Discharge: 2025-06-01

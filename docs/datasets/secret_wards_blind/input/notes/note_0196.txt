@@ -1,0 +1,10 @@
+मरीज़: रेयांश साहा
+रिश्तेदार: आरवी साहा
+फ़ोन: 0003700399
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0399@example.invalid
+Village: Nivarpur-22
+Age: 40
+Admission: 2025-12-29
+Discharge: 2025-12-30

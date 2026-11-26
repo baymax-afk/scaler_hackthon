@@ -1,0 +1,10 @@
+Patient: Reyansh Joshi
+C/O Aaravi Joshi
+C/O fever
+Phone: +91 00037-00495
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0495@example.invalid
+Village: Nivarpur-02
+Age: 28
+Admission: 2025-09-20
+Discharge: 2025-09-27

@@ -1,0 +1,10 @@
+मरीज़: ऋतवन ख़ान
+रिश्तेदार: तन्विका ख़ान
+फ़ोन: 0003700563
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0563@example.invalid
+Village: Nivarpur-12
+Age: 34
+Admission: 2025-07-29
+Discharge: 2025-08-01

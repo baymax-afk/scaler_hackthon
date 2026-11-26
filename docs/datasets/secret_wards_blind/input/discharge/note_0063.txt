@@ -1,0 +1,10 @@
+Patient: Nayuli Saha
+C/O Ishaan Saha
+C/O fever
+Phone: +91 00037-00398
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0398@example.invalid
+Village: Nivarpur-21
+Age: 86
+Admission: 2025-01-19
+Discharge: 2025-01-25

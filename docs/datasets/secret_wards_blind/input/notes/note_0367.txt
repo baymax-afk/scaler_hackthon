@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन राठौर
+रिश्तेदार: अविराज राठौर
+फ़ोन: 0003700138
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0138@example.invalid
+Village: Nivarpur-22
+Age: 52
+Admission: 2025-06-12
+Discharge: 2025-06-21

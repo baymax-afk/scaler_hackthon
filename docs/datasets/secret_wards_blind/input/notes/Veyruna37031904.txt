@@ -1,0 +1,11 @@
+मरीज़: तन्विका सेन
+रिश्तेदार: ऋतवन सेन
+फ़ोन: 0003700692
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Alternate patient name: Veyruna37031904
+Email: 370319.p0692@example.invalid
+Village: Nivarpur-25
+Age: 19
+Admission: 2025-09-11
+Discharge: 2025-09-18

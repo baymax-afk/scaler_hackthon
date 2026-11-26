@@ -1,0 +1,10 @@
+मरीज़: मेहर ख़ान
+रिश्तेदार: मिहिरन ख़ान
+फ़ोन: 0003700562
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0562@example.invalid
+Village: Nivarpur-11
+Age: 73
+Admission: 2025-07-10
+Discharge: 2025-07-14

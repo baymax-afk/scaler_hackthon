@@ -1,0 +1,10 @@
+मरीज़: नायुली जोशी
+रिश्तेदार: ईशान जोशी
+फ़ोन: 0003700602
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0602@example.invalid
+Village: Nivarpur-22
+Age: 60
+Admission: 2025-06-23
+Discharge: 2025-06-26

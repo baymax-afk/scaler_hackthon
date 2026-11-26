@@ -1,0 +1,10 @@
+मरीज़: ईशान साहा
+रिश्तेदार: नायुली साहा
+फ़ोन: 0003700185
+शिकायत: चक्कर
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0185@example.invalid
+Village: Nivarpur-11
+Age: 64
+Admission: 2025-08-09
+Discharge: 2025-08-12

@@ -1,0 +1,10 @@
+मरीज़: ईशान सेन
+रिश्तेदार: नायुली सेन
+फ़ोन: 0003700149
+शिकायत: चक्कर
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0149@example.invalid
+Village: Nivarpur-04
+Age: 46
+Admission: 2025-10-03
+Discharge: 2025-10-10

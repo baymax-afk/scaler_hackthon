@@ -1,0 +1,10 @@
+Patient: Ishaan Saha
+C/O Nayuli Saha
+C/O fever
+Phone: +91 00037-00077
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0077@example.invalid
+Village: Nivarpur-19
+Age: 73
+Admission: 2025-04-25
+Discharge: 2025-05-01

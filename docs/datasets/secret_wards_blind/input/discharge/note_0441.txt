@@ -1,0 +1,10 @@
+Patient: Ritavan Bisht
+C/O Tanvika Bisht
+C/O fever
+Phone: +91 00037-00755
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0755@example.invalid
+Village: Nivarpur-01
+Age: 66
+Admission: 2025-05-14
+Discharge: 2025-05-17

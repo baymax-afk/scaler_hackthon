@@ -1,0 +1,10 @@
+Patient: Ishaan Joshi
+C/O Nayuli Joshi
+C/O fever
+Phone: +91 00037-00605
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0605@example.invalid
+Village: Nivarpur-25
+Age: 46
+Admission: 2025-09-25
+Discharge: 2025-10-03

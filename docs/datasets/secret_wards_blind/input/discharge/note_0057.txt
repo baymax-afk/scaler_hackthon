@@ -1,0 +1,10 @@
+Patient: Aaravi Verma
+C/O Reyansh Verma
+C/O fever
+Phone: +91 00037-00972
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0972@example.invalid
+Village: Nivarpur-15
+Age: 74
+Admission: 2025-01-20
+Discharge: 2025-01-22

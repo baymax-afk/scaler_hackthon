@@ -1,0 +1,11 @@
+मरीज़: मिहिरन नाइक
+रिश्तेदार: मेहर नाइक
+फ़ोन: 0003700949
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Alternate patient name: Veyruna37031901
+Email: 370319.p0949@example.invalid
+Village: Nivarpur-21
+Age: 43
+Admission: 2025-05-26
+Discharge: 2025-05-30

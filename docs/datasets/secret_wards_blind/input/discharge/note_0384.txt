@@ -1,0 +1,10 @@
+Patient: Tanvika Saha
+C/O Ritavan Saha
+C/O fever
+Phone: +91 00037-00404
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0404@example.invalid
+Village: Nivarpur-27
+Age: 48
+Admission: 2025-03-10
+Discharge: 2025-03-19

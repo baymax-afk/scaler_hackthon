@@ -1,0 +1,10 @@
+Patient: Aviraj Rathore
+C/O Zarveen Rathore
+C/O fever
+Phone: +91 00037-00357
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0357@example.invalid
+Village: Nivarpur-09
+Age: 72
+Admission: 2025-12-21
+Discharge: 2025-12-30

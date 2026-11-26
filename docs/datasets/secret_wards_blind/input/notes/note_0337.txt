@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन ख़ान
+रिश्तेदार: अविराज ख़ान
+फ़ोन: 0003700018
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0018@example.invalid
+Village: Nivarpur-18
+Age: 79
+Admission: 2025-10-07
+Discharge: 2025-10-16

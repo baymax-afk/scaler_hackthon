@@ -1,0 +1,10 @@
+Patient: Ishaan Verma
+C/O Nayuli Verma
+C/O fever
+Phone: +91 00037-00761
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0761@example.invalid
+Village: Nivarpur-07
+Age: 73
+Admission: 2025-01-11
+Discharge: 2025-01-20

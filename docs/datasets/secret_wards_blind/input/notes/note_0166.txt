@@ -1,0 +1,10 @@
+मरीज़: ऋतवन राठौर
+रिश्तेदार: तन्विका राठौर
+फ़ोन: 0003700359
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0359@example.invalid
+Village: Nivarpur-11
+Age: 36
+Admission: 2025-01-22
+Discharge: 2025-01-28

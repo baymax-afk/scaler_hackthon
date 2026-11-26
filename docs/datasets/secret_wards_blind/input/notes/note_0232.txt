@@ -1,0 +1,10 @@
+मरीज़: मेहर नाइक
+रिश्तेदार: मिहिरन नाइक
+फ़ोन: 0003700310
+शिकायत: चक्कर
+Iron deficiency anemia (D50.9); Hb 9.8 g/dL; Ferrous sulfate 60 mg OD; Dr. K. Rao
+Email: 370319.p0310@example.invalid
+Village: Nivarpur-20
+Age: 86
+Admission: 2025-06-25
+Discharge: 2025-06-29

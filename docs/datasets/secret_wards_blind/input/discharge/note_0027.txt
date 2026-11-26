@@ -1,0 +1,10 @@
+Patient: Mihiran Ansari
+C/O Meher Ansari
+C/O fever
+Phone: +91 00037-00589
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0589@example.invalid
+Village: Nivarpur-09
+Age: 49
+Admission: 2025-05-12
+Discharge: 2025-05-18

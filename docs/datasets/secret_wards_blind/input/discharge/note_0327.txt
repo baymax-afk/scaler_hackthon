@@ -1,0 +1,10 @@
+Patient: Tanvika Bisht
+C/O Ritavan Bisht
+C/O fever
+Phone: +91 00037-00428
+Type 2 diabetes (E11.9); HbA1c 8.4 %; Metformin 500 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0428@example.invalid
+Village: Nivarpur-22
+Age: 69
+Admission: 2025-05-21
+Discharge: 2025-05-28

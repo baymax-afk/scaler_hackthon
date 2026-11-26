@@ -1,0 +1,10 @@
+मरीज़: आरवी अंसारी
+रिश्तेदार: रेयांश अंसारी
+फ़ोन: 0003700264
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0264@example.invalid
+Village: Nivarpur-03
+Age: 27
+Admission: 2025-12-11
+Discharge: 2025-12-20

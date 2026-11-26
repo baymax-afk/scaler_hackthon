@@ -1,0 +1,10 @@
+Patient: Zarveen Rathore
+C/O Aviraj Rathore
+C/O fever
+Phone: +91 00037-00678
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. Zarveen
+Email: 370319.p0678@example.invalid
+Village: Nivarpur-11
+Age: 74
+Admission: 2025-04-14
+Discharge: 2025-04-21

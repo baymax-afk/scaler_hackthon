@@ -1,0 +1,10 @@
+मरीज़: ज़रवीन राठौर
+रिश्तेदार: अविराज राठौर
+फ़ोन: 0003700462
+शिकायत: चक्कर
+Hypertension (I10); BP 152/94 mmHg; Amlodipine 5 mg OD; Dr. K. Rao
+Email: 370319.p0462@example.invalid
+Village: Nivarpur-27
+Age: 50
+Admission: 2025-10-13
+Discharge: 2025-10-22

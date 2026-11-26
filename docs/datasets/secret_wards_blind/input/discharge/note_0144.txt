@@ -1,0 +1,10 @@
+Patient: Reyansh Naik
+C/O Aaravi Naik
+C/O fever
+Phone: +91 00037-00087
+Parkinson disease (G20); Pulse 62 bpm; Levodopa 100 mg 1-0-1; Dr. K. Rao
+Email: 370319.p0087@example.invalid
+Village: Nivarpur-00
+Age: 81
+Admission: 2025-07-02
+Discharge: 2025-07-03

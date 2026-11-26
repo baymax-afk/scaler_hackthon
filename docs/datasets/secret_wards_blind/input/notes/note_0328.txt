@@ -1,0 +1,10 @@
+मरीज़: आरवी नाइक
+रिश्तेदार: रेयांश नाइक
+फ़ोन: 0003700192
+शिकायत: चक्कर
+Acute pharyngitis (J02.9); Temperature 38.5 °C; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0192@example.invalid
+Village: Nivarpur-18
+Age: 70
+Admission: 2025-08-11
+Discharge: 2025-08-17

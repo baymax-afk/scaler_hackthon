@@ -1,0 +1,10 @@
+Patient: Aaravi Sen
+C/O Reyansh Sen
+C/O fever
+Phone: +91 00037-00036
+Hyponatremia (E87.1); Sodium 109 mmol/L; Paracetamol 500 mg PRN; Dr. K. Rao
+Email: 370319.p0036@example.invalid
+Village: Nivarpur-07
+Age: 54
+Admission: 2025-03-29
+Discharge: 2025-04-01
