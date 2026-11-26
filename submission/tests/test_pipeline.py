@@ -16,6 +16,38 @@ from rakshak.release import publish_release
 
 
 class DetectionTest(unittest.TestCase):
+    def test_patient_identity_fields_stop_before_demographics_in_both_scripts(self):
+        text = "मरीज़ का नाम: काव्या देव    आयु: 47 वर्ष   BP 120/80"
+        rendered, _ = transform(text, ".txt", Rewrite())
+        self.assertEqual(rendered, "मरीज़ का नाम: [NAME]    आयु: 47 वर्ष   BP 120/80")
+        table, _ = transform("Naam\tDawai\nNivara Dev\t5 mg\n", ".tsv", Rewrite())
+        self.assertEqual(table, "Naam\tDawai\n[NAME]\t5 mg\n")
+
+    def test_subject_of_measured_vital_preserves_value_and_other_roles(self):
+        source = ("Nivara Dev ka BP 120/80 mmHg. Review in 2 weeks.\n"
+                  "Dr. Nivara Dev ka BP 120/80 mmHg.\n"
+                  "Patient Education ka BP chart was discussed.\n"
+                  "left arm ka BP 118/78 mmHg.")
+        rendered, _ = transform(source, ".txt", Rewrite())
+        self.assertEqual(rendered, source.replace("Nivara Dev", "[NAME]", 1))
+
+    def test_name_boundary_keeps_separate_registration_id_private(self):
+        note = "मरीज़ का नाम: Nivara Dev   आयु: 45/F   Reg No: HZ-792   Dose: 5 mg"
+        actual, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(actual, "मरीज़ का नाम: [NAME]   आयु: 45/F   Reg No: [MRN]   Dose: 5 mg")
+
+    def test_honorific_and_measured_vital_support_an_abbreviated_patient_mention(self):
+        source = "Nivara ji ki blood pressure: 125/80.\nDr sahab ka BP 128/84."
+        rendered, _ = transform(source, ".txt", Rewrite())
+        self.assertEqual(rendered, "[NAME] ji ki blood pressure: 125/80.\nDr sahab ka BP 128/84.")
+
+    def test_generic_naam_under_medication_and_provider_keeps_its_source_role(self):
+        obj = {"medication": {"naam": "Ferrous Sulfate"}, "provider": {"naam": "Nivara Dev"},
+               "patient": {"naam": "Nivara Dev"}}
+        rendered, _ = transform(json.dumps(obj), ".json", Rewrite())
+        obj["patient"]["naam"] = "[NAME]"
+        self.assertEqual(json.loads(rendered), obj)
+
     def test_positions_are_original(self):
         source = "🩺 ९१२३\u200b४५६७८९; 650 mg"
         finding, = detect(SourceUnit(source)).findings
@@ -234,6 +266,45 @@ class ReleaseTest(unittest.TestCase):
             self.assertEqual((outgoing / "sanitized/note.txt").read_text(),
                              "Patient Name: [NAME] dose 0,5 mg\n"
                              "Patient Name: [NAME] (dose 5 mg)\nDr. Mira Sen reviewed.")
+
+    def test_masked_phone_cannot_escape_in_content_or_release_paths(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            incoming = root / "input"
+            incoming.mkdir()
+            masked = "98XXXXXX10"
+            (incoming / (masked + ".txt")).write_text(
+                "Callback requested at " + masked + ". Dose 10 mg. Lot AB98XXXXXX10Z.")
+            output = root / "release"
+            publish_release(incoming, output, b"fixture")
+            report = json.loads((output / "report.json").read_text())
+            self.assertEqual(report["counts"]["files_sanitized"], 1)
+            path = report["files"][0]["output"]
+            self.assertNotIn(masked, path)
+            self.assertEqual((output / path).read_text(),
+                             "Callback requested at [PHONE]. Dose 10 mg. Lot AB98XXXXXX10Z.")
+            self.assertNotIn(masked, (output / "records.jsonl").read_text())
+
+    def test_uninspected_attachment_link_is_withheld_from_entire_release(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            source.mkdir()
+            marker = "synthetic-download-token"
+            attachment = {"url": "https://files.example.invalid/" + marker,
+                          "contentType": "application/pdf"}
+            bundle = {"resourceType": "Bundle", "type": "collection", "entry": [
+                {"resource": {"resourceType": "DocumentReference",
+                              "content": [{"attachment": attachment}]}}]}
+            (source / "ref.json").write_text(json.dumps(bundle))
+            (source / "safe.txt").write_text("Dose 5 mg.")
+            out = root / "release"
+            counts = publish_release(source, out, b"fixture")
+            self.assertEqual((counts["files_sanitized"], counts["files_quarantined"]), (1, 1))
+            self.assertFalse((out / "sanitized/ref.json").exists())
+            self.assertEqual((out / "sanitized/safe.txt").read_text(), "Dose 5 mg.")
+            for artifact in (out / "report.json", out / "records.jsonl"):
+                self.assertNotIn(marker, artifact.read_text())
 
     def test_repeatable_and_quarantine_does_not_publish_raw(self):
         with TemporaryDirectory() as temporary:

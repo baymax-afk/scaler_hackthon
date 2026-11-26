@@ -21,7 +21,7 @@ def structured_label(path, label, resource, siblings=None):
     siblings = siblings or {}
     if not resource:
         leaf = normalize_label(label)
-        if leaf in {"name", "display", "display name"}:
+        if leaf in {"name", "naam", "display", "display name"}:
             containers = [normalize_label(part) for part in path[:-1] if isinstance(part, str)]
             if any(part in CLINICIAN_FIELDS for part in containers):
                 return "clinician name"
@@ -33,6 +33,8 @@ def structured_label(path, label, resource, siblings=None):
                     for key, value in siblings.items()
                 ):
                     return "patient display"
+            if leaf == "naam" and containers:
+                return ""
         return label
 
     if "identifier" in path and label == "value":

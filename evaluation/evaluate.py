@@ -169,6 +169,8 @@ def practice_audit(root, gold):
         outputs[metadata["input_sha256"]].append(metadata["output"])
     totals = Counter()
     by_script = defaultdict(Counter)
+    file_exposure = Counter(exported=0, patient_name_visible=0, patient_name_and_geography_visible=0)
+    geography = {"HOUSE", "LOCALITY", "VILLAGE", "LANDMARK", "PIN"}
     for _, file in sorted(gold["files"].items()):
         matches = outputs[file["sha256"]]
         if not matches:
@@ -178,6 +180,7 @@ def practice_audit(root, gold):
         totals["required_files_exported"] += file.get("expect") == "sanitize" and result is not None
         text = export_text(root, result)
         path = norm(result or "")
+        visible_types = set()
         for unit in file["units"].values():
             for annotation in unit["entities"]:
                 if annotation["type"] == "CANARY":
@@ -185,6 +188,8 @@ def practice_audit(root, gold):
                 phrase = norm(annotation["surface"])
                 haystack = path if annotation["channel"] == "filename" else text
                 visible = bool(phrase) and phrase in haystack
+                if visible:
+                    visible_types.add(annotation["type"])
                 totals["identifier_mentions"] += 1
                 totals["identifier_mentions_exported"] += result is not None
                 totals["visible_mentions"] += visible
@@ -193,9 +198,14 @@ def practice_audit(root, gold):
                 totals["input_clinical_probes"] += 1
                 totals["exported_clinical_probes"] += result is not None
                 totals["preserved_clinical_probes"] += bool(result) and norm(probe["text"]) in text
+        if result is not None:
+            file_exposure["exported"] += 1
+            if "PATIENT_NAME" in visible_types:
+                file_exposure["patient_name_visible"] += 1
+                file_exposure["patient_name_and_geography_visible"] += bool(geography & visible_types)
     if any(outputs.values()):
         raise ValueError("extra_report_entries")
-    return {"counts": dict(totals), "report_counts": report["counts"],
+    return {"counts": dict(totals), "file_exposure": dict(file_exposure), "report_counts": report["counts"],
             "by_script": {key: dict(value) for key, value in by_script.items()},
             "quarantine_reasons": dict(Counter(file["reason"] for file in report["files"] if file["output"] is None))}
 

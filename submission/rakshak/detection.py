@@ -6,7 +6,7 @@ import unicodedata
 from .source_context import normalize_label
 
 MAX_UNIT = 524288
-LOCALIZED_PATIENT_LABELS = ("mareez ka naam", "ರೋಗಿಯ ಹೆಸರು", "நோயாளியின் பெயர்")
+LOCALIZED_PATIENT_LABELS = ("मरीज़ का नाम", "मरीज़ का नाम", "mareez ka naam", "ರೋಗಿಯ ಹೆಸರು", "நோயாளியின் பெயர்")
 
 FIELD_GROUPS = {
     "NAME": "name|patient|patient name|patient full name|full name|first name|last name|surname|"
@@ -49,7 +49,7 @@ CHART_FIELD = re.compile(
 )
 CHART_VALUE = r"[^\W_]+(?:[-./][^\W_]+)*"
 CHART_CUE = re.compile(
-    r"(?im)^[ \t]*(?:chart|medical[ \t]+record)[ \t]*(?:\#|"
+    r"(?im)(?:^[ \t]*(?:chart|medical[ \t]+record)|\breg(?:istration)?)[ \t]*(?:\#|"
     r"(?:number|no\.?|id|identifier)[ \t]*[:=#])[ \t]*(" + CHART_VALUE +
     r")(?=$|[\s,;|])"
 )
@@ -57,7 +57,7 @@ LABEL_SPACES = str.maketrans({"\u00a0": " ", "\u202f": " "})
 DOSE = r"\d+(?:[.,]\d+)?[ \t]*(?:mg|mcg|[µμ]g|g|ml|iu|units?)\b"
 INLINE_CLINICAL = re.compile(
     r"(?:^|[ \t])(?:\([ \t]*)?(?:"
-    r"(?:(?:dose|dosage)(?:[ \t]*[:=][ \t]*|[ \t]+))?" + DOSE
+    r"(?:आयु|उम्र)[ \t]*[:：=][ \t]*\d|(?:(?:dose|dosage)(?:[ \t]*[:=][ \t]*|[ \t]+))?" + DOSE
     + r"|(?:(?:medication|rx)[ \t]*[:=][ \t]*[\w-]{1,40}|metformin|amlodipine|salbutamol)[ \t]+" + DOSE
     + r"|follow[ -]up[ \t]+in[ \t]+\d+[ \t]+(?:hours?|days?|weeks?|months?)\b)", re.I,
 )
@@ -69,7 +69,15 @@ VISITOR = re.compile(r"(?m)^\d{1,2}:\d{2}[ \t]+-[ \t]+(" + NAME +
                      r")[ \t]+\((?i:attendant|visitor|guardian)\b")
 RELATIVE = re.compile(r"\b([SDWC]/o)[ \t]+(" + NAME + r")(?=$|[\r\n;,|])", re.I)
 RELATIONSHIP_LINE = re.compile(r"(?:^|[\n;,|])[ \t]*[SDW]/o[ \t]+([^\r\n;,|]{1,160})(?=$|[\r\n;,|])", re.I)
-HONORIFIC = re.compile(r"(?im)^[ \t]{0,16}(" + NAME + r")[ \t]+(?:ji|sahab|didi)[ \t]+(?:aaye|aayi|ka|ki)\b")
+HONORIFIC = re.compile(r"(?im)^[ \t]{0,16}(" + NAME + r")[ \t]+(?:ji|sahab|didi|behenji)[ \t]+(?:aaye|aayi|ka|ki)\b")
+# Line-initial named subject plus a possessive and a measured vital.
+VITAL_SUBJECT = re.compile(
+    r"(?m)^[ \t]*([A-Z][a-zA-Z’'-]{1,29}(?:[ \t]+[A-Z][a-zA-Z’'-]{1,29}){1,3})"
+    r"[ \t]+(?i:ka|ki)[ \t]+(?i:BP|blood pressure)[ \t]*[:=]?[ \t]*"
+    r"\d{2,3}[ \t]*/[ \t]*\d{2,3}(?!\d)"
+)
+VITAL_NONPERSON = {"dr", "doctor", "nurse", "prof", "left", "right", "arm", "leg", "patient",
+                   "ward", "blood", "supine", "standing", "sitting", "upper", "lower"}
 INLINE_PHONE = re.compile(r"(?i)\b(?:phone|mob|mobile)[ \t]{1,8}((?:\+91[ -]?)?\d{5}[ -]?\d{5})(?!\d)")
 INLINE_RELATIVE = re.compile(r"(?i)\b([SDW]/o)[ \t]+(" + NAME + r")\.(?=[ \t]+(?:Phone|Mob|Mobile)\b)")
 COMPLAINT = re.compile(r"(?:^|[ \t])(?:fever|cough|pain|vomiting|weakness|headache|dizziness|chakkar|"
@@ -87,6 +95,7 @@ SHAPES = (
     ("MRN", re.compile(r"(?<![a-z0-9])(?:UHID|MRN|IPD|OPD|SNJ|JJH|ADM|DHH)[- /]?[0-9]{3,12}(?:[-/][0-9]{3,12})?(?![a-z0-9])", re.I)),
     ("ABHA", re.compile(r"(?<![a-z0-9])[0-9]{2}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}(?![a-z0-9])", re.I)),
     ("AADHAAR", re.compile(r"(?<![a-z0-9])(?:[0-9]{4}[ -]?[0-9]{4}|[xX*]{4}[ -]?[xX*]{4})[ -]?[0-9]{4}(?![a-z0-9])", re.I)),
+    ("PHONE", re.compile(r"(?<![^\W_])(?:\+91[ -]?)?[6-9][0-9][x*]{6}[0-9]{2}(?![^\W_])", re.I)),
     ("PHONE", re.compile(r"(?<![a-z0-9])(?:\+91[ -]?|0)?[6-9][0-9]{4}[ -]?[0-9]{5}(?![a-z0-9])", re.I)),
 )
 NUMERIC = {"PHONE", "AADHAAR", "ABHA"}
@@ -173,6 +182,8 @@ def detect(unit: SourceUnit) -> DetectionResult:
     if not typed and unit.channel == "content":
         value = source.strip()
         start = len(source) - len(source.lstrip())
+        if label == "naam" and person_name(value):
+            return DetectionResult((Finding(start, start + len(value), "NAME", .94, "name_field"),))
         if PATIENT_ROLE_FIELD.fullmatch(label) and person_name(value):
             return DetectionResult((Finding(start, start + len(value), "NAME", .94,
                                             "patient_field_context", "patient"),))
@@ -207,7 +218,12 @@ def detect(unit: SourceUnit) -> DetectionResult:
                                     "local_label", EXPLICIT_NAME_ROLES.get(inline_label)))
     for pattern, kind in ((HONORIFIC, "NAME"), (INLINE_PHONE, "PHONE")):
         for match in pattern.finditer(source):
+            if kind == "NAME" and VITAL_NONPERSON.intersection(match[1].casefold().replace(".", "").split()):
+                continue
             accepted.append(Finding(*match.span(1), kind, .90, "local_role"))
+    for match in VITAL_SUBJECT.finditer(label_view):
+        if not VITAL_NONPERSON.intersection(match[1].casefold().split()):
+            accepted.append(Finding(*match.span(1), "NAME", .88, "vital_subject", "patient"))
     for match in CHART_CUE.finditer(label_view):
         if chart_number(match[1]):
             accepted.append(Finding(*match.span(1), "MRN", .94, "chart_context"))

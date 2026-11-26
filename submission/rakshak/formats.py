@@ -136,6 +136,9 @@ def walk(value, rewrite, path=(), label="", unit="", resource="", siblings=None,
     if len(path) > 80:
         raise UnsafeInput("json_depth_limit")
     if isinstance(value, dict):
+        # A link can grant access to the unsanitized document behind it.
+        if resource and "url" in value and ("contentType" in value or label == "attachment"):
+            raise UnsafeInput("uninspected_attachment_url")
         if resource and "data" in value and "contentType" in value and ({"size", "hash"} & value.keys()):
             raise UnsafeInput("unsupported_attachment_integrity_metadata")
         result = {}

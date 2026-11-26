@@ -1,13 +1,32 @@
 import hashlib
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 
-from evaluate import keyed, predict, score
+from evaluate import keyed, practice_audit, predict, score
 from splits import split
 
 
 class EvaluationTest(unittest.TestCase):
+    def test_practice_counts_files_with_joint_exposure_once(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "sanitized").mkdir()
+            path = "sanitized/note.txt"
+            (root / path).write_text("Fictional Name visited Example Village")
+            (root / "report.json").write_text(json.dumps({"counts": {}, "files": [
+                {"input_sha256": "one", "output": path},
+                {"input_sha256": "two", "output": None, "reason": "invalid_input"}]}))
+            entities = [{"type": kind, "surface": value, "script": "latin", "channel": "content"}
+                        for kind, value in (("PATIENT_NAME", "Fictional Name"),
+                                            ("VILLAGE", "Example Village"))]
+            units = {key: {"entities": entities} for key in ("one", "two")}
+            truth = {"files": {key: {"sha256": key, "units": units} for key in ("one", "two")}}
+            exposure = practice_audit(root, truth)["file_exposure"]
+            self.assertEqual(exposure, {"exported": 1, "patient_name_visible": 1,
+                                        "patient_name_and_geography_visible": 1})
+
     def test_open_v2_example_keeps_roles_and_incomplete_join_explicit(self):
         fixture = Path(__file__).resolve().parents[1] / "docs/datasets/robustness_v2/open_example"
         raw = (fixture / "inputs.json").read_bytes()

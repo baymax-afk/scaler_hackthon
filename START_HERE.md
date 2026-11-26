@@ -242,3 +242,18 @@ Do it in this order. Each step is measurable with `check_dev.py`.
 | how we keep the ranking fair | [docs/FAIRNESS.md](docs/FAIRNESS.md) |
 | what goes in the 2-page Project Brief PDF | [docs/PROJECT_BRIEF.md](docs/PROJECT_BRIEF.md) |
 | quick answers | [docs/FAQ.md](docs/FAQ.md) |
+
+## Run this team's submission
+
+From this checkout, build the runtime in a fresh directory. The resulting directory is the root to use for the judged repository. Its explicit file list excludes datasets, evaluator truth, local caches and Git metadata.
+
+```sh
+work=$(mktemp -d)
+python3 prepare_submission.py "$work/team"
+python3 check_submission.py --repo "$work/team" --run
+RAKSHA_SECRET=practice python3 "$work/team/main.py" --input dev/input --output "$work/release"
+python3 validate_output.py --input dev/input --output "$work/release"
+python3 check_dev.py --output "$work/release"
+```
+
+The practice key above is public test data. The organizer supplies the actual release secret. Add the team-reviewed two-page project brief PDF to the judged checkout before final delivery. The private scoring sandbox and final GitHub submission are separate from this local rehearsal.
