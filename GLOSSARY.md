@@ -11,6 +11,9 @@ An individual who received care and may be represented by several **Patient Reco
 A row, structured entry, or document about a **Patient**. One patient can have many records across registrations, visits, prescriptions, and other exports.
 _Avoid_: Patient, file
 
+**Scoring Unit**:
+A **Patient Record** or a file-level channel, such as a header or filename, that the evaluator checks for identifying information.
+
 **Direct Identifier**:
 Information that directly identifies a **Patient** or associated person, such as a full name, phone number, or government-assigned identifier.
 
@@ -27,6 +30,9 @@ The assignment of **Patient Records** from different patients to the same **Pati
 **Missed Link**:
 A failure to group **Patient Records** that available evidence identifies as belonging to the same **Patient**.
 
+**Linkage Abstention**:
+A decision to leave a **Patient Record** without a **Patient Pseudonym** because the identity evidence is insufficient.
+
 **Clinical Utility**:
 The value of a **Research Release** for analysis, including intact clinical observations, accurate time intervals, and representative coverage of the input.
 
@@ -36,6 +42,9 @@ _Avoid_: Anonymous dataset
 
 **Quarantined File**:
 An input file excluded from the **Research Release** because it could not be processed safely.
+
+**Suppression**:
+Withholding data from the **Research Release** under its privacy policy.
 
 **Canary**:
 A synthetic identity deliberately placed in the inputs to verify whether identifying information escapes during processing or in a **Research Release**.
