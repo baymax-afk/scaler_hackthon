@@ -76,6 +76,20 @@ class EvaluationTest(unittest.TestCase):
         self.assertIsNone(result["fpr"])
         self.assertIsNone(result["accuracy"])
 
+    def test_strict_does_not_count_unreviewed_predictions_as_false_positives(self):
+        raw = json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
+                           "text": "Mira and Alia"}]).encode()
+        truth = keyed(json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
+                                  "input_sha256": hashlib.sha256(raw).hexdigest(),
+                                  "gold": [[0, 4, "NAME"]], "negative_scope": "partial",
+                                  "annotation_status": "adjudicated"}]).encode())
+        snapshot = predict(raw)
+        snapshot["units"]["a"]["accepted"] = [[0, 4, "NAME"], [9, 13, "NAME"]]
+        result = score(raw, truth, snapshot, strict_v2=True)
+        self.assertIsNone(result["precision"])
+        self.assertEqual(result["known_positive_recall"], 1.0)
+        self.assertEqual(result["unjudged_exact_predictions"], 1)
+
     def test_exact_and_overlap_scores_separate_boundary_errors(self):
         raw = json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
                            "text": "abcdefghij"}]).encode()
@@ -83,7 +97,8 @@ class EvaluationTest(unittest.TestCase):
         truth = keyed(json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
                                   "input_sha256": digest, "gold": [[0, 4, "NAME"],
                                                                     [5, 9, "NAME"]],
-                                  "protect": [], "annotation_status": "adjudicated"}]).encode())
+                                  "protect": [], "annotation_status": "adjudicated",
+                                  "negative_scope": "exhaustive"}]).encode())
         snapshot = predict(raw)
         snapshot["units"]["a"]["accepted"] = [[1, 5, "NAME"], [6, 9, "NAME"]]
         result = score(raw, truth, snapshot, strict_v2=True)
