@@ -1,6 +1,7 @@
 """Create a deterministic, reconciled de-identification output."""
 from collections import Counter
 from hashlib import file_digest
+from decimal import Decimal
 import hmac
 import json
 from pathlib import Path
@@ -10,9 +11,10 @@ import sys
 import tempfile
 import time
 
-from .formats import Rewrite, UnsafeInput, decode, transform
+from .formats import (Rewrite, UnsafeInput, decode, transform, encode_json, unique_pairs,
+                      invalid_constant, value_at, assign_at, PLACEHOLDERS)
 from .detection import SourceUnit, detect
-from .linkage import resolve_linkage
+from .linkage import resolve_linkage, text_target
 import csv
 
 MAX_FILE = 16 * 1024 * 1024
@@ -33,7 +35,7 @@ def output_location(relative, secret):
     return relative.with_name("file_" + token + relative.suffix.lower())
 
 
-def apply_pseudonyms(path, changes):
+def apply_table_pseudonyms(path, changes):
     delimiter = "\t" if path.suffix.lower() == ".tsv" else ","
     # The temporary file never contains raw data and is removed with the stage on failure.
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="",
@@ -45,10 +47,42 @@ def apply_pseudonyms(path, changes):
             for index, row in enumerate(reader):
                 if index in changes:
                     column, patient = changes[index]
+                    if row[column].strip() not in PLACEHOLDERS:
+                        raise UnsafeInput("invalid_link_target")
                     row[column] = patient
                 writer.writerow(row)
         replacement = Path(staged.name)
     replacement.replace(path)
+
+
+def apply_pseudonyms(path, changes):
+    """Modify only verified redaction placeholders inside staged artifacts."""
+    kinds = {target[0] for target, _ in changes}
+    if kinds == {"table"}:
+        apply_table_pseudonyms(path, {target[1]: (target[2], patient) for target, patient in changes})
+        return
+    if kinds == {"json"}:
+        document = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=unique_pairs,
+                              parse_float=Decimal, parse_constant=invalid_constant)
+        for target, patient in changes:
+            value = value_at(document, target[1])
+            if not isinstance(value, str) or value.strip() not in PLACEHOLDERS:
+                raise UnsafeInput("invalid_link_target")
+            assign_at(document, target[1], patient)
+        path.write_text(encode_json(document) + "\n", encoding="utf-8")
+        return
+    if kinds == {"text"} and len(changes) == 1:
+        target, patient = changes[0]
+        # Read and write without newline conversion: the locator is based on
+        # the exact sanitized bytes and must preserve input line structure.
+        text = path.read_bytes().decode("utf-8")
+        span = text_target(text, target[1], target[2])
+        if span is None:
+            raise UnsafeInput("invalid_link_target")
+        start, end = span
+        path.write_bytes((text[:start] + patient + text[end:]).encode("utf-8"))
+        return
+    raise UnsafeInput("invalid_link_target")
 
 
 def build_release(input_path, output, secret):
@@ -62,6 +96,7 @@ def build_release(input_path, output, secret):
     used_dirs = set()
     records = {}
     evidence = {}
+    targets = {}
     for file in sorted(input_path.rglob("*")):
         if file.is_symlink():
             raise UnsafeInput("input_symlink")
@@ -107,17 +142,17 @@ def build_release(input_path, output, secret):
             records[key] = locator in rewrite.generalized
             if locator in rewrite.row_evidence:
                 evidence[key] = rewrite.row_evidence[locator]
+                targets[key] = rewrite.link_targets[locator]
         counts["records_processed"] += len(locators)
-        counts["records_generalized"] += len(rewrite.generalized)
+        counts["records_generalized"] += len(rewrite.generalized.intersection(locators))
         counts["files_sanitized"] += 1
         entities.update(rewrite.entities)
     linked = resolve_linkage(evidence, secret)
-    # Rewrite only already-sanitized table cells. No original identifier is reopened.
+    # Rewrite only already-sanitized placeholders. No original identifier is reopened.
     by_file = {}
     for key, patient in linked.items():
-        path, locator = key
-        row = int(locator.split(":", 1)[1])
-        by_file.setdefault(path, {})[row] = (evidence[key].column, patient)
+        path, _ = key
+        by_file.setdefault(path, []).append((targets[key], patient))
     for path, changes in by_file.items():
         apply_pseudonyms(output / path, changes)
     counts["records_linked"] = len(linked)

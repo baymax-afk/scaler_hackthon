@@ -3,6 +3,7 @@ import base64
 import binascii
 from collections import Counter
 import csv
+from datetime import date
 from decimal import Decimal
 import io
 import json
@@ -10,14 +11,15 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 
-from .detection import FIELDS, NAME, SourceUnit, detect
+from .detection import FIELDS, NAME, PATIENT_ROLE_FIELD, CHART_FIELD, SourceUnit, detect
 from .source_context import normalize_label, source_section, structured_label
-from .linkage import row_evidence
-from .quasi import generalize_row
+from .linkage import row_evidence, json_evidence, text_evidence, text_target
+from .quasi import generalize_row, generalize_json_record
 
 
 UUID = re.compile(r"(?:urn:uuid:)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
 XHTML = "http://www.w3.org/1999/xhtml"
+FHIR_BIRTH_DATE = re.compile(r"([0-9]{4})(?:-([0-9]{2})(?:-([0-9]{2}))?)?\Z")
 FHIR_DATE_FIELDS = {"birthDate", "date", "effectiveDateTime", "issued", "timestamp",
                     "start", "end", "recordedDate"}
 ET.register_namespace("", XHTML)
@@ -49,7 +51,10 @@ class Rewrite:
         self.entities = []
         self.secret = secret
         self.row_evidence = {}
+        self.link_targets = {}
         self.generalized = set()
+        self.fhir_patient_targets = set()
+        self.fhir_patient_names = set()
 
     def findings(self, text, **context):
         result = detect(SourceUnit(text, **context))
@@ -89,7 +94,9 @@ def table(text, extension, rewrite):
             renamed[index] = candidate
     if len(set(renamed)) < len(set(header)):
         raise UnsafeInput("header_collision")
-    patient_table = any(normalize_label(label) in FIELDS or
+    patient_table = any(PATIENT_ROLE_FIELD.fullmatch(normalize_label(label)) or
+                        CHART_FIELD.fullmatch(normalize_label(label)) or
+                        normalize_label(label) in FIELDS or
                         normalize_label(label) in PERSON_NAME_FIELDS or
                         normalize_label(label) in PATIENT_FIELDS or
                         normalize_label(label).startswith("patient ") or
@@ -117,6 +124,7 @@ def table(text, extension, rewrite):
                     "[MRN]", "[AADHAAR]", "[ABHA]", "[PHONE]", "[EMAIL]", "[PAN]", "[INSURANCE_ID]"
                 }:
                     rewrite.row_evidence[locator] = evidence
+                    rewrite.link_targets[locator] = ("table", index, evidence.column)
         writer.writerow(cleaned)
     return destination.getvalue(), locations
 
@@ -168,7 +176,8 @@ def patient_evidence(record):
         if isinstance(value, dict):
             for key, item in value.items():
                 label = normalize_label(key)
-                if label in PATIENT_FIELDS or label.startswith("patient "):
+                if (label in PATIENT_FIELDS or label.startswith("patient ") or
+                        PATIENT_ROLE_FIELD.fullmatch(label) or CHART_FIELD.fullmatch(label)):
                     roles.add("patient")
                 if label in PERSON_NAME_FIELDS and isinstance(item, str) and item.strip():
                     roles.add("person_name")
@@ -220,6 +229,72 @@ def json_record_locators(document):
     return ["doc"] if patient_evidence(document) else []
 
 
+PLACEHOLDERS = frozenset({"[MRN]", "[AADHAAR]", "[ABHA]", "[PHONE]", "[EMAIL]", "[PAN]", "[INSURANCE_ID]"})
+
+
+def value_at(document, path):
+    for part in path:
+        document = document[part]
+    return document
+
+
+def assign_at(document, path, value):
+    if not path:
+        raise ValueError("empty_value_path")
+    value_at(document, path[:-1])[path[-1]] = value
+
+
+def record_path(document, locator):
+    """Resolve the parser's own RFC 6901 pointer, retaining integer indices."""
+    if locator == "doc":
+        return ()
+    path = []
+    for part in locator.lstrip("/").split("/"):
+        key = part.replace("~1", "/").replace("~0", "~")
+        key = int(key) if isinstance(document, list) else key
+        document = document[key]
+        path.append(key)
+    return tuple(path)
+
+
+def collect_json_evidence(document, result, locations, rewrite):
+    for locator in locations:
+        if rewrite.secret is None:
+            continue
+        candidate = json_evidence(document, locator, rewrite.secret)
+        if candidate is None:
+            continue
+        evidence, path = candidate
+        try:
+            value = value_at(result, path)
+        except (KeyError, IndexError, TypeError):
+            continue  # A renamed key or ambiguous original path must abstain.
+        if isinstance(value, str) and value.strip() in PLACEHOLDERS:
+            rewrite.row_evidence[locator] = evidence
+            rewrite.link_targets[locator] = ("json", path)
+
+
+def generalize_json(document, result, locations, rewrite):
+    for locator in locations:
+        path = record_path(document, locator)
+        for relative, replacement in generalize_json_record(value_at(document, path)).items():
+            field_path = (*path, *relative)
+            try:
+                original = value_at(document, field_path)
+                cleaned = value_at(result, field_path)
+            except (KeyError, IndexError, TypeError):
+                continue
+            if not isinstance(cleaned, str):
+                continue
+            # Do not undo unrelated redaction (e.g. apparent phone in an age
+            # field). Quasi transforms may replace their own typed redaction.
+            if cleaned != original and cleaned.strip() not in {"[PIN]", "[ADDRESS]"}:
+                continue
+            if cleaned != replacement:
+                assign_at(result, field_path, replacement)
+                rewrite.generalized.add(locator)
+
+
 def json_document(text, rewrite):
     document = json.loads(text, object_pairs_hook=unique_pairs,
                           parse_float=Decimal, parse_constant=invalid_constant)
@@ -228,6 +303,8 @@ def json_document(text, rewrite):
         return fhir_document(document, rewrite)
     locations = json_record_locators(document)
     result = walk(document, rewrite)
+    generalize_json(document, result, locations, rewrite)
+    collect_json_evidence(document, result, locations, rewrite)
     return encode_json(result) + "\n", locations
 
 
@@ -267,6 +344,34 @@ def walk(value, rewrite, path=(), label="", unit="", resource="", siblings=None,
     if isinstance(value, str):
         if resource and label == "div" and "text" in path:
             return narrative(value, rewrite, resource, name_surfaces)
+        # Reference.display is a patient name only when its adjacent reference
+        # actually points to the single Patient in this Bundle. Do not redact
+        # clinician, hospital, coding or non-patient display names.
+        if resource and label == "display" and isinstance(siblings, dict):
+            reference = siblings.get("reference")
+            if isinstance(reference, str) and reference in rewrite.fhir_patient_targets:
+                return rewrite.text(value, label="patient name")
+        if resource in {"Patient", "RelatedPerson"} and label == "valueString" and "extension" in path:
+            url = (siblings or {}).get("url", "")
+            role = normalize_label(url.rstrip("/").rsplit("/", 1)[-1]) if isinstance(url, str) else ""
+            if role in {"mother name", "mothers name", "father name", "fathers name", "guardian name",
+                        "relative name", "husband name", "wife name", "caregiver name"}:
+                return rewrite.text(value, label="relative name")
+        if resource in {"Patient", "RelatedPerson"} and label == "birthDate":
+            # FHIR R4 date explicitly permits year precision. Do not publish a
+            # typed placeholder or invent a birth date: retain only the true year.
+            match = FHIR_BIRTH_DATE.fullmatch(value)
+            if not match:
+                raise UnsafeInput("invalid_fhir_birth_date")
+            year, month, day = match.groups()
+            try:
+                date(int(year), int(month or 1), int(day or 1))
+            except ValueError:
+                raise UnsafeInput("invalid_fhir_birth_date") from None
+            if month:
+                rewrite.findings(value, label="birthDate")
+                rewrite.generalized.add("doc")
+            return year
         if resource and label in FHIR_DATE_FIELDS:
             if rewrite.findings(value, label=label):
                 raise UnsafeInput("unsupported_fhir_date_transform")
@@ -295,7 +400,20 @@ def attachment(value, content_type, rewrite):
         decoded = base64.b64decode(value, validate=True)
     except (binascii.Error, ValueError):
         raise UnsafeInput("invalid_attachment") from None
-    cleaned = rewrite.text(decode(decoded))
+    text = decode(decoded)
+    # A referral's explicit subject may lack a normal Patient: label.
+    # Only use the same Bundle's structured full Patient name as corroboration.
+    def referral(match):
+        name = match[1].rstrip()
+        if normalized_name(name) not in rewrite.fhir_patient_names:
+            return match[0]
+        end = match.start(1) - match.start() + len(name)
+        start = match.start(1) - match.start()
+        return match[0][:start] + rewrite.text(name, label="patient name") + match[0][end:]
+    if rewrite.fhir_patient_names:
+        text = re.sub(r"(?im)^[ \t]*referral[ \t]*:[ \t]*([^,;()\r\n]{2,160})(?=[,;(])",
+                      referral, text)
+    cleaned = rewrite.text(text)
     return base64.b64encode(cleaned.encode("utf-8")).decode("ascii")
 
 
@@ -406,9 +524,24 @@ def fhir_document(bundle, rewrite):
     if patients > 1:
         raise UnsafeInput("multiple_fhir_patients")
     validate_references(entries)
-    result = walk(bundle, rewrite, resource="Bundle")
+    for entry in entries:
+        patient = entry["resource"]
+        if patient["resourceType"] != "Patient":
+            continue
+        if isinstance(entry.get("fullUrl"), str):
+            rewrite.fhir_patient_targets.add(entry["fullUrl"])
+        if isinstance(patient.get("id"), str):
+            rewrite.fhir_patient_targets.add("Patient/" + patient["id"])
+        rewrite.fhir_patient_names.update(human_name_surfaces(patient))
+    try:
+        result = walk(bundle, rewrite, resource="Bundle")
+    finally:
+        rewrite.fhir_patient_names.clear()
+        rewrite.fhir_patient_targets.clear()
     validate_references(result.get("entry", []))
-    return encode_json(result) + "\n", ["doc"] if patients else []
+    locations = ["doc"] if patients else []
+    collect_json_evidence(bundle, result, locations, rewrite)
+    return encode_json(result) + "\n", locations
 
 
 def transform(text, extension, rewrite):
@@ -418,5 +551,12 @@ def transform(text, extension, rewrite):
         return json_document(text, rewrite)
     if extension == ".txt":
         result = rewrite.text(text)
+        if rewrite.secret is not None:
+            candidate = text_evidence(text, rewrite.secret)
+            if candidate is not None:
+                evidence, line, kind = candidate
+                if text_target(result, line, kind) is not None:
+                    rewrite.row_evidence["doc"] = evidence
+                    rewrite.link_targets["doc"] = ("text", line, kind)
         return result, ["doc"]
     raise UnsafeInput("unsupported_format")

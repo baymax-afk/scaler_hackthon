@@ -44,11 +44,23 @@ LABELED = re.compile(
     r"((?:[^\r\n;,|]|(?<=\d),(?=\d)){1,160})", re.I,
 )
 NAME_INITIALS = re.compile(r",[ \t]*(?:[^\W\d_]\.[ \t]*){1,3}(?=$|[\r\n;,|])")
-PATIENT_ROLE_FIELD = re.compile(r"(?:patient display|(?:referred|admitted|enrolled) (?:subject|person)|beneficiary)(?: name)?")
+PATIENT_ROLE_FIELD = re.compile(
+    r"(?:patient display|(?:referred|admitted|enrolled) (?:subject|person)|beneficiary"
+    r"|(?:sample|referral|transfer|admission|service) recipient|(?:transfer|referral|admission) for"
+    r"|ward chart|on behalf of)(?: name)?"
+)
+CONTACT_ROLE_FIELD = re.compile(r"(?:caller|contact person|family speaker|guardian speaker)(?: name)?")
 CHART_FIELD = re.compile(
     r"(?:medical record|patient (?:chart|record)|chart) (?:no|number|id|identifier|ref|reference)"
 )
+CHART_ALIAS_FIELD = re.compile(
+    r"(?:chart (?:anchor|key)|(?:claim|policy|insurance) member(?: (?:id|no|number))?"
+    r"|accession owner|local file|(?:handover|transfer) label|settlement)"
+)
 CHART_VALUE = r"[^\W_]+(?:[-./][^\W_]+)*"
+# Weak administrative aliases require the shape of a scoped record identifier,
+# not a solitary number, a short diagnosis code, or arbitrary prose.
+OPAQUE_CHART_VALUE = re.compile(r"[A-Za-z]{2,16}[-/][A-Za-z0-9]{4,32}(?:[-/][A-Za-z0-9]{1,16}){0,2}")
 CHART_CUE = re.compile(
     r"(?im)(?:^[ \t]*(?:chart|medical[ \t]+record)|\breg(?:istration)?)[ \t]*(?:\#|"
     r"(?:number|no\.?|id|identifier)[ \t]*[:=#])[ \t]*(" + CHART_VALUE +
@@ -135,6 +147,16 @@ ADDRESS_PIN = re.compile(r"(?<!\d)\d{6}(?!\d)[ \t]*$")
 CARE_ADDRESS_TAIL = re.compile(
     r"(?im)^[ \t]*address[ \t]*\(attendant\)[ \t]*:[ \t]*c/o[ \t]+[^,;\r\n]{1,160},[ \t]*([^,;\r\n]{1,160})"
 )
+FAMILY_INTRODUCTION = re.compile(
+    r"(?im)^[ \t]*(?:family|relative|guardian|caregiver)[ \t]*:[ \t]*I[ \t]+am[ \t]+"
+    r"([^\r\n]{1,140}?)\.[ \t]*I[ \t]+(?:came[ \t]+with|accompanied|brought)[ \t]+"
+    r"([^\r\n]{1,140}?)\.?[ \t]*(?=\r?$)"
+)
+SUBJECT_CUE = re.compile(r"(?im)^[ \t]*subject[ \t]*[:=][ \t]*([^\r\n]{1,140})")
+PATIENT_REVIEW_CONTEXT = re.compile(
+    r"(?im)^[ \t]*(?:prescription|medication|clinical|patient)[ \t]+(?:review|encounter|intake|record|note)[ \t]*(?=\r?$)"
+)
+CONTACT_CONTEXT = re.compile(r"(?im)^[ \t]*(?:reply[ -]to|patient[ \t]+contact|return[ \t]+contact)[ \t]*[:=]?[ \t]+\S")
 INLINE_JSON_PATIENT = re.compile(
     r'(?i)"(?:patient|patient_name|patient name)"\s*:\s*"([^"\r\n]{1,160})"'
 )
@@ -152,7 +174,8 @@ NULLS = {"", "-", "n/a", "na", "none", "unknown", "null", "not available", "reda
 SHAPES = (
     ("EMAIL", re.compile(r"(?<![\w.+-])[\w.+-]{1,64}@[\w-]{1,63}(?:\.[\w-]{1,63}){1,4}(?![\w.-])", re.I)),
     ("PAN", re.compile(r"(?<![a-z0-9])[A-Z]{5}[0-9]{4}[A-Z](?![a-z0-9])", re.I)),
-    ("MRN", re.compile(r"(?<![a-z0-9])(?:UHID|MRN|IPD|OPD|SNJ|JJH|ADM|DHH)[- /]?[0-9]{3,12}(?:[-/][0-9]{3,12})?(?![a-z0-9])", re.I)),
+    ("MRN", re.compile(r"(?<![a-z0-9])(?:UHID|MRN|IPD|OPD|SNJ|JJH|ADM|DHH)[- /]?"
+                       r"(?:[0-9]{2}[-/][0-9]{3,12}|[0-9]{3,12}(?:[-/][0-9]{3,12})?)(?![a-z0-9])", re.I)),
     ("ABHA", re.compile(r"(?<![a-z0-9])[0-9]{2}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}(?![a-z0-9])", re.I)),
     ("AADHAAR", re.compile(r"(?<![a-z0-9])(?:[0-9]{4}[ -]?[0-9]{4}|[xX*]{4}[ -]?[xX*]{4})[ -]?[0-9]{4}(?![a-z0-9])", re.I)),
     ("PHONE", re.compile(r"(?<![^\W_])(?:\+91[ -]?)?[6-9][0-9][x*]{6}[0-9]{2}(?![^\W_])", re.I)),
@@ -229,6 +252,21 @@ def person_name(value):
     return 2 <= len(words) <= 5 and all(map(name_word, words))
 
 
+NONPERSON_NAME_WORDS = VITAL_NONPERSON | {
+    "sample", "specimen", "laboratory", "lab", "chart", "dose", "dosage", "medicine",
+    "medication", "prescription", "review", "diagnosis", "pressure", "pulse", "blood",
+    "glucose", "temperature", "vital", "vitals", "signs", "status", "result", "test",
+    "function", "normal", "clinical", "assessment", "record", "count", "monitoring",
+    "report", "followup", "follow-up",
+}
+
+
+def contextual_name(value):
+    """Require name shape as well as a role; do not claim lexical identity."""
+    words = {word.strip(".,").casefold() for word in value.split()}
+    return person_name(value.translate(LABEL_SPACES)) and not words.intersection(NONPERSON_NAME_WORDS)
+
+
 def chart_number(value):
     return 3 <= len(value) <= 64 and any(char.isdecimal() for char in value)
 
@@ -249,11 +287,16 @@ def detect(unit: SourceUnit) -> DetectionResult:
         start = len(source) - len(source.lstrip())
         if label == "naam" and person_name(value):
             return DetectionResult((Finding(start, start + len(value), "NAME", .94, "name_field"),))
-        if PATIENT_ROLE_FIELD.fullmatch(label) and person_name(value):
+        if PATIENT_ROLE_FIELD.fullmatch(label) and contextual_name(value):
             return DetectionResult((Finding(start, start + len(value), "NAME", .94,
                                             "patient_field_context", "patient"),))
+        if CONTACT_ROLE_FIELD.fullmatch(label) and contextual_name(value):
+            return DetectionResult((Finding(start, start + len(value), "NAME", .92,
+                                            "contact_field_context", "contact"),))
         if CHART_FIELD.fullmatch(label) and chart_number(value) and re.fullmatch(CHART_VALUE, value):
             return DetectionResult((Finding(start, start + len(value), "MRN", .94, "chart_context"),))
+        if CHART_ALIAS_FIELD.fullmatch(label) and chart_number(value) and OPAQUE_CHART_VALUE.fullmatch(value):
+            return DetectionResult((Finding(start, start + len(value), "MRN", .92, "chart_alias_context"),))
     if typed and unit.channel in {"content", "metadata"}:
         value = source.strip()
         start = len(source) - len(source.lstrip())
@@ -299,6 +342,20 @@ def detect(unit: SourceUnit) -> DetectionResult:
             accepted.append(Finding(*match.span(1), "NAME", .91, "corroborated_subject", "patient"))
     for match in PAREN_RELATIVE.finditer(label_view):
         accepted.append(Finding(*match.span(1), "RELATIVE", .92, "relationship", "relative"))
+    for match in FAMILY_INTRODUCTION.finditer(label_view):
+        for index, kind, role in ((1, "RELATIVE", "relative"), (2, "NAME", "patient")):
+            value = match[index].rstrip()
+            if contextual_name(value):
+                accepted.append(Finding(match.start(index), match.start(index) + len(value),
+                                        kind, .92, "family_introduction", role))
+    # Subject is ambiguous by itself (clinical topic, specimen, etc.). Require
+    # both patient-document context and a return-contact cue.
+    if PATIENT_REVIEW_CONTEXT.search(label_view) and CONTACT_CONTEXT.search(label_view):
+        for match in SUBJECT_CUE.finditer(label_view):
+            value = identifier_prefix(match[1], "NAME")
+            if contextual_name(value):
+                accepted.append(Finding(match.start(1), match.start(1) + len(value),
+                                        "NAME", .91, "subject_context", "patient"))
     for match in INLINE_JSON_PATIENT.finditer(label_view):
         if person_name(match[1]):
             accepted.append(Finding(*match.span(1), "NAME", .90, "embedded_patient_field", "patient"))

@@ -1,14 +1,15 @@
-"""Conservative table-only identity linkage from typed source fields.
+"""Conservative identity linkage from typed table, JSON and text records.
 
-Collect evidence before redaction, retain it only after a row is exportable,
-then resolve the batch. The caller must replace the selected identifier cell
-(``RowEvidence.column``) with the returned pseudonym, and record the same token
-in records.jsonl. Raw identifiers, names, DOBs, ages, relative and locality
-values are never retained in evidence. Keys and evidence must not be logged.
+Collect evidence before redaction, retain it only after a record is exportable,
+then resolve the batch. The caller must replace the selected already-redacted
+identifier with the returned pseudonym and record the same token in records.jsonl.
+Raw identifiers, names, DOBs, ages, relative and locality values are never
+retained in evidence. Keys and evidence must not be logged.
 """
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date
+from urllib.parse import urlsplit
 import hmac
 import itertools
 import re
@@ -388,3 +389,242 @@ def resolve_linkage(records, secret):
         for j in sorted(group):
             output[keys[j]] = pseudonym
     return output
+
+
+# A record locator is output metadata; never derive it from arbitrary object
+# keys that might contain identifiers. Only known record-collection names and
+# canonical zero-based indices are accepted here, matching the safe interface.
+_JSON_COLLECTIONS = {'patients', 'visits', 'encounters', 'registrations', 'results', 'records',
+                     'patient records', 'clinical records', 'consultations', 'appointments'}
+_JSON_PATIENT_OBJECTS = {'patient', 'beneficiary'}
+_JSON_ID_OBJECTS = {'ids', 'identifiers', 'patient identifiers'}
+_JSON_CONTACT_OBJECTS = {'contact', 'patient contact'}
+_JSON_RELATIVE_OBJECTS = {'guardian', 'relative', 'related person'}
+_JSON_ADDRESS_OBJECTS = {'address', 'patient address'}
+_TEXT_LINE = re.compile(r"^[ \t]*([^\r\n:=#：]{1,64}?)[ \t]*[:：=#][ \t]*(.*?)[ \t]*$")
+_TEXT_CONTACT_LABELS = {'patient phone', 'patient mobile', 'patient email', 'mobile', 'mobile no', 'mobile number',
+                        'phone', 'phone number', 'फोन', 'फ़ोन', 'मोबाइल'}
+
+
+def _json_record(document, locator):
+    if isinstance(document, dict) and document.get('resourceType') == 'Bundle':
+        return None  # Handled by the separately validated FHIR adapter.
+    if locator == 'doc':
+        return (document, ()) if isinstance(document, dict) else None
+    if not isinstance(locator, str) or not locator.startswith('/'):
+        return None
+    parts = locator[1:].split('/')
+    if len(parts) == 1 and isinstance(document, list):
+        records, path, index = document, (), parts[0]
+    elif len(parts) == 2 and isinstance(document, dict):
+        key = parts[0].replace('~1', '/').replace('~0', '~')
+        if normalize_label(key) not in _JSON_COLLECTIONS:
+            return None
+        records, path, index = document.get(key), (key,), parts[1]
+    else:
+        return None
+    if not isinstance(records, list) or not re.fullmatch(r'0|[1-9][0-9]{0,8}', index):
+        return None
+    i = int(index)
+    if i >= len(records) or not isinstance(records[i], dict):
+        return None
+    return records[i], (*path, i)
+
+
+def json_evidence(document, locator, secret):
+    """Extract keyed evidence and an exact string replacement path from JSON.
+
+    Supports one FHIR Patient with an explicitly HL7-typed MR identifier, and
+    explicit fields of non-FHIR object records, known arrays, and
+    a single explicit patient object (with typed ID/contact/address/guardian
+    subobjects). Unknown containers, clinicians, notes, metadata, mixed
+    arrays and arbitrary keys are never searched. Only string identifiers can
+    be chosen for replacement; a numeric age can corroborate without changing
+    its original representation. The consumer MUST check the returned path
+    exists in the sanitized document and contains exactly a typed placeholder.
+    """
+    if isinstance(document, dict) and document.get('resourceType') == 'Bundle':
+        return _fhir_patient_evidence(document, secret) if locator == 'doc' else None
+    selected = _json_record(document, locator)
+    if selected is None:
+        return None
+    record, base = selected
+    labels, values, paths = [], [], []
+
+    def add(label, value, path):
+        kind = LABELS.get(normalize_label(label))
+        if kind is None:
+            return
+        # Numeric identity fields cannot carry a string pseudonym safely.
+        # Use a numeric age solely as a keyed clue; preserve the number on disk.
+        if kind == 'age' and type(value) is int:
+            value = str(value)
+        if not isinstance(value, str):
+            return
+        labels.append(label)
+        values.append(value)
+        paths.append(path)
+
+    def add_direct(obj, path, kinds=None):
+        for key, value in obj.items():
+            kind = LABELS.get(normalize_label(key))
+            if kind is not None and (kinds is None or kind in kinds):
+                add(key, value, (*path, key))
+
+    def patient_fields(obj, path):
+        add_direct(obj, path)
+        for key, value in obj.items():
+            if not isinstance(value, dict):
+                continue
+            label = normalize_label(key)
+            subpath = (*path, key)
+            if label in _JSON_ID_OBJECTS:
+                add_direct(value, subpath, ID_KINDS)
+            elif label in _JSON_CONTACT_OBJECTS:
+                add_direct(value, subpath, WEAK)
+            elif label in _JSON_ADDRESS_OBJECTS:
+                add_direct(value, subpath, {'village'})
+            elif label in _JSON_RELATIVE_OBJECTS:
+                for child, item in value.items():
+                    if LABELS.get(normalize_label(child)) in {'name', 'relative'}:
+                        add('relative name', item, (*subpath, child))
+
+    patient_fields(record, base)
+    patient_objects = [(key, value) for key, value in record.items()
+                       if normalize_label(key) in _JSON_PATIENT_OBJECTS and isinstance(value, dict)]
+    if len(patient_objects) > 1:
+        return None
+    if patient_objects:
+        key, obj = patient_objects[0]
+        patient_fields(obj, (*base, key))
+    evidence = row_evidence(labels, values, secret)
+    return (evidence, paths[evidence.column]) if evidence is not None else None
+
+
+def text_evidence(text, secret):
+    """Extract identity only from separate, explicit label/value lines.
+
+    Return (RowEvidence, zero-based line index, expected redaction kind), or
+    None. The whole-field value must satisfy the typed parser. No unlabelled
+    prose, free-text names, encounter IDs, or identifiers next to a clinical
+    number are parsed. Multiple conflicting same-kind fields already abstain
+    via row_evidence; additionally require the selected anchor line to be the
+    only line of its label kind to avoid ambiguous insertion.
+    """
+    labels, values, line_numbers = [], [], []
+    for index, line in enumerate(text.splitlines()):
+        match = _TEXT_LINE.fullmatch(line)
+        if not match:
+            continue
+        label = match[1].strip()
+        normalized = normalize_label(label)
+        kind = LABELS.get(normalized)
+        if kind is None or (kind in WEAK and normalized not in _TEXT_CONTACT_LABELS):
+            continue
+        if not match[2] or len(match[2]) > 256:
+            continue
+        labels.append(label)
+        values.append(match[2])
+        line_numbers.append(index)
+    evidence = row_evidence(labels, values, secret)
+    if evidence is None:
+        return None
+    kind = LABELS[normalize_label(labels[evidence.column])]
+    if sum(LABELS.get(normalize_label(label)) == kind for label in labels) != 1:
+        return None
+    return evidence, line_numbers[evidence.column], kind.upper()
+
+
+def text_target(cleaned_text, line_index, kind):
+    """Safely locate a sanitized exact typed placeholder on the original line.
+
+    Returns a code-point (start, end) span only if the typed line still has the
+    expected label role and exact placeholder as its whole value. No raw input
+    or source identifier is used. The caller must replace this validated span.
+    """
+    if type(line_index) is not int or line_index < 0 or kind.casefold() not in ID_KINDS:
+        return None
+    position = 0
+    for index, line in enumerate(cleaned_text.splitlines(keepends=True)):
+        if index == line_index:
+            match = _TEXT_LINE.fullmatch(line.rstrip('\r\n'))
+            expected = '[' + kind.upper() + ']'
+            if (match and LABELS.get(normalize_label(match[1].strip())) == kind.casefold()
+                    and match[2] == expected):
+                return position + match.start(2), position + match.end(2)
+            return None
+        position += len(line)
+    return None
+
+
+def _fhir_patient_evidence(bundle, secret):
+    """Only a unique Patient's HL7 MR identifier value; no resource IDs/refs."""
+    entries = bundle.get('entry')
+    if not isinstance(entries, list):
+        return None
+    patients = [(i, e['resource']) for i, e in enumerate(entries)
+                if isinstance(e, dict) and isinstance(e.get('resource'), dict)
+                and e['resource'].get('resourceType') == 'Patient']
+    if len(patients) != 1:
+        return None
+    index, patient = patients[0]
+    identifiers = patient.get('identifier')
+    if not isinstance(identifiers, list):
+        return None
+    labels, values, paths = [], [], []
+    base = ('entry', index, 'resource')
+    for i, identifier in enumerate(identifiers):
+        if not isinstance(identifier, dict) or not isinstance(identifier.get('value'), str):
+            continue
+        system = identifier.get('system')
+        if not isinstance(system, str) or len(system) > 256:
+            continue
+        try:
+            parsed = urlsplit(system)
+        except ValueError:
+            continue
+        if (parsed.scheme not in {'http', 'https'} or not parsed.netloc or parsed.query or parsed.fragment
+                or parsed.path.rstrip('/').rsplit('/', 1)[-1].casefold() not in {'uhid', 'mrn'}):
+            continue
+        kind = identifier.get('type', {})
+        coding = kind.get('coding') if isinstance(kind, dict) else None
+        if not isinstance(coding, list):
+            continue
+        typed = [c.get('code') for c in coding if isinstance(c, dict)
+                 and c.get('system') == 'http://terminology.hl7.org/CodeSystem/v2-0203']
+        if typed != ['MR']:
+            continue
+        labels.append('mrn'); values.append(identifier['value']); paths.append((*base, 'identifier', i, 'value'))
+    if len(labels) != 1:
+        return None
+    # An identifier-valued reference elsewhere could depend on the old value.
+    # Abstain instead of editing the resource identifier without coordinating
+    # its reference. Ignore Bundle.identifier (it describes the Bundle itself).
+    pending = [(entries, 0)]
+    while pending:
+        value, depth = pending.pop()
+        if depth > 80:
+            return None
+        if isinstance(value, dict):
+            if isinstance(value.get('identifier'), dict):
+                return None
+            pending.extend((v, depth + 1) for v in value.values() if isinstance(v, (dict, list)))
+        elif isinstance(value, list):
+            pending.extend((v, depth + 1) for v in value if isinstance(v, (dict, list)))
+    names = patient.get('name')
+    if isinstance(names, list):
+        for name in names:
+            if not isinstance(name, dict):
+                continue
+            if isinstance(name.get('text'), str):
+                labels.append('patient name'); values.append(name['text']); paths.append(())
+            given, family = name.get('given'), name.get('family')
+            if isinstance(given, list) and given and all(isinstance(v, str) for v in given) and isinstance(family, str):
+                labels.append('patient name'); values.append(' '.join([*given, family])); paths.append(())
+    for key, label in (('birthDate', 'dob'), ('gender', 'gender')):
+        if isinstance(patient.get(key), str):
+            labels.append(label); values.append(patient[key]); paths.append(())
+    evidence = row_evidence(labels, values, secret)
+    if evidence is None or not paths[evidence.column]:
+        return None
+    return evidence, paths[evidence.column]
