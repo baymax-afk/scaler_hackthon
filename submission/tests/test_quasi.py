@@ -1,8 +1,10 @@
 """Source-only component tests for structured quasi-identifier generalization."""
 
 import unittest
+from datetime import datetime
 
-from rakshak.quasi import generalize_row
+from rakshak.quasi import (generalize_json_record, generalize_row,
+                             patient_day_shift, shift_patient_date)
 
 
 class StructuredQuasiTests(unittest.TestCase):
@@ -73,7 +75,7 @@ class StructuredQuasiTests(unittest.TestCase):
         self.assertEqual(generalize_row(header, row), {8: "45-49"})
 
     def test_only_valid_exact_ages_are_changed(self):
-        for value in ("-1", "126", "47y", "47.5", "4-7", "N/A", "", "1e2", "²", "00 9", "999999"):
+        for value in ("-1", "126", "47mg", "47.5", "4-7", "N/A", "", "1e2", "²", "00 9", "999999"):
             with self.subTest(value=value):
                 self.assertEqual(generalize_row(["MRN", "Age"], ["MRN-42", value]), {})
 
@@ -96,6 +98,100 @@ class StructuredQuasiTests(unittest.TestCase):
         self.assertEqual(generalize_row(["MRN", "Age"], ["MRN-42", 47]), {})
         self.assertEqual(generalize_row(["MRN", "Age"], ["MRN-42", True]), {})
         self.assertEqual(generalize_row(["MRN", "Age"], ["", "47"]), {})
+
+
+    def test_combined_age_sex_and_year_units(self):
+        for label, value, expected in (
+            ("AgeSex", "52/M", "50-54/M"), ("Age/Gender", "52 Y / F", "50-54 Y / F"),
+            ("Age", "52 y", "50-54 y"), ("Age", "52yrs", "50-54yrs"),
+            ("Age", "52y", "50-54y"), ("आयु", "५२ वर्ष", "50-54 वर्ष"),
+            ("उम्र", "५२ साल/महिला", "50-54 साल/महिला"),
+        ):
+            with self.subTest(label=label, value=value):
+                self.assertEqual(generalize_row(["MRN", label], ["MRN-42", value]), {1: expected})
+                self.assertEqual(generalize_row(["MRN", label], ["MRN-42", expected]), {})
+        for v in ("52 days", "52 months", "52/MIN", "52/100", "52 mg", "52/M/F", "52 y dose"):
+            self.assertEqual(generalize_row(["MRN", "Age"], ["MRN-42", v]), {})
+
+    def test_json_explicit_nested_patient_string_fields(self):
+        record = {
+            "patient": {
+                "name": "Synthetic Patient", "ageSex": "52/M",
+                "address": {"village": "Synthetic Village", "district": "Sample District", "PIN": "560100"},
+                "demographics": {"age": "52 yrs"},
+                "other": {"age": "52"},
+            },
+            "specimen": {"age": "52", "pin": "560100"},
+            "doctor": {"age": "52", "PIN": "560100"},
+        }
+        self.assertEqual(generalize_json_record(record), {
+            ("patient", "ageSex"): "50-54/M",
+            ("patient", "address", "village"): "Sample District",
+            ("patient", "address", "PIN"): "560***",
+            ("patient", "demographics", "age"): "50-54 yrs",
+        })
+
+    def test_json_explicit_patient_root_and_typed_values(self):
+        record = {"patientId": 17, "age": 52, "PIN": 560100, "patient age": "52Y",
+                  "village": "Synthetic Village", "district": "Sample District",
+                  "dose": "50 mg", "length of stay": 7, "date": "2026-10-01", "age (days)": "52"}
+        self.assertEqual(generalize_json_record(record), {
+            ("patient age",): "50-54Y", ("village",): "Sample District"
+        })
+        self.assertEqual(record["age"], 52)
+        self.assertEqual(record["PIN"], 560100)
+
+    def test_json_ambiguous_and_non_patient_paths_are_unchanged(self):
+        for record in (
+            {"age": "52", "PIN": "560100", "name": "Synthetic Person"},
+            {"resourceType": "Patient", "id": "identifier", "age": "52", "PIN": "560100"},
+            {"patients": [{"patientID": "MRN-1", "age": "52"}]},
+            {"patient": {"age": "52"}, "beneficiary": {"age": "52"}},
+            {"MRN": "MRN-42", "village": "Synthetic Village", "district": "Sample District",
+             "address": {"district": "Other District"}},
+            {"patient": {"age": "52", "resourceType": "Patient"}},
+        ):
+            with self.subTest(record=record):
+                self.assertEqual(generalize_json_record(record), {})
+
+    def test_json_address_list_relative_paths(self):
+        record = {"MRN": "MRN-42", "addresses": [
+            {"village": "Synthetic Village", "district": "Sample District", "pin": "560100"}
+        ]}
+        self.assertEqual(generalize_json_record(record), {
+            ("addresses", 0, "village"): "Sample District",
+            ("addresses", 0, "pin"): "560***",
+        })
+
+
+    def test_patient_date_shift_preserves_intervals_and_is_keyed(self):
+        offset = patient_day_shift("practice-test", "PSN-SYNTHETIC")
+        self.assertTrue(0 < abs(offset) <= 365)
+        self.assertEqual(offset, patient_day_shift(b"practice-test", b"PSN-SYNTHETIC"))
+        self.assertNotEqual(offset, patient_day_shift("another-test", "PSN-SYNTHETIC"))
+        distinct = {patient_day_shift("practice-test", f"PSN-SYNTHETIC-{i}") for i in range(10)}
+        self.assertGreater(len(distinct), 1)
+        for fmt, dates in (
+            ("%Y-%m-%d", ("2024-02-27", "2024-03-01")),
+            ("%d/%m/%Y", ("27/02/2024", "01/03/2024")),
+        ):
+            shifted = [shift_patient_date(value, offset, date_format=fmt) for value in dates]
+            original_gap = datetime.strptime(dates[1], fmt) - datetime.strptime(dates[0], fmt)
+            shifted_gap = datetime.strptime(shifted[1], fmt) - datetime.strptime(shifted[0], fmt)
+            self.assertEqual(original_gap, shifted_gap)
+
+    def test_date_shift_abstains_without_exact_format_or_key(self):
+        for date, fmt in (
+            ("2024-02-30", "%Y-%m-%d"), ("2024-02", "%Y-%m"), ("2024-2-1", "%Y-%m-%d"),
+            ("01/02/2024", "%Y-%m-%d"), ("2024-01-01T12:00:00Z", "%Y-%m-%d"),
+        ):
+            self.assertIsNone(shift_patient_date(date, 21, date_format=fmt))
+        self.assertIsNone(shift_patient_date("2024-01-01", 366, date_format="%Y-%m-%d"))
+        self.assertIsNone(shift_patient_date("2024-01-01", True, date_format="%Y-%m-%d"))
+        with self.assertRaises(ValueError):
+            patient_day_shift("", "PSN-SYNTHETIC")
+        with self.assertRaises(ValueError):
+            patient_day_shift("practice-test", "")
 
 
 if __name__ == "__main__":

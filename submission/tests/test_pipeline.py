@@ -292,14 +292,16 @@ class FormatTest(unittest.TestCase):
             {"fullUrl": "urn:uuid:22222222-2222-4222-8222-222222222222",
              "resource": {"resourceType": "Patient", "id": "22222222-2222-4222-8222-222222222222",
                           "birthDate": "1991-02-03"}}]}
-        try:
-            output, _ = transform(json.dumps(bundle), ".json", Rewrite())
-        except UnsafeInput as exc:
-            self.assertEqual(exc.args[0], "unsupported_fhir_date_transform")
-        else:
-            released = json.loads(output)["entry"][0]["resource"]["birthDate"]
-            date.fromisoformat(released)
-            self.assertNotEqual(released, "[DOB]")
+        rewrite = Rewrite()
+        output, locators = transform(json.dumps(bundle), ".json", rewrite)
+        released = json.loads(output)["entry"][0]["resource"]["birthDate"]
+        self.assertEqual(released, "1991")
+        self.assertEqual(locators, ["doc"])
+        self.assertEqual(rewrite.generalized, {"doc"})
+        for invalid in ("1991-02-30", "1991-00-12", "0000", "1991-13", "1991-2"):
+            bundle["entry"][0]["resource"]["birthDate"] = invalid
+            with self.assertRaisesRegex(UnsafeInput, "invalid_fhir_birth_date"):
+                transform(json.dumps(bundle), ".json", Rewrite())
 
 
 class ReleaseTest(unittest.TestCase):

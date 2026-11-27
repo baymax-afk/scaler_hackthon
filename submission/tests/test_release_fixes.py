@@ -67,6 +67,53 @@ class ReleaseFixesTest(unittest.TestCase):
                 pseudos.append(entries[0]["patient"])
             self.assertNotEqual(*pseudos)
 
+    def test_cross_format_linkage_rewrites_only_validated_identifier_targets(self):
+        with TemporaryDirectory() as temp:
+            source = Path(temp) / "input"
+            source.mkdir()
+            identifier = "CLN-12345"
+            name = "Mira Sen"
+            (source / "table.csv").write_text("Patient Name,UHID,Age,Dose\nMira Sen,CLN-12345,52,5 mg\n")
+            (source / "note.txt").write_text("Patient Name: Mira Sen\nUHID: CLN-12345\nDose: 5 mg\n")
+            (source / "visit.json").write_text(json.dumps({
+                "patient": {"name": name, "uhid": identifier, "age_sex": "52/M"},
+                "dose": "5 mg", "measurement": 52}))
+            (source / "bundle.json").write_text(json.dumps({
+                "resourceType": "Bundle", "type": "collection", "entry": [
+                    {"resource": {"resourceType": "Patient", "id": "p-1",
+                        "identifier": [{"system": "https://example.invalid/uhid",
+                            "type": {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                                  "code": "MR"}]}, "value": identifier}],
+                        "name": [{"text": name}], "birthDate": "1974-03-02"}},
+                    {"resource": {"resourceType": "Observation",
+                        "subject": {"reference": "Patient/p-1", "display": name},
+                        "valueQuantity": {"value": 52, "unit": "mg"}}}]}))
+            out = Path(temp) / "release"
+            counts = publish_release(source, out, b"cross-format-test")
+            self.assertEqual(counts["files_quarantined"], 0)
+            self.assertEqual(counts["records_linked"], 4)
+            entries = [json.loads(line) for line in (out / "records.jsonl").read_text().splitlines()]
+            patients = {entry["patient"] for entry in entries}
+            self.assertEqual(len(patients), 1)
+            pseudonym = patients.pop()
+            self.assertIsNotNone(pseudonym)
+            for entry in entries:
+                rendered = (out / entry["file"]).read_text()
+                self.assertIn(pseudonym, rendered)
+                self.assertNotIn(identifier, rendered)
+                self.assertNotIn(name, rendered)
+                if "valueQuantity" in rendered:
+                    resources = json.loads(rendered)["entry"]
+                    self.assertEqual(resources[0]["resource"]["birthDate"], "1974")
+                    self.assertEqual(resources[1]["resource"]["valueQuantity"]["value"], 52)
+                    self.assertEqual(resources[1]["resource"]["subject"]["reference"], "Patient/" +
+                                     resources[0]["resource"]["id"])
+                elif "age_sex" in rendered:
+                    record = json.loads(rendered)
+                    self.assertEqual(record["patient"]["age_sex"], "50-54/M")
+                    self.assertEqual(record["measurement"], 52)
+                    self.assertEqual(record["dose"], "5 mg")
+
 
 if __name__ == "__main__":
     unittest.main()

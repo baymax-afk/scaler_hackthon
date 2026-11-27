@@ -1,7 +1,7 @@
 """Synthetic unit tests for conservative table-only linkage."""
 import unittest
 
-from rakshak.linkage import row_evidence, resolve_linkage
+from rakshak.linkage import row_evidence, resolve_linkage, json_evidence, text_evidence, text_target
 
 
 SECRET = b"synthetic-linkage-test-a"
@@ -133,6 +133,66 @@ class TestLinkage(unittest.TestCase):
         c = self.row(UHID="MRN-00123", PatientName=NAME, DOB="01/12/1979")
         self.assertEqual({}, self.resolve(a, c))
         self.assertIsNone(row_evidence(["UHID", "PatientName", "DOB (DD/MM/YYYY)"], ["MRN-00123", NAME, "01/13/1979"], SECRET).dob)
+
+
+    def test_json_patient_fields_cross_format(self):
+        doc = {'visits': [{'patient_ref': 'CLN-12345', 'patient': {'name': NAME, 'age_sex': '47/F'},
+                           'doctor': {'name': 'Other Person'}, 'vitals': {'value': 123}}]}
+        evidence, path = json_evidence(doc, '/visits/0', SECRET)
+        self.assertEqual(('visits', 0, 'patient_ref'), path)
+        table = self.row(UHID='CLN-12345', PatientName=NAME, AgeSex='47/F')
+        self.linked(evidence, table)
+
+    def test_json_whole_structured_record_and_string_only(self):
+        doc = {'patient': {'name': NAME, 'age': 47, 'sex': 'F', 'hospital_uhid': 'MRN-00123'}}
+        evidence, path = json_evidence(doc, 'doc', SECRET)
+        self.assertEqual(('patient', 'hospital_uhid'), path)
+        self.linked(evidence, self.row(UHID='MRN-00123', PatientName=NAME, AgeSex='47/F'))
+        self.assertIsNone(json_evidence({'patient': {'aadhaar': 123456789012, 'name': NAME}}, 'doc', SECRET))
+        self.assertIsNone(json_evidence({'metadata': {'name': NAME, 'uhid': 'CLN-12345'}}, 'doc', SECRET))
+        self.assertIsNone(json_evidence({'secret-name': [{'name': NAME, 'uhid': 'CLN-12345'}]}, '/secret-name/0', SECRET))
+        self.assertIsNone(json_evidence({'resourceType': 'Bundle', 'uhid': 'CLN-12345'}, 'doc', SECRET))
+
+    def test_json_nested_ids_and_relative(self):
+        doc = {'patients': [{'name': NAME, 'ids': {'aadhaar': A},
+                             'guardian': {'name': 'Arun Sen', 'uhid': 'CLN-12345'}}]}
+        evidence, path = json_evidence(doc, '/patients/0', SECRET)
+        self.assertEqual(('patients', 0, 'ids', 'aadhaar'), path)
+        self.linked(evidence, self.row(Aadhaar=A, PatientName=NAME, RelativeName='Arun Sen'))
+        self.assertIsNone(json_evidence(doc, '/patients/9', SECRET))
+        self.assertIsNone(json_evidence(doc, '/patients/00', SECRET))
+
+    def test_text_label_line_and_validated_target(self):
+        raw = 'Patient Name: ' + NAME + '\r\nUHID: CLN-12345\r\nDose: 10 mg'
+        evidence, line, kind = text_evidence(raw, SECRET)
+        self.assertEqual((1, 'MRN'), (line, kind))
+        self.linked(evidence, self.row(UHID='CLN-12345', PatientName=NAME))
+        clean = 'Patient Name: [NAME]\r\nUHID: [MRN]  \r\nDose: 10 mg'
+        start, end = text_target(clean, line, kind)
+        self.assertEqual('[MRN]', clean[start:end])
+        self.assertIsNone(text_target('Patient Name: [NAME]\nUHID: [MRN] extra', line, kind))
+        self.assertIsNone(text_target('Patient Name: [NAME]\nDoctor: [MRN]', line, kind))
+        self.assertIsNone(text_evidence(raw + '\r\nUHID: CLN-12345', SECRET))
+        self.assertIsNone(text_evidence('Dose: CLN-12345\nName: ' + NAME, SECRET))
+        self.assertIsNone(text_evidence('Patient Name: ' + NAME + '\nUHID: CLN-12345; Dose 10mg', SECRET))
+
+
+    def test_fhir_unique_typed_patient_identifier(self):
+        patient = {'resourceType': 'Patient', 'id': 'unchanged-reference-id',
+                   'identifier': [{'system': 'https://clinic.invalid/uhid', 'type': {'coding': [
+                       {'system': 'http://terminology.hl7.org/CodeSystem/v2-0203', 'code': 'MR'}]},
+                                   'value': 'CLN-12345'}],
+                   'name': [{'text': NAME, 'given': ['Mira'], 'family': 'Sen'}]}
+        bundle = {'resourceType': 'Bundle', 'entry': [{'resource': patient}, {'resource': {'resourceType':'Observation',
+                  'subject': {'reference': 'Patient/unchanged-reference-id'}, 'value': 42}}]}
+        evidence, path = json_evidence(bundle, 'doc', SECRET)
+        self.assertEqual(('entry', 0, 'resource', 'identifier', 0, 'value'), path)
+        self.linked(evidence, self.row(UHID='CLN-12345', PatientName=NAME))
+        self.assertIsNone(json_evidence({'resourceType':'Bundle', 'entry':[{'resource':patient}, {'resource':patient}]}, 'doc', SECRET))
+        bundle['entry'][1]['resource']['subject']['identifier'] = {'value': 'CLN-12345'}
+        self.assertIsNone(json_evidence(bundle, 'doc', SECRET))
+        del patient['identifier'][0]['type']
+        self.assertIsNone(json_evidence({'resourceType':'Bundle','entry':[{'resource':patient}]}, 'doc', SECRET))
 
 
 if __name__ == "__main__":

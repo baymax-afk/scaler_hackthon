@@ -66,6 +66,43 @@ class NarrativeDetectionRegression(unittest.TestCase):
         self.assertEqual(rewrite("UHID-123456 Glucose", channel="header"), "[MRN] Glucose")
         self.assertEqual(rewrite("UHID-123456 Nivara"), "[MRN] Nivara")
 
+    def test_semantic_role_alias_with_unicode_name_and_negative_controls(self):
+        for label in ("Sample recipient", "Transfer for", "Ward chart", "OnBehalfOf", "Caller"):
+            with self.subTest(label=label):
+                self.assertEqual(rewrite("ನಿವರಾ ದೇವ್", label=label), "[NAME]")
+                self.assertEqual(rewrite("Nivara, K. R.", label=label), "[NAME]")
+                self.assertEqual(rewrite("Blood Pressure", label=label), "Blood Pressure")
+                self.assertEqual(rewrite("14 mg", label=label), "14 mg")
+        self.assertEqual(rewrite("Nivara Dev", label="Clinician"), "Nivara Dev")
+        self.assertEqual(rewrite("Nivara Dev", label="Specimen"), "Nivara Dev")
+
+    def test_scoped_opaque_administrative_aliases(self):
+        for label in ("ChartAnchor", "Claim member", "Local file", "Handover label", "Settlement", "AccessionOwner"):
+            with self.subTest(label=label):
+                self.assertEqual(rewrite("WEST-7W209X", label=label), "[MRN]")
+                self.assertEqual(rewrite("E11.9", label=label), "E11.9")
+                self.assertEqual(rewrite("650 mg", label=label), "650 mg")
+        self.assertEqual(rewrite("WEST-7W209X", label="Benefit code"), "WEST-7W209X")
+        self.assertEqual(rewrite("WEST-7W209X", label="Specimen"), "WEST-7W209X")
+        self.assertEqual(rewrite("Chart: SNJ/26/123456; follow-up 26/11/2026; E11.9"),
+                         "Chart: [MRN]; follow-up 26/11/2026; E11.9")
+
+    def test_explicit_dialogue_roles_not_clinician(self):
+        source = ("Family: I am काव्या देव. I came with நிலா வேலன்.\n"
+                  "Clinician: I am काव्या देव. I came with நிலா வேலன்.\n"
+                  "Dr. काव्या देव confirmed 120/80.")
+        expected = ("Family: I am [RELATIVE]. I came with [NAME].\n"
+                    "Clinician: I am काव्या देव. I came with நிலா வேலன்.\n"
+                    "Dr. काव्या देव confirmed 120/80.")
+        self.assertEqual(rewrite(source), expected)
+
+    def test_review_subject_requires_role_and_contact_context(self):
+        source = "Prescription review\nSubject = Nivara, R.\nContinue 14 mg\nReply-to person@example.invalid"
+        self.assertEqual(rewrite(source),
+                         "Prescription review\nSubject = [NAME]\nContinue 14 mg\nReply-to [EMAIL]")
+        self.assertEqual(rewrite("Subject = Blood Pressure\nReview 14 mg"), "Subject = Blood Pressure\nReview 14 mg")
+        self.assertEqual(rewrite("Subject = Nivara Dev"), "Subject = Nivara Dev")
+
     def test_localized_relative_and_registration_clues(self):
         text = "पति का नाम: रवि देव\nपंजीकरण सं.: RK/26/00012    आईपीडी सं.: IP/26/00012"
         self.assertEqual(rewrite(text),
