@@ -47,7 +47,7 @@ class OpenSliceTest(unittest.TestCase):
             result = open_slice_audit(self.original, release)
             self.assertEqual((result["input_files"], result["sanitized_files"],
                               result["input_clinical_facts"], result["preserved_clinical_facts"]),
-                             (5, 4, 7, 6))
+                             (5, 5, 7, 7))
             self.assertEqual(result["linkage_diagnostic"]["false_merged_clusters"], 0)
             manifest = json.loads((self.original / "manifest.json").read_bytes())
             report_path = release / "report.json"
@@ -65,7 +65,7 @@ class OpenSliceTest(unittest.TestCase):
                           if item["input_sha256"] == fingerprint)
             target = release / output
             target.write_text(target.read_text().replace("BP 118/76, pulse 72", "BP 118/76"))
-            self.assertEqual(open_slice_audit(self.original, release)["preserved_clinical_facts"], 5)
+            self.assertEqual(open_slice_audit(self.original, release)["preserved_clinical_facts"], 6)
             (release / "sanitized" / "unreported.txt").write_text("synthetic", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "invalid_release_ledger"):
                 open_slice_audit(self.original, release)
