@@ -21,8 +21,22 @@ def structured_label(path, label, resource, siblings=None):
     siblings = siblings or {}
     if not resource:
         leaf = normalize_label(label)
+        containers = [normalize_label(part) for part in path[:-1] if isinstance(part, str)]
+        patient_context = any(part in {"patient", "patients", "beneficiary", "beneficiaries"}
+                              for part in containers)
+        if patient_context and not NON_PATIENT_SECTIONS.intersection(containers):
+            if containers and containers[-1] == "name" and leaf in {
+                "first", "last", "local", "given", "family", "middle"
+            }:
+                return "patient name"
+            if containers and containers[-1] in {"guardian", "relative", "attendant", "caregiver"} and leaf in {
+                "name", "naam", "display", "display name"
+            }:
+                return "relative name"
+            if "address" in containers and leaf in {"line", "house", "house no", "locality",
+                                                     "village", "mohalla", "street", "landmark"}:
+                return "address"
         if leaf in {"name", "naam", "display", "display name"}:
-            containers = [normalize_label(part) for part in path[:-1] if isinstance(part, str)]
             if any(part in CLINICIAN_FIELDS for part in containers):
                 return "clinician name"
             if containers and not NON_PATIENT_SECTIONS.intersection(containers):

@@ -12,13 +12,13 @@ FIELD_GROUPS = {
     "NAME": "name|patient|patient name|patient full name|full name|first name|last name|surname|"
             "patientname|alternate patient name|नाम|मरीज का नाम|रोगी का नाम|मरीज़|मरीज|रोगी|"
             + "|".join(LOCALIZED_PATIENT_LABELS),
-    "RELATIVE": "relative|रिश्तेदार|relative name|father name|mother name|husband name|guardian|guardian name|attendant|caregiver",
+    "RELATIVE": "relative|रिश्तेदार|relative name|father name|mother name|husband name|guardian|guardian name|attendant|caregiver|पिता का नाम|माता का नाम|पति का नाम|पत्नी का नाम|pita pati ka naam",
     "PHONE": "phone|phone number|patient phone|mobile|mobile number|mobile no|contact no|contact number|telephone|tel|फोन|फ़ोन|मोबाइल",
     "EMAIL": "email|email address|e mail",
     "AADHAAR": "aadhaar|aadhaar no|aadhr no|aadhaar number|aadhar|aadhaar masked|masked aadhaar|आधार",
     "ABHA": "abha|abha no|abha number|abha address",
     "MRN": "mrn|patient id|patientid|patient identifier|patient ref|uhid|hospital uhid|ipd no|opd no|registration no|hospital id|admission id|admission no",
-    "ADDRESS": "address|patient address|residence|street|house no|village|village mohalla|mohalla|landmark|pata|gaon|पता",
+    "ADDRESS": "address|patient address|residence|street|house no|village|village mohalla|mohalla|landmark|pata|gaon|पता|ग्राम|गाँव|गांव|मोहल्ला|city",
     "PIN": "pin|pin code|pincode|zip|postal code",
     "DOB": "dob|date of birth|birth date|birthdate|janm tithi|janam tithi|जन्म तिथि|जन्मतिथि",
     "PAN": "pan|pan no|pan number",
@@ -32,6 +32,7 @@ EXPLICIT_NAME_ROLES = {
     "contact name": "contact", "related person name": "related_person",
     "relative": "relative", "relative name": "relative", "father name": "relative",
     "mother name": "relative", "husband name": "relative", "रिश्तेदार": "relative",
+    "पिता का नाम": "relative", "माता का नाम": "relative", "पति का नाम": "relative", "पत्नी का नाम": "relative",
     **dict.fromkeys(LOCALIZED_PATIENT_LABELS, "patient"),
 }
 FIELDS = {label: kind for kind, labels in FIELD_GROUPS.items() for label in labels.split("|")}
@@ -63,21 +64,80 @@ INLINE_CLINICAL = re.compile(
 )
 NAME_TOKEN = r"[A-Za-z\u0900-\u097f][A-Za-z\u0900-\u097f.'’\-]{0,29}"
 NAME = NAME_TOKEN + r"(?:[ \t]+" + NAME_TOKEN + r"){0,2}"
+# A capitalized first token and mixed-case following tokens are restricted to
+# explicit narrative role cues (transliterated surnames may be lowercase).
+LATIN_TOKEN = r"(?:(?:Mr|Mrs|Ms|Shri|Smt|Mohd|[A-Z])\.|[A-Z][a-zA-Z’'-]{0,29})"
+HONORIFIC_SUFFIX = r"(?:[ \t]+(?i:ji|sahab|didi|behenji|babu|amma))?"
+LATIN_FOLLOW = r"(?!(?i:ji|sahab|didi|behenji|babu|amma)\b)[A-Za-z][a-zA-Z’'-]{0,29}"
+LATIN_NAME = LATIN_TOKEN + r"(?:[ \t]+" + LATIN_FOLLOW + r"){0,3}"
+TIME_PREFIX = r"(?:\d{1,2}[:.]\d{2}[ \t]*[-–][ \t]*)?"
 CALLER = re.compile(r"(?i:\b(?:called by|visitor|attendant)\b[ \t]{0,8}[:=]?[ \t]{1,8})(" +
                     NAME + r")(?=[ \t]{1,8}(?:\+?\d|\()|$|[,;\r\n])")
 VISITOR = re.compile(r"(?m)^\d{1,2}:\d{2}[ \t]+-[ \t]+(" + NAME +
                      r")[ \t]+\((?i:attendant|visitor|guardian)\b")
 RELATIVE = re.compile(r"\b([SDWC]/o)[ \t]+(" + NAME + r")(?=$|[\r\n;,|])", re.I)
 RELATIONSHIP_LINE = re.compile(r"(?:^|[\n;,|])[ \t]*[SDW]/o[ \t]+([^\r\n;,|]{1,160})(?=$|[\r\n;,|])", re.I)
-HONORIFIC = re.compile(r"(?im)^[ \t]{0,16}(" + NAME + r")[ \t]+(?:ji|sahab|didi|behenji)[ \t]+(?:aaye|aayi|ka|ki)\b")
+DEV_NAME_TOKEN = r"[\u0904-\u0939][\u0900-\u097f]{0,29}"
+DEV_NAME = DEV_NAME_TOKEN + r"(?:[ \t]+" + DEV_NAME_TOKEN + r"){0,2}"
+HONORIFIC = re.compile(r"(?m)^[ \t]{0,16}(" + LATIN_NAME + "|" + DEV_NAME +
+                      r")[ \t]+(?i:ji|sahab|didi|behenji)[ \t]+(?i:aaye|aayi|ka|ki)\b")
 # Line-initial named subject plus a possessive and a measured vital.
 VITAL_SUBJECT = re.compile(
-    r"(?m)^[ \t]*([A-Z][a-zA-Z’'-]{1,29}(?:[ \t]+[A-Z][a-zA-Z’'-]{1,29}){1,3})"
+    r"(?m)^[ \t]*(?:(?:\d{1,4}[-/.]\d{1,2}[-/.]\d{1,4})[ \t]+)?"
+    + TIME_PREFIX + r"(" + LATIN_NAME + r")"
+    + HONORIFIC_SUFFIX +
     r"[ \t]+(?i:ka|ki)[ \t]+(?i:BP|blood pressure)[ \t]*[:=]?[ \t]*"
     r"\d{2,3}[ \t]*/[ \t]*\d{2,3}(?!\d)"
 )
 VITAL_NONPERSON = {"dr", "doctor", "nurse", "prof", "left", "right", "arm", "leg", "patient",
                    "ward", "blood", "supine", "standing", "sitting", "upper", "lower"}
+NARRATIVE_PATIENT = (
+    # A report's subject is distinct from a clinician mentioned elsewhere.
+    re.compile(r"(?m)^[ \t]*(?i:report of)[ \t]+(" + LATIN_NAME + r")" + HONORIFIC_SUFFIX +
+               r"[ \t]+\d{1,3}[ \t]*(?i:y|yrs?|years?)[ \t]*/[ \t]*(?i:[mfx])\b"),
+    # Restrict the possessive cue to a named person's attendant.
+    re.compile(r"(?i:\b(?:sample received from|received from))[ \t]+(" +
+               LATIN_NAME + r")[’']s[ \t]+(?i:attendant|guardian)\b"),
+    # Preserve diagnosis and the relationship clause, not just the name.
+    re.compile(r"(?m)^[ \t]*" + TIME_PREFIX + r"(" + LATIN_NAME +
+               r")[ \t]*[-–][ \t]*(?i:k/c/o)\b"),
+    re.compile(r"(?m)^[ \t]*(" + LATIN_NAME +
+               r"),[ \t]*(?i:[sdw]/o)[ \t]+[^\n\r,;]{1,160},[ \t]*(?i:discharged|admitted)\b"),
+    re.compile(r"(?:(?<=\.)[ \t]+|(?m:^[ \t]*))(" + LATIN_NAME + r")" + HONORIFIC_SUFFIX +
+               r"[ \t]+(?i:ki|ka)[ \t]+(?i:condition)[ \t]+(?i:ab|is|was)\b"),
+    re.compile(r"(?i:\b(?:opd|patient|clinical)[ \t]+note for)[ \t]+(" +
+               LATIN_NAME + r")(?=[.;,\r\n])"),
+)
+HINDI_SYMPTOM_SUBJECT = re.compile(
+    r"(?m)^[ \t]*([\u0904-\u0939][\u0900-\u097f]{0,29}(?:[ \t]+"
+    r"[\u0904-\u0939][\u0900-\u097f]{0,29}){1,3})[ \t]+को[ \t]+"
+    r"\d{1,3}[ \t]+(?:दिन|सप्ताह|घंटे|महीने)[ \t]+से(?=$|[ \t])"
+)
+PAREN_RELATIVE = re.compile(r"\([ \t]*(?i:[sdw]/o)[ \t]+(" + NAME + r")[ \t]*\)")
+CHAT_SPEAKER = re.compile(
+    r"(?m)^[ \t]*\[\d{1,4}[-/.]\d{1,2}[-/.]\d{1,4},[ \t]*"
+    r"\d{1,2}:\d{2}(?::\d{2})?(?:[ \t]*(?i:am|pm))?\][ \t]+("
+    + LATIN_NAME + r"):[ \t]*(?=\S)"
+)
+LOCAL_MRN_CUE = re.compile(
+    r"(?i)(?:पंजीकरण|रजिस्ट्रेशन|आईपीडी|ओपीडी)[ \t]+(?:सं\.?|नंबर|क्रमांक)[ \t]*[:：=][ \t]*("
+    + CHART_VALUE + r")(?=$|[\s,;|])"
+)
+BED_CHART_CUE = re.compile(
+    r"(?im)^[^\n\r]{0,120}\bbed[ \t]+\d{1,3}[ \t]*[-–][ \t]*(IP[-/]\d{2}[-/]\d{3,12})(?=$|[\s,;|])"
+)
+ADDRESS_LINE = re.compile(
+    r"(?im)(?:^|[\n;|])[ \t]{0,32}(?:address|पता|pata)[ \t]*[:：=][ \t]*([^\r\n;|]{1,350})"
+)
+DISTRICT_CUE = re.compile(r"(?i)^(?:district|distt?\.?|tehsil|tahsil|तहसील|जिला|ज़िला|jila)\s")
+ADDRESS_GEO_CUE = re.compile(r"(?i)(?:\b(?:district|distt?\.?|tehsil|tahsil|ward|mohalla|village|vill\.?|gram)\b|तहसील|जिला|ग्राम|मोहल्ला)")
+ADDRESS_PIN = re.compile(r"(?<!\d)\d{6}(?!\d)[ \t]*$")
+CARE_ADDRESS_TAIL = re.compile(
+    r"(?im)^[ \t]*address[ \t]*\(attendant\)[ \t]*:[ \t]*c/o[ \t]+[^,;\r\n]{1,160},[ \t]*([^,;\r\n]{1,160})"
+)
+INLINE_JSON_PATIENT = re.compile(
+    r'(?i)"(?:patient|patient_name|patient name)"\s*:\s*"([^"\r\n]{1,160})"'
+)
 INLINE_PHONE = re.compile(r"(?i)\b(?:phone|mob|mobile)[ \t]{1,8}((?:\+91[ -]?)?\d{5}[ -]?\d{5})(?!\d)")
 INLINE_RELATIVE = re.compile(r"(?i)\b([SDW]/o)[ \t]+(" + NAME + r")\.(?=[ \t]+(?:Phone|Mob|Mobile)\b)")
 COMPLAINT = re.compile(r"(?:^|[ \t])(?:fever|cough|pain|vomiting|weakness|headache|dizziness|chakkar|"
@@ -99,6 +159,10 @@ SHAPES = (
     ("PHONE", re.compile(r"(?<![a-z0-9])(?:\+91[ -]?|0)?[6-9][0-9]{4}[ -]?[0-9]{5}(?![a-z0-9])", re.I)),
 )
 NUMERIC = {"PHONE", "AADHAAR", "ABHA"}
+MRN_NAME_HEADER = re.compile(
+    r"(?i:(?:UHID|MRN|IPD|OPD|SNJ|JJH|ADM|DHH)[- /]?\d{3,12}(?:[-/]\d{3,12})?)"
+    r"[ \t]+([A-Z][a-z’'-]{1,29})"
+)
 OPAQUE_KEY = re.compile(r"[A-Za-z]{3,40}[0-9]{6,16}")
 FILE_NAME = re.compile(r"(?i)^(?:discharge_summary|patient|prescription|report)[_-](?:[a-z]{2,30}[_ -])+[a-z]{2,30}(?=[_-](?:[A-Z]{2,8}[-_]?)?[0-9])")
 FILENAME_IP = re.compile(r"(?i)(?<![A-Za-z0-9])IP-[0-9]{2}-[0-9]{5}(?![A-Za-z0-9])")
@@ -222,9 +286,59 @@ def detect(unit: SourceUnit) -> DetectionResult:
             if kind == "NAME" and VITAL_NONPERSON.intersection(match[1].casefold().replace(".", "").split()):
                 continue
             accepted.append(Finding(*match.span(1), kind, .90, "local_role"))
-    for match in VITAL_SUBJECT.finditer(label_view):
-        if not VITAL_NONPERSON.intersection(match[1].casefold().split()):
-            accepted.append(Finding(*match.span(1), "NAME", .88, "vital_subject", "patient"))
+    for pattern in (VITAL_SUBJECT, *NARRATIVE_PATIENT):
+        for match in pattern.finditer(label_view):
+            if not VITAL_NONPERSON.intersection(match[1].casefold().replace(".", "").split()):
+                accepted.append(Finding(*match.span(1), "NAME", .88, "narrative_subject", "patient"))
+    # A repeated Devanagari subject needs corroboration: the same document has
+    # already identified that surface via an explicit name field.
+    known_names = {" ".join(label_view[f.start:f.end].casefold().split()) for f in accepted
+                   if f.kind == "NAME" and f.reason in {"typed_field", "local_label"}}
+    for match in HINDI_SYMPTOM_SUBJECT.finditer(label_view):
+        if " ".join(match[1].casefold().split()) in known_names:
+            accepted.append(Finding(*match.span(1), "NAME", .91, "corroborated_subject", "patient"))
+    for match in PAREN_RELATIVE.finditer(label_view):
+        accepted.append(Finding(*match.span(1), "RELATIVE", .92, "relationship", "relative"))
+    for match in INLINE_JSON_PATIENT.finditer(label_view):
+        if person_name(match[1]):
+            accepted.append(Finding(*match.span(1), "NAME", .90, "embedded_patient_field", "patient"))
+    for match in CHAT_SPEAKER.finditer(label_view):
+        # A timestamped chat sender can be a clinician; only handle the
+        # personal sender of a forwarded patient report in this bounded form.
+        if re.match(r"<attachment:[^\r\n>]{1,120}>[ \t]*\r?\n[ \t]*(?i:forwarded)\b",
+                    label_view[match.end():match.end() + 180]) and not (
+                        VITAL_NONPERSON.intersection(match[1].casefold().split())):
+            accepted.append(Finding(*match.span(1), "RELATIVE", .88, "chat_sender", "contact"))
+    for pattern in (LOCAL_MRN_CUE, BED_CHART_CUE):
+        for match in pattern.finditer(label_view):
+            if chart_number(match[1]):
+                accepted.append(Finding(*match.span(1), "MRN", .96, "local_chart_context"))
+    for match in CARE_ADDRESS_TAIL.finditer(label_view):
+        value = match[1].rstrip()
+        if value and not INLINE_CLINICAL.search(value):
+            accepted.append(Finding(match.start(1), match.start(1) + len(value), "ADDRESS",
+                                    .94, "address_component"))
+    for match in ADDRESS_LINE.finditer(label_view):
+        address = match[1]
+        # A structured multi-component residential address is different from
+        # unrelated inline clinical clauses. Retain coarse geography and remove
+        # the fine-grained components, including a terminal postal identifier.
+        if not ADDRESS_GEO_CUE.search(address):
+            continue
+        coarse_geography_seen = False
+        for part in re.finditer(r"[^,]+", address):
+            value = part[0].strip()
+            start = match.start(1) + part.start() + len(part[0]) - len(part[0].lstrip())
+            if not value:
+                continue
+            if DISTRICT_CUE.match(value):
+                coarse_geography_seen = True
+                if pin := ADDRESS_PIN.search(value):
+                    accepted.append(Finding(start + pin.start(), start + pin.end(), "PIN", .96,
+                                            "address_postal_context"))
+            elif not coarse_geography_seen and part.start() and not re.match(r"(?i)(?:dose|medication|rx|BP|pulse|temperature|"
+                                               r"diagnosis|consultant|mobile|phone)\b", value):
+                accepted.append(Finding(start, start + len(value), "ADDRESS", .94, "address_component"))
     for match in CHART_CUE.finditer(label_view):
         if chart_number(match[1]):
             accepted.append(Finding(*match.span(1), "MRN", .94, "chart_context"))
@@ -259,6 +373,13 @@ def detect(unit: SourceUnit) -> DetectionResult:
         stem = source.rsplit(".", 1)[0] if unit.channel == "filename" else source
         if OPAQUE_KEY.fullmatch(stem):
             accepted.append(Finding(0, len(stem), "IDENTIFIER", .85, "opaque_label"))
+    if unit.channel == "header":
+        if match := MRN_NAME_HEADER.fullmatch(label_view):
+            word = match[1].casefold()
+            if word not in VITAL_NONPERSON | {"bp", "pulse", "temp", "temperature", "dose",
+                                             "result", "glucose", "reading", "sugar", "weight",
+                                             "status", "date", "time", "height", "rate"}:
+                accepted.append(Finding(*match.span(1), "NAME", .90, "patient_header", "patient"))
     if unit.channel == "filename":
         match = FILE_NAME.match(source)
         if match:

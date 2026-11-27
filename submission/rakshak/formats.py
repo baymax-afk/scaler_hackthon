@@ -1,6 +1,7 @@
 """Parse and rewrite supported formats without flattening their structure."""
 import base64
 import binascii
+from collections import Counter
 import csv
 from decimal import Decimal
 import io
@@ -11,6 +12,8 @@ import xml.etree.ElementTree as ET
 
 from .detection import FIELDS, NAME, SourceUnit, detect
 from .source_context import normalize_label, source_section, structured_label
+from .linkage import row_evidence
+from .quasi import generalize_row
 
 
 UUID = re.compile(r"(?:urn:uuid:)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
@@ -42,8 +45,11 @@ def decode(raw):
 
 
 class Rewrite:
-    def __init__(self):
+    def __init__(self, secret=None):
         self.entities = []
+        self.secret = secret
+        self.row_evidence = {}
+        self.generalized = set()
 
     def findings(self, text, **context):
         result = detect(SourceUnit(text, **context))
@@ -70,10 +76,23 @@ def table(text, extension, rewrite):
     if len(header) < 2 and any(char in text.partition("\n")[0] for char in ",\t;"):
         raise UnsafeInput("mislabeled_delimiter")
     renamed = [rewrite.text(label, channel="header") for label in header]
+    # Two distinct identifying column labels may redact to the same text.
+    # Disambiguate only rewritten labels using their position, never raw data.
+    reserved = set(renamed)
+    collisions = Counter(renamed)
+    for index, (original, cleaned) in enumerate(zip(header, renamed)):
+        if original != cleaned and collisions[cleaned] > 1:
+            candidate = f"{cleaned}__col{index + 1}"
+            while candidate in reserved:
+                candidate += "_"
+            reserved.add(candidate)
+            renamed[index] = candidate
     if len(set(renamed)) < len(set(header)):
         raise UnsafeInput("header_collision")
     patient_table = any(normalize_label(label) in FIELDS or
                         normalize_label(label) in PERSON_NAME_FIELDS or
+                        normalize_label(label) in PATIENT_FIELDS or
+                        normalize_label(label).startswith("patient ") or
                         detect(SourceUnit(label, channel="header")).findings for label in header)
     destination = io.StringIO(newline="")
     writer = csv.writer(destination, delimiter=delimiter, lineterminator="\n")
@@ -82,9 +101,23 @@ def table(text, extension, rewrite):
     for index, row in enumerate(reader):
         if len(row) != len(header):
             raise UnsafeInput("ragged_table")
-        writer.writerow([rewrite.text(value, label=label) for label, value in zip(header, row)])
+        locator = f"row:{index}"
+        generalized = generalize_row(header, row) if patient_table else {}
+        cleaned = []
+        for column, (label, value) in enumerate(zip(header, row)):
+            sanitized = rewrite.text(value, label=label)
+            cleaned.append(generalized.get(column, sanitized))
         if patient_table:
-            locations.append(f"row:{index}")
+            locations.append(locator)
+            if generalized:
+                rewrite.generalized.add(locator)
+            if rewrite.secret is not None:
+                evidence = row_evidence(header, row, rewrite.secret)
+                if evidence is not None and cleaned[evidence.column].strip() in {
+                    "[MRN]", "[AADHAAR]", "[ABHA]", "[PHONE]", "[EMAIL]", "[PAN]", "[INSURANCE_ID]"
+                }:
+                    rewrite.row_evidence[locator] = evidence
+        writer.writerow(cleaned)
     return destination.getvalue(), locations
 
 
