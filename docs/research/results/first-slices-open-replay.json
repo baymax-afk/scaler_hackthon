@@ -1,0 +1,1101 @@
+{
+  "arm_revisions": {
+    "before": "d8973ab",
+    "candidate": "confirmed note label and dose boundaries on d8973ab",
+    "v1": "095c854"
+  },
+  "arms": {
+    "before": {
+      "historical_style_practice_audit": {
+        "by_script": {
+          "deva": {
+            "labeled": 143,
+            "visible": 114
+          },
+          "hinglish": {
+            "labeled": 111,
+            "visible": 80
+          },
+          "latin": {
+            "labeled": 2976,
+            "visible": 387
+          }
+        },
+        "counts": {
+          "exported_clinical_probes": 4382,
+          "identifier_mentions": 3230,
+          "identifier_mentions_exported": 2940,
+          "input_clinical_probes": 4855,
+          "preserved_clinical_probes": 4382,
+          "required_files": 192,
+          "required_files_exported": 166,
+          "visible_mentions": 581
+        },
+        "quarantine_reasons": {
+          "ambiguous_identifier": 5,
+          "empty_file": 1,
+          "invalid_input": 1,
+          "json_depth_limit": 1,
+          "json_key_collision_or_fhir_key": 1,
+          "unsupported_attachment": 1,
+          "unsupported_fhir_date_transform": 19,
+          "unsupported_format": 3
+        },
+        "report_counts": {
+          "files_quarantined": 32,
+          "files_sanitized": 168,
+          "files_total": 200,
+          "identifiers_detected": 2262,
+          "records_generalized": 0,
+          "records_linked": 0,
+          "records_processed": 753,
+          "records_quarantined": 0,
+          "records_suppressed": 0
+        }
+      },
+      "open_splits": {
+        "development": {
+          "by_format": {
+            "csv": {
+              "identifier_labels": 600,
+              "identifier_labels_in_locatable_units": 600,
+              "identifier_partial": 1,
+              "identifier_transformed": 200,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 399,
+              "protected_damaged": 0,
+              "protected_preserved": 200,
+              "protected_spans": 200,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "fhir": {
+              "identifier_labels": 746,
+              "identifier_labels_in_locatable_units": 746,
+              "identifier_partial": 0,
+              "identifier_transformed": 700,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 46,
+              "protected_damaged": 0,
+              "protected_preserved": 100,
+              "protected_spans": 100,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "json": {
+              "identifier_labels": 600,
+              "identifier_labels_in_locatable_units": 600,
+              "identifier_partial": 2,
+              "identifier_transformed": 200,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 398,
+              "protected_damaged": 0,
+              "protected_preserved": 300,
+              "protected_spans": 300,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "tsv": {
+              "identifier_labels": 450,
+              "identifier_labels_in_locatable_units": 450,
+              "identifier_partial": 2,
+              "identifier_transformed": 150,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 150,
+              "literal_residuals": 298,
+              "protected_damaged": 0,
+              "protected_preserved": 150,
+              "protected_spans": 150,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 150,
+              "records_in_exported_file": 150,
+              "records_locatable": 150
+            },
+            "txt": {
+              "identifier_labels": 761,
+              "identifier_labels_in_locatable_units": 761,
+              "identifier_partial": 63,
+              "identifier_transformed": 281,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 250,
+              "literal_residuals": 417,
+              "protected_damaged": 0,
+              "protected_preserved": 698,
+              "protected_spans": 698,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 250,
+              "records_in_exported_file": 250,
+              "records_locatable": 250
+            }
+          },
+          "counts": {
+            "identifier_labels": 3157,
+            "identifier_labels_in_locatable_units": 3157,
+            "identifier_partial": 68,
+            "identifier_transformed": 1531,
+            "identifier_unexported": 0,
+            "identifier_unresolved": 0,
+            "indexed": 1000,
+            "literal_residuals": 1558,
+            "protected_damaged": 0,
+            "protected_preserved": 1448,
+            "protected_spans": 1448,
+            "protected_unexported": 0,
+            "protected_unresolved": 0,
+            "records": 1000,
+            "records_in_exported_file": 1000,
+            "records_locatable": 1000
+          },
+          "extra_index_entries": 0,
+          "linkage": {
+            "eligible_pairs": 57,
+            "false_pairs": 0,
+            "pair_precision": null,
+            "pair_recall": 0.0,
+            "true_pairs": 0
+          }
+        },
+        "validation": {
+          "by_format": {
+            "csv": {
+              "identifier_labels": 240,
+              "identifier_labels_in_locatable_units": 240,
+              "identifier_partial": 0,
+              "identifier_transformed": 80,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 160,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "fhir": {
+              "identifier_labels": 340,
+              "identifier_labels_in_locatable_units": 340,
+              "identifier_partial": 0,
+              "identifier_transformed": 320,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 20,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "json": {
+              "identifier_labels": 240,
+              "identifier_labels_in_locatable_units": 240,
+              "identifier_partial": 0,
+              "identifier_transformed": 160,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 80,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "tsv": {
+              "identifier_labels": 180,
+              "identifier_labels_in_locatable_units": 180,
+              "identifier_partial": 0,
+              "identifier_transformed": 60,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 60,
+              "literal_residuals": 120,
+              "protected_damaged": 0,
+              "protected_preserved": 60,
+              "protected_spans": 60,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 60,
+              "records_in_exported_file": 60,
+              "records_locatable": 60
+            },
+            "txt": {
+              "identifier_labels": 234,
+              "identifier_labels_in_locatable_units": 234,
+              "identifier_partial": 23,
+              "identifier_transformed": 134,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 100,
+              "literal_residuals": 77,
+              "protected_damaged": 0,
+              "protected_preserved": 252,
+              "protected_spans": 252,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 100,
+              "records_in_exported_file": 100,
+              "records_locatable": 100
+            }
+          },
+          "counts": {
+            "identifier_labels": 1234,
+            "identifier_labels_in_locatable_units": 1234,
+            "identifier_partial": 23,
+            "identifier_transformed": 754,
+            "identifier_unexported": 0,
+            "identifier_unresolved": 0,
+            "indexed": 400,
+            "literal_residuals": 457,
+            "protected_damaged": 0,
+            "protected_preserved": 552,
+            "protected_spans": 552,
+            "protected_unexported": 0,
+            "protected_unresolved": 0,
+            "records": 400,
+            "records_in_exported_file": 400,
+            "records_locatable": 400
+          },
+          "extra_index_entries": 0,
+          "linkage": {
+            "eligible_pairs": 21,
+            "false_pairs": 0,
+            "pair_precision": null,
+            "pair_recall": 0.0,
+            "true_pairs": 0
+          }
+        }
+      }
+    },
+    "candidate": {
+      "historical_style_practice_audit": {
+        "by_script": {
+          "deva": {
+            "labeled": 143,
+            "visible": 114
+          },
+          "hinglish": {
+            "labeled": 111,
+            "visible": 80
+          },
+          "latin": {
+            "labeled": 2976,
+            "visible": 387
+          }
+        },
+        "counts": {
+          "exported_clinical_probes": 4382,
+          "identifier_mentions": 3230,
+          "identifier_mentions_exported": 2940,
+          "input_clinical_probes": 4855,
+          "preserved_clinical_probes": 4382,
+          "required_files": 192,
+          "required_files_exported": 166,
+          "visible_mentions": 581
+        },
+        "quarantine_reasons": {
+          "ambiguous_identifier": 5,
+          "empty_file": 1,
+          "invalid_input": 1,
+          "json_depth_limit": 1,
+          "json_key_collision_or_fhir_key": 1,
+          "unsupported_attachment": 1,
+          "unsupported_fhir_date_transform": 19,
+          "unsupported_format": 3
+        },
+        "report_counts": {
+          "files_quarantined": 32,
+          "files_sanitized": 168,
+          "files_total": 200,
+          "identifiers_detected": 2262,
+          "records_generalized": 0,
+          "records_linked": 0,
+          "records_processed": 753,
+          "records_quarantined": 0,
+          "records_suppressed": 0
+        }
+      },
+      "open_splits": {
+        "development": {
+          "by_format": {
+            "csv": {
+              "identifier_labels": 600,
+              "identifier_labels_in_locatable_units": 600,
+              "identifier_partial": 1,
+              "identifier_transformed": 200,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 399,
+              "protected_damaged": 0,
+              "protected_preserved": 200,
+              "protected_spans": 200,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "fhir": {
+              "identifier_labels": 746,
+              "identifier_labels_in_locatable_units": 746,
+              "identifier_partial": 0,
+              "identifier_transformed": 700,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 46,
+              "protected_damaged": 0,
+              "protected_preserved": 100,
+              "protected_spans": 100,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "json": {
+              "identifier_labels": 600,
+              "identifier_labels_in_locatable_units": 600,
+              "identifier_partial": 2,
+              "identifier_transformed": 200,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 398,
+              "protected_damaged": 0,
+              "protected_preserved": 300,
+              "protected_spans": 300,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "tsv": {
+              "identifier_labels": 450,
+              "identifier_labels_in_locatable_units": 450,
+              "identifier_partial": 2,
+              "identifier_transformed": 150,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 150,
+              "literal_residuals": 298,
+              "protected_damaged": 0,
+              "protected_preserved": 150,
+              "protected_spans": 150,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 150,
+              "records_in_exported_file": 150,
+              "records_locatable": 150
+            },
+            "txt": {
+              "identifier_labels": 761,
+              "identifier_labels_in_locatable_units": 761,
+              "identifier_partial": 63,
+              "identifier_transformed": 281,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 250,
+              "literal_residuals": 417,
+              "protected_damaged": 0,
+              "protected_preserved": 698,
+              "protected_spans": 698,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 250,
+              "records_in_exported_file": 250,
+              "records_locatable": 250
+            }
+          },
+          "counts": {
+            "identifier_labels": 3157,
+            "identifier_labels_in_locatable_units": 3157,
+            "identifier_partial": 68,
+            "identifier_transformed": 1531,
+            "identifier_unexported": 0,
+            "identifier_unresolved": 0,
+            "indexed": 1000,
+            "literal_residuals": 1558,
+            "protected_damaged": 0,
+            "protected_preserved": 1448,
+            "protected_spans": 1448,
+            "protected_unexported": 0,
+            "protected_unresolved": 0,
+            "records": 1000,
+            "records_in_exported_file": 1000,
+            "records_locatable": 1000
+          },
+          "extra_index_entries": 0,
+          "linkage": {
+            "eligible_pairs": 57,
+            "false_pairs": 0,
+            "pair_precision": null,
+            "pair_recall": 0.0,
+            "true_pairs": 0
+          },
+          "neutral_span_replay": {
+            "annotation_status": "generated_unreviewed",
+            "by_category": {
+              "EMAIL": {
+                "annotated": 1000,
+                "exact_hits": 1000,
+                "incomplete": 0,
+                "overlap_hits": 1000
+              },
+              "MRN": {
+                "annotated": 834,
+                "exact_hits": 200,
+                "incomplete": 0,
+                "overlap_hits": 200
+              },
+              "NAME": {
+                "annotated": 1140,
+                "exact_hits": 200,
+                "incomplete": 0,
+                "overlap_hits": 200
+              },
+              "RELATIVE": {
+                "annotated": 183,
+                "exact_hits": 100,
+                "incomplete": 0,
+                "overlap_hits": 100
+              }
+            },
+            "counts": {
+              "incomplete_units": 0,
+              "protected_incomplete": 0,
+              "protected_overlaps": 0,
+              "protected_spans": 1448,
+              "unannotated_units": 16520,
+              "units": 20366,
+              "units_with_review_candidates": 0
+            },
+            "overlap_semantics": "one-to-one typed overlap without precision or FPR",
+            "role_prediction_support": "unavailable_in_phase_a_snapshots"
+          }
+        },
+        "validation": {
+          "by_format": {
+            "csv": {
+              "identifier_labels": 240,
+              "identifier_labels_in_locatable_units": 240,
+              "identifier_partial": 0,
+              "identifier_transformed": 80,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 160,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "fhir": {
+              "identifier_labels": 340,
+              "identifier_labels_in_locatable_units": 340,
+              "identifier_partial": 0,
+              "identifier_transformed": 320,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 20,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "json": {
+              "identifier_labels": 240,
+              "identifier_labels_in_locatable_units": 240,
+              "identifier_partial": 0,
+              "identifier_transformed": 160,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 80,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "tsv": {
+              "identifier_labels": 180,
+              "identifier_labels_in_locatable_units": 180,
+              "identifier_partial": 0,
+              "identifier_transformed": 60,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 60,
+              "literal_residuals": 120,
+              "protected_damaged": 0,
+              "protected_preserved": 60,
+              "protected_spans": 60,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 60,
+              "records_in_exported_file": 60,
+              "records_locatable": 60
+            },
+            "txt": {
+              "identifier_labels": 234,
+              "identifier_labels_in_locatable_units": 234,
+              "identifier_partial": 27,
+              "identifier_transformed": 139,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 100,
+              "literal_residuals": 68,
+              "protected_damaged": 0,
+              "protected_preserved": 252,
+              "protected_spans": 252,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 100,
+              "records_in_exported_file": 100,
+              "records_locatable": 100
+            }
+          },
+          "counts": {
+            "identifier_labels": 1234,
+            "identifier_labels_in_locatable_units": 1234,
+            "identifier_partial": 27,
+            "identifier_transformed": 759,
+            "identifier_unexported": 0,
+            "identifier_unresolved": 0,
+            "indexed": 400,
+            "literal_residuals": 448,
+            "protected_damaged": 0,
+            "protected_preserved": 552,
+            "protected_spans": 552,
+            "protected_unexported": 0,
+            "protected_unresolved": 0,
+            "records": 400,
+            "records_in_exported_file": 400,
+            "records_locatable": 400
+          },
+          "extra_index_entries": 0,
+          "linkage": {
+            "eligible_pairs": 21,
+            "false_pairs": 0,
+            "pair_precision": null,
+            "pair_recall": 0.0,
+            "true_pairs": 0
+          },
+          "neutral_span_replay": {
+            "annotation_status": "generated_unreviewed",
+            "by_category": {
+              "EMAIL": {
+                "annotated": 480,
+                "exact_hits": 400,
+                "incomplete": 0,
+                "overlap_hits": 400
+              },
+              "MRN": {
+                "annotated": 140,
+                "exact_hits": 80,
+                "incomplete": 0,
+                "overlap_hits": 80
+              },
+              "NAME": {
+                "annotated": 454,
+                "exact_hits": 106,
+                "incomplete": 0,
+                "overlap_hits": 112
+              },
+              "RELATIVE": {
+                "annotated": 160,
+                "exact_hits": 80,
+                "incomplete": 0,
+                "overlap_hits": 80
+              }
+            },
+            "counts": {
+              "incomplete_units": 0,
+              "protected_incomplete": 0,
+              "protected_overlaps": 0,
+              "protected_spans": 552,
+              "unannotated_units": 9618,
+              "units": 11158,
+              "units_with_review_candidates": 0
+            },
+            "overlap_semantics": "one-to-one typed overlap without precision or FPR",
+            "role_prediction_support": "unavailable_in_phase_a_snapshots"
+          }
+        }
+      }
+    },
+    "v1": {
+      "historical_style_practice_audit": {
+        "by_script": {
+          "deva": {
+            "labeled": 143,
+            "visible": 114
+          },
+          "hinglish": {
+            "labeled": 111,
+            "visible": 80
+          },
+          "latin": {
+            "labeled": 2976,
+            "visible": 437
+          }
+        },
+        "counts": {
+          "exported_clinical_probes": 4701,
+          "identifier_mentions": 3230,
+          "identifier_mentions_exported": 3172,
+          "input_clinical_probes": 4855,
+          "preserved_clinical_probes": 4701,
+          "required_files": 192,
+          "required_files_exported": 185,
+          "visible_mentions": 631
+        },
+        "quarantine_reasons": {
+          "ambiguous_identifier": 5,
+          "empty_file": 1,
+          "invalid_input": 1,
+          "json_depth_limit": 1,
+          "json_key_collision_or_fhir_key": 1,
+          "unsupported_attachment": 1,
+          "unsupported_format": 3
+        },
+        "report_counts": {
+          "files_quarantined": 13,
+          "files_sanitized": 187,
+          "files_total": 200,
+          "identifiers_detected": 2549,
+          "records_generalized": 0,
+          "records_linked": 0,
+          "records_processed": 772,
+          "records_quarantined": 0,
+          "records_suppressed": 0
+        }
+      },
+      "open_splits": {
+        "development": {
+          "by_format": {
+            "csv": {
+              "identifier_labels": 600,
+              "identifier_labels_in_locatable_units": 600,
+              "identifier_partial": 1,
+              "identifier_transformed": 200,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 399,
+              "protected_damaged": 0,
+              "protected_preserved": 200,
+              "protected_spans": 200,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "fhir": {
+              "identifier_labels": 746,
+              "identifier_labels_in_locatable_units": 746,
+              "identifier_partial": 0,
+              "identifier_transformed": 700,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 46,
+              "protected_damaged": 0,
+              "protected_preserved": 100,
+              "protected_spans": 100,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "json": {
+              "identifier_labels": 600,
+              "identifier_labels_in_locatable_units": 600,
+              "identifier_partial": 2,
+              "identifier_transformed": 200,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 200,
+              "literal_residuals": 398,
+              "protected_damaged": 0,
+              "protected_preserved": 300,
+              "protected_spans": 300,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 200,
+              "records_in_exported_file": 200,
+              "records_locatable": 200
+            },
+            "tsv": {
+              "identifier_labels": 450,
+              "identifier_labels_in_locatable_units": 450,
+              "identifier_partial": 2,
+              "identifier_transformed": 150,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 150,
+              "literal_residuals": 298,
+              "protected_damaged": 0,
+              "protected_preserved": 150,
+              "protected_spans": 150,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 150,
+              "records_in_exported_file": 150,
+              "records_locatable": 150
+            },
+            "txt": {
+              "identifier_labels": 761,
+              "identifier_labels_in_locatable_units": 761,
+              "identifier_partial": 63,
+              "identifier_transformed": 281,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 250,
+              "literal_residuals": 417,
+              "protected_damaged": 0,
+              "protected_preserved": 698,
+              "protected_spans": 698,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 250,
+              "records_in_exported_file": 250,
+              "records_locatable": 250
+            }
+          },
+          "counts": {
+            "identifier_labels": 3157,
+            "identifier_labels_in_locatable_units": 3157,
+            "identifier_partial": 68,
+            "identifier_transformed": 1531,
+            "identifier_unexported": 0,
+            "identifier_unresolved": 0,
+            "indexed": 1000,
+            "literal_residuals": 1558,
+            "protected_damaged": 0,
+            "protected_preserved": 1448,
+            "protected_spans": 1448,
+            "protected_unexported": 0,
+            "protected_unresolved": 0,
+            "records": 1000,
+            "records_in_exported_file": 1000,
+            "records_locatable": 1000
+          },
+          "extra_index_entries": 0,
+          "linkage": {
+            "eligible_pairs": 57,
+            "false_pairs": 0,
+            "pair_precision": null,
+            "pair_recall": 0.0,
+            "true_pairs": 0
+          },
+          "neutral_span_replay": {
+            "annotation_status": "generated_unreviewed",
+            "by_category": {
+              "EMAIL": {
+                "annotated": 1000,
+                "exact_hits": 1000,
+                "incomplete": 0,
+                "overlap_hits": 1000
+              },
+              "MRN": {
+                "annotated": 834,
+                "exact_hits": 200,
+                "incomplete": 0,
+                "overlap_hits": 200
+              },
+              "NAME": {
+                "annotated": 1140,
+                "exact_hits": 200,
+                "incomplete": 0,
+                "overlap_hits": 200
+              },
+              "RELATIVE": {
+                "annotated": 183,
+                "exact_hits": 100,
+                "incomplete": 0,
+                "overlap_hits": 100
+              }
+            },
+            "counts": {
+              "incomplete_units": 0,
+              "protected_incomplete": 0,
+              "protected_overlaps": 0,
+              "protected_spans": 1448,
+              "unannotated_units": 16520,
+              "units": 20366,
+              "units_with_review_candidates": 0
+            },
+            "overlap_semantics": "one-to-one typed overlap without precision or FPR",
+            "role_prediction_support": "unavailable_in_phase_a_snapshots"
+          }
+        },
+        "validation": {
+          "by_format": {
+            "csv": {
+              "identifier_labels": 240,
+              "identifier_labels_in_locatable_units": 240,
+              "identifier_partial": 0,
+              "identifier_transformed": 80,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 160,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "fhir": {
+              "identifier_labels": 340,
+              "identifier_labels_in_locatable_units": 340,
+              "identifier_partial": 0,
+              "identifier_transformed": 320,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 20,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "json": {
+              "identifier_labels": 240,
+              "identifier_labels_in_locatable_units": 240,
+              "identifier_partial": 0,
+              "identifier_transformed": 160,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 80,
+              "literal_residuals": 80,
+              "protected_damaged": 0,
+              "protected_preserved": 80,
+              "protected_spans": 80,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 80,
+              "records_in_exported_file": 80,
+              "records_locatable": 80
+            },
+            "tsv": {
+              "identifier_labels": 180,
+              "identifier_labels_in_locatable_units": 180,
+              "identifier_partial": 0,
+              "identifier_transformed": 60,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 60,
+              "literal_residuals": 120,
+              "protected_damaged": 0,
+              "protected_preserved": 60,
+              "protected_spans": 60,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 60,
+              "records_in_exported_file": 60,
+              "records_locatable": 60
+            },
+            "txt": {
+              "identifier_labels": 234,
+              "identifier_labels_in_locatable_units": 234,
+              "identifier_partial": 23,
+              "identifier_transformed": 134,
+              "identifier_unexported": 0,
+              "identifier_unresolved": 0,
+              "indexed": 100,
+              "literal_residuals": 77,
+              "protected_damaged": 0,
+              "protected_preserved": 252,
+              "protected_spans": 252,
+              "protected_unexported": 0,
+              "protected_unresolved": 0,
+              "records": 100,
+              "records_in_exported_file": 100,
+              "records_locatable": 100
+            }
+          },
+          "counts": {
+            "identifier_labels": 1234,
+            "identifier_labels_in_locatable_units": 1234,
+            "identifier_partial": 23,
+            "identifier_transformed": 754,
+            "identifier_unexported": 0,
+            "identifier_unresolved": 0,
+            "indexed": 400,
+            "literal_residuals": 457,
+            "protected_damaged": 0,
+            "protected_preserved": 552,
+            "protected_spans": 552,
+            "protected_unexported": 0,
+            "protected_unresolved": 0,
+            "records": 400,
+            "records_in_exported_file": 400,
+            "records_locatable": 400
+          },
+          "extra_index_entries": 0,
+          "linkage": {
+            "eligible_pairs": 21,
+            "false_pairs": 0,
+            "pair_precision": null,
+            "pair_recall": 0.0,
+            "true_pairs": 0
+          },
+          "neutral_span_replay": {
+            "annotation_status": "generated_unreviewed",
+            "by_category": {
+              "EMAIL": {
+                "annotated": 480,
+                "exact_hits": 400,
+                "incomplete": 0,
+                "overlap_hits": 400
+              },
+              "MRN": {
+                "annotated": 140,
+                "exact_hits": 80,
+                "incomplete": 0,
+                "overlap_hits": 80
+              },
+              "NAME": {
+                "annotated": 454,
+                "exact_hits": 101,
+                "incomplete": 0,
+                "overlap_hits": 103
+              },
+              "RELATIVE": {
+                "annotated": 160,
+                "exact_hits": 80,
+                "incomplete": 0,
+                "overlap_hits": 80
+              }
+            },
+            "counts": {
+              "incomplete_units": 0,
+              "protected_incomplete": 0,
+              "protected_overlaps": 0,
+              "protected_spans": 552,
+              "unannotated_units": 9618,
+              "units": 11158,
+              "units_with_review_candidates": 0
+            },
+            "overlap_semantics": "one-to-one typed overlap without precision or FPR",
+            "role_prediction_support": "unavailable_in_phase_a_snapshots"
+          }
+        }
+      }
+    }
+  },
+  "dataset_manifest_sha256": {
+    "development": "a851dae281ca341910235037e0b9c0340b53ef4cc6efc5eae4b60e3a8cdaf51b",
+    "validation": "4e338ce5b494b21cdbb4cfb0f0dea0f716a150ed1b28713e25959f97aa6ca772"
+  },
+  "dataset_open_vocabulary_overlap": {
+    "EMAIL": {
+      "validation_occurrences": 480,
+      "validation_occurrences_seen_in_development": 0,
+      "validation_unique": 379,
+      "validation_unique_seen_in_development": 0
+    },
+    "MRN": {
+      "validation_occurrences": 140,
+      "validation_occurrences_seen_in_development": 0,
+      "validation_unique": 140,
+      "validation_unique_seen_in_development": 0
+    },
+    "NAME": {
+      "validation_occurrences": 454,
+      "validation_occurrences_seen_in_development": 412,
+      "validation_unique": 164,
+      "validation_unique_seen_in_development": 136
+    },
+    "PROTECT": {
+      "validation_occurrences": 552,
+      "validation_occurrences_seen_in_development": 457,
+      "validation_unique": 38,
+      "validation_unique_seen_in_development": 22
+    },
+    "RELATIVE": {
+      "validation_occurrences": 160,
+      "validation_occurrences_seen_in_development": 146,
+      "validation_unique": 65,
+      "validation_unique_seen_in_development": 56
+    },
+    "source_labels": {
+      "validation_occurrences": 4641,
+      "validation_occurrences_seen_in_development": 2981,
+      "validation_unique": 37,
+      "validation_unique_seen_in_development": 16
+    }
+  },
+  "evaluator": "source-only inventory and independent original-occurrence alignment",
+  "legacy_audit_original_corpus_reproduced": [
+    "v1",
+    "candidate"
+  ],
+  "rejection_suite": {
+    "fixtures": 9,
+    "mismatches": {
+      "invalid-utf8.txt": {
+        "expected": "quarantined",
+        "observed": "sanitized"
+      },
+      "metadata.json": {
+        "expected": "metadata_zero_records",
+        "observed": "metadata_index_entry"
+      }
+    }
+  }
+}

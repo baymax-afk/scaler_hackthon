@@ -3,10 +3,15 @@ from dataclasses import dataclass
 import re
 import unicodedata
 
+from .source_context import normalize_label
+
 MAX_UNIT = 524288
+LOCALIZED_PATIENT_LABELS = ("मरीज़ का नाम", "मरीज़ का नाम", "mareez ka naam", "ರೋಗಿಯ ಹೆಸರು", "நோயாளியின் பெயர்")
 
 FIELD_GROUPS = {
-    "NAME": "name|patient|patient name|patient full name|full name|first name|last name|surname|patientname|alternate patient name|naam|नाम|मरीज का नाम|रोगी का नाम|मरीज़|मरीज|रोगी",
+    "NAME": "name|patient|patient name|patient full name|full name|first name|last name|surname|"
+            "patientname|alternate patient name|नाम|मरीज का नाम|रोगी का नाम|मरीज़|मरीज|रोगी|"
+            + "|".join(LOCALIZED_PATIENT_LABELS),
     "RELATIVE": "relative|रिश्तेदार|relative name|father name|mother name|husband name|guardian|guardian name|attendant|caregiver",
     "PHONE": "phone|phone number|patient phone|mobile|mobile number|mobile no|contact no|contact number|telephone|tel|फोन|फ़ोन|मोबाइल",
     "EMAIL": "email|email address|e mail",
@@ -20,9 +25,42 @@ FIELD_GROUPS = {
     "INSURANCE_ID": "insurance id|insurance number|policy number|policy no|member id|pmjay id",
     "PATH": "source path|original path|original filename|input path|original file",
 }
+FHIR_NAME_TYPES = {"contact name": "NAME", "related person name": "RELATIVE"}
+EXPLICIT_NAME_ROLES = {
+    "patient": "patient", "patient name": "patient", "patient full name": "patient",
+    "मरीज का नाम": "patient", "रोगी का नाम": "patient",
+    "contact name": "contact", "related person name": "related_person",
+    "relative": "relative", "relative name": "relative", "father name": "relative",
+    "mother name": "relative", "husband name": "relative", "रिश्तेदार": "relative",
+    **dict.fromkeys(LOCALIZED_PATIENT_LABELS, "patient"),
+}
 FIELDS = {label: kind for kind, labels in FIELD_GROUPS.items() for label in labels.split("|")}
-LABELS = "|".join(re.escape(label).replace(r"\ ", r"[ _-]{1,8}") for label in sorted(FIELDS, key=len, reverse=True))
-LABELED = re.compile(r"(?:^|[\n;,|])[ \t]{0,32}(" + LABELS + r")[ \t]*[:=#][ \t]{0,32}([^\r\n;,|]{1,160})", re.I)
+LABELS = "|".join(re.escape(label).replace(r"\ ", r"[ \t_-]{1,8}")
+                  for label in sorted(FIELDS, key=len, reverse=True))
+LABELED = re.compile(
+    r"(?:^|[\n;,|])[ \t]{0,32}(" + LABELS +
+    r")(?:[ \t]*[:：=#][ \t]{0,32}|[ \t]{1,8}/[ \t]{1,8})"
+    r"((?:[^\r\n;,|]|(?<=\d),(?=\d)){1,160})", re.I,
+)
+NAME_INITIALS = re.compile(r",[ \t]*(?:[^\W\d_]\.[ \t]*){1,3}(?=$|[\r\n;,|])")
+PATIENT_ROLE_FIELD = re.compile(r"(?:patient display|(?:referred|admitted|enrolled) (?:subject|person)|beneficiary)(?: name)?")
+CHART_FIELD = re.compile(
+    r"(?:medical record|patient (?:chart|record)|chart) (?:no|number|id|identifier|ref|reference)"
+)
+CHART_VALUE = r"[^\W_]+(?:[-./][^\W_]+)*"
+CHART_CUE = re.compile(
+    r"(?im)(?:^[ \t]*(?:chart|medical[ \t]+record)|\breg(?:istration)?)[ \t]*(?:\#|"
+    r"(?:number|no\.?|id|identifier)[ \t]*[:=#])[ \t]*(" + CHART_VALUE +
+    r")(?=$|[\s,;|])"
+)
+LABEL_SPACES = str.maketrans({"\u00a0": " ", "\u202f": " "})
+DOSE = r"\d+(?:[.,]\d+)?[ \t]*(?:mg|mcg|[µμ]g|g|ml|iu|units?)\b"
+INLINE_CLINICAL = re.compile(
+    r"(?:^|[ \t])(?:\([ \t]*)?(?:"
+    r"(?:आयु|उम्र)[ \t]*[:：=][ \t]*\d|(?:(?:dose|dosage)(?:[ \t]*[:=][ \t]*|[ \t]+))?" + DOSE
+    + r"|(?:(?:medication|rx)[ \t]*[:=][ \t]*[\w-]{1,40}|metformin|amlodipine|salbutamol)[ \t]+" + DOSE
+    + r"|follow[ -]up[ \t]+in[ \t]+\d+[ \t]+(?:hours?|days?|weeks?|months?)\b)", re.I,
+)
 NAME_TOKEN = r"[A-Za-z\u0900-\u097f][A-Za-z\u0900-\u097f.'’\-]{0,29}"
 NAME = NAME_TOKEN + r"(?:[ \t]+" + NAME_TOKEN + r"){0,2}"
 CALLER = re.compile(r"(?i:\b(?:called by|visitor|attendant)\b[ \t]{0,8}[:=]?[ \t]{1,8})(" +
@@ -30,7 +68,16 @@ CALLER = re.compile(r"(?i:\b(?:called by|visitor|attendant)\b[ \t]{0,8}[:=]?[ \t
 VISITOR = re.compile(r"(?m)^\d{1,2}:\d{2}[ \t]+-[ \t]+(" + NAME +
                      r")[ \t]+\((?i:attendant|visitor|guardian)\b")
 RELATIVE = re.compile(r"\b([SDWC]/o)[ \t]+(" + NAME + r")(?=$|[\r\n;,|])", re.I)
-HONORIFIC = re.compile(r"(?im)^[ \t]{0,16}(" + NAME + r")[ \t]+(?:ji|sahab|didi)[ \t]+(?:aaye|aayi|ka|ki)\b")
+RELATIONSHIP_LINE = re.compile(r"(?:^|[\n;,|])[ \t]*[SDW]/o[ \t]+([^\r\n;,|]{1,160})(?=$|[\r\n;,|])", re.I)
+HONORIFIC = re.compile(r"(?im)^[ \t]{0,16}(" + NAME + r")[ \t]+(?:ji|sahab|didi|behenji)[ \t]+(?:aaye|aayi|ka|ki)\b")
+# Line-initial named subject plus a possessive and a measured vital.
+VITAL_SUBJECT = re.compile(
+    r"(?m)^[ \t]*([A-Z][a-zA-Z’'-]{1,29}(?:[ \t]+[A-Z][a-zA-Z’'-]{1,29}){1,3})"
+    r"[ \t]+(?i:ka|ki)[ \t]+(?i:BP|blood pressure)[ \t]*[:=]?[ \t]*"
+    r"\d{2,3}[ \t]*/[ \t]*\d{2,3}(?!\d)"
+)
+VITAL_NONPERSON = {"dr", "doctor", "nurse", "prof", "left", "right", "arm", "leg", "patient",
+                   "ward", "blood", "supine", "standing", "sitting", "upper", "lower"}
 INLINE_PHONE = re.compile(r"(?i)\b(?:phone|mob|mobile)[ \t]{1,8}((?:\+91[ -]?)?\d{5}[ -]?\d{5})(?!\d)")
 INLINE_RELATIVE = re.compile(r"(?i)\b([SDW]/o)[ \t]+(" + NAME + r")\.(?=[ \t]+(?:Phone|Mob|Mobile)\b)")
 COMPLAINT = re.compile(r"(?:^|[ \t])(?:fever|cough|pain|vomiting|weakness|headache|dizziness|chakkar|"
@@ -48,6 +95,7 @@ SHAPES = (
     ("MRN", re.compile(r"(?<![a-z0-9])(?:UHID|MRN|IPD|OPD|SNJ|JJH|ADM|DHH)[- /]?[0-9]{3,12}(?:[-/][0-9]{3,12})?(?![a-z0-9])", re.I)),
     ("ABHA", re.compile(r"(?<![a-z0-9])[0-9]{2}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}(?![a-z0-9])", re.I)),
     ("AADHAAR", re.compile(r"(?<![a-z0-9])(?:[0-9]{4}[ -]?[0-9]{4}|[xX*]{4}[ -]?[xX*]{4})[ -]?[0-9]{4}(?![a-z0-9])", re.I)),
+    ("PHONE", re.compile(r"(?<![^\W_])(?:\+91[ -]?)?[6-9][0-9][x*]{6}[0-9]{2}(?![^\W_])", re.I)),
     ("PHONE", re.compile(r"(?<![a-z0-9])(?:\+91[ -]?|0)?[6-9][0-9]{4}[ -]?[0-9]{5}(?![a-z0-9])", re.I)),
 )
 NUMERIC = {"PHONE", "AADHAAR", "ABHA"}
@@ -72,6 +120,7 @@ class Finding:
     kind: str
     score: float
     reason: str
+    role: str | None = None
 
 
 @dataclass(frozen=True)
@@ -79,14 +128,6 @@ class DetectionResult:
     findings: tuple[Finding, ...] = ()
     review: tuple[Finding, ...] = ()
     error: str | None = None
-
-
-def normalize_label(label):
-    label = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", label)
-    label = re.sub(r"\([^)]*\)", "", label.casefold())
-    words = (character if character.isalnum() or unicodedata.category(character).startswith("M")
-             else " " for character in label)
-    return " ".join("".join(words).split())
 
 
 def comparison_view(text):
@@ -101,6 +142,33 @@ def comparison_view(text):
     return "".join(characters), positions
 
 
+def identifier_prefix(value, kind):
+    if kind in {"NAME", "RELATIVE"}:
+        clinical = INLINE_CLINICAL.search(value)
+        if clinical:
+            value = value[:clinical.start()]
+    return value.rstrip()
+
+
+def name_word(token):
+    return bool(token) and token[0].isalpha() and all(
+        char.isalpha() or unicodedata.category(char).startswith("M") or char in ".'’-"
+        for char in token
+    )
+
+
+def person_name(value):
+    surname, comma, initials = value.partition(",")
+    if comma:
+        return name_word(surname.strip()) and bool(NAME_INITIALS.fullmatch(comma + initials))
+    words = value.split()
+    return 2 <= len(words) <= 5 and all(map(name_word, words))
+
+
+def chart_number(value):
+    return 3 <= len(value) <= 64 and any(char.isdecimal() for char in value)
+
+
 def detect(unit: SourceUnit) -> DetectionResult:
     source = unit.text
     if len(source) > MAX_UNIT:
@@ -109,30 +177,71 @@ def detect(unit: SourceUnit) -> DetectionResult:
         return DetectionResult()
     label = normalize_label(unit.label)
     typed = FIELDS.get(label)
+    if unit.section == "fhir":
+        typed = FHIR_NAME_TYPES.get(label, typed)
+    accepted = []
+    if not typed and unit.channel == "content":
+        value = source.strip()
+        start = len(source) - len(source.lstrip())
+        if label == "naam" and person_name(value):
+            return DetectionResult((Finding(start, start + len(value), "NAME", .94, "name_field"),))
+        if PATIENT_ROLE_FIELD.fullmatch(label) and person_name(value):
+            return DetectionResult((Finding(start, start + len(value), "NAME", .94,
+                                            "patient_field_context", "patient"),))
+        if CHART_FIELD.fullmatch(label) and chart_number(value) and re.fullmatch(CHART_VALUE, value):
+            return DetectionResult((Finding(start, start + len(value), "MRN", .94, "chart_context"),))
     if typed and unit.channel in {"content", "metadata"}:
         value = source.strip()
         start = len(source) - len(source.lstrip())
-        location = Finding(start, start + len(value), typed, .98, "typed_field")
-        return DetectionResult((location,))
+        prefix = identifier_prefix(value.translate(LABEL_SPACES), typed)
+        if prefix:
+            location = Finding(start, start + len(prefix), typed, .98, "typed_field",
+                               EXPLICIT_NAME_ROLES.get(label))
+            if len(prefix) == len(value):
+                return DetectionResult((location,))
+            accepted.append(location)
 
-    accepted = []
     review = []
-    for match in LABELED.finditer(source):
-        value = match[2].rstrip()
-        kind = FIELDS.get(normalize_label(match[1]))
+    # These cue-space substitutions are one-to-one in code points.
+    label_view = source.translate(LABEL_SPACES) if "\u00a0" in source or "\u202f" in source else source
+    for match in LABELED.finditer(label_view):
+        inline_label = normalize_label(match[1])
+        kind = FIELDS.get(inline_label)
+        value = identifier_prefix(match[2], kind)
+        if kind in {"NAME", "RELATIVE"} and value == match[2].rstrip() and name_word(value):
+            if initials := NAME_INITIALS.match(label_view, match.end(2)):
+                value = label_view[match.start(2):initials.end()].rstrip()
+        if "/" in label_view[match.end(1):match.start(2)] and (
+                kind not in {"NAME", "RELATIVE"} or not person_name(value)):
+            continue
         if kind and value.casefold() not in NULLS:
-            accepted.append(Finding(match.start(2), match.start(2) + len(value), kind, .94, "local_label"))
+            accepted.append(Finding(match.start(2), match.start(2) + len(value), kind, .94,
+                                    "local_label", EXPLICIT_NAME_ROLES.get(inline_label)))
     for pattern, kind in ((HONORIFIC, "NAME"), (INLINE_PHONE, "PHONE")):
         for match in pattern.finditer(source):
+            if kind == "NAME" and VITAL_NONPERSON.intersection(match[1].casefold().replace(".", "").split()):
+                continue
             accepted.append(Finding(*match.span(1), kind, .90, "local_role"))
+    for match in VITAL_SUBJECT.finditer(label_view):
+        if not VITAL_NONPERSON.intersection(match[1].casefold().split()):
+            accepted.append(Finding(*match.span(1), "NAME", .88, "vital_subject", "patient"))
+    for match in CHART_CUE.finditer(label_view):
+        if chart_number(match[1]):
+            accepted.append(Finding(*match.span(1), "MRN", .94, "chart_context"))
     for pattern in (CALLER, VISITOR):
         for match in pattern.finditer(source):
             accepted.append(Finding(*match.span(1), "RELATIVE", .90, "local_role"))
     for match in INLINE_RELATIVE.finditer(source):
-        accepted.append(Finding(*match.span(2), "RELATIVE", .89, "relationship"))
+        accepted.append(Finding(*match.span(2), "RELATIVE", .89, "relationship", "relative"))
+    for match in RELATIONSHIP_LINE.finditer(label_view):
+        value = identifier_prefix(match[1], "RELATIVE")
+        if person_name(value):
+            accepted.append(Finding(match.start(1), match.start(1) + len(value),
+                                    "RELATIVE", .87, "relationship", "relative"))
     for match in RELATIVE.finditer(source):
         start, end = match.span(2)
-        finding = Finding(start, end, "RELATIVE", .85, "relationship")
+        role = "contact" if match[1].casefold() == "c/o" else "relative"
+        finding = Finding(start, end, "RELATIVE", .85, "relationship", role)
         prefix = source[max(0, match.start() - 3):match.start()].casefold()
         if prefix.endswith(("k/", "h/")):
             continue

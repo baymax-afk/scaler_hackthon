@@ -1,7 +1,7 @@
 """Validate generated robustness_v2 inputs and audit independent Research Releases."""
 import argparse
 import base64
-from collections import Counter, defaultdict, deque
+from collections import Counter, defaultdict
 import csv
 from functools import lru_cache
 from hashlib import sha256
@@ -12,8 +12,13 @@ import sys
 from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "docs/datasets/robustness_v2"))
+sys.path[:0] = [str(ROOT), str(ROOT / "docs/datasets/robustness_v2")]
 from generate import FORMATS, SCENARIOS, VERSION
+from evaluation.matching import overlap_matches
+from evaluation.role_metrics import RoleMetrics
+from evaluation.release_evidence import OccurrenceAlignment, reconcile
+from evaluation.release_scan import scan_known_surfaces
+from evaluation.source_inventory import annotated_source_id, source_inventory
 
 
 LINEAGE = ("id", "patient_group", "template_family", "institution")
@@ -37,14 +42,26 @@ def digest(path):
 def dereference(value, locator):
     if locator == "doc":
         return value
-    for part in locator.split("/")[1:]:
-        part = part.replace("~1", "/").replace("~0", "~")
-        value = value[int(part)] if isinstance(value, list) else value[part]
+    require(locator.startswith("/"), "invalid_json_pointer")
+    for encoded in locator.split("/")[1:]:
+        part = encoded.replace("~1", "/").replace("~0", "~")
+        require(part.replace("~", "~0").replace("/", "~1") == encoded, "invalid_json_pointer")
+        if isinstance(value, list):
+            index = int(part)
+            require(index >= 0 and part == str(index), "invalid_array_index")
+            value = value[index]
+        else:
+            value = value[part]
     return value
 
 
-@lru_cache(maxsize=32)
 def read_document(path, fmt):
+    stat = path.stat()
+    return parsed_document(path, fmt, (stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns))
+
+
+@lru_cache(maxsize=32)
+def parsed_document(path, fmt, _file_version):
     if fmt in {"csv", "tsv"}:
         raw = path.read_bytes()
         encoding = "utf-16" if raw.startswith((b"\xff\xfe", b"\xfe\xff")) else "utf-8-sig"
@@ -61,7 +78,9 @@ def record_value(path, fmt, locator):
     value = read_document(path, fmt)
     if fmt in {"csv", "tsv"}:
         require(locator.startswith("row:"), "invalid_row_locator")
-        return value[int(locator[4:])]
+        index = int(locator[4:])
+        require(index >= 0 and locator == f"row:{index}", "invalid_row_locator")
+        return value[index]
     return dereference(value, locator)
 
 
@@ -72,10 +91,6 @@ def unit_text(value, unit):
         return base64.b64decode(value, validate=True).decode("utf-8")
     require(unit["representation"] in {"text", "scalar"}, "unknown_representation")
     return str(value)
-
-
-def unit_id(record_id, number):
-    return f"{record_id}/{number}"
 
 
 def validate_fhir(bundle):
@@ -228,11 +243,7 @@ def validate(root, fhir_schema=None):
 
 
 def source_units(folder):
-    _, records = load_split(folder)
-    for record in records:
-        value = record_value(folder / "input" / record["file"], record["format"], record["loc"])
-        for i, unit in enumerate(record["units"]):
-            yield {"id": unit_id(record["id"], i), "text": unit_text(value, unit), "label": unit["label"]}
+    yield from source_inventory(folder / "input")
 
 
 def score_spans(folder, raw, predictions):
@@ -242,50 +253,83 @@ def score_spans(folder, raw, predictions):
     actual_units = json.loads(raw)
     require(actual_units == list(source_units(folder)), "source_units_do_not_match_dataset")
     source = {unit["id"]: unit["text"] for unit in actual_units}
-    truth_units = {unit_id(record["id"], index): unit
-                   for record in records for index, unit in enumerate(record["units"])}
-    require(source.keys() == predictions["units"].keys() == truth_units.keys(), "prediction_join")
+    truth_units = defaultdict(list)
+    for record in records:
+        for unit in record["units"]:
+            truth_units[annotated_source_id(record, unit)].extend(unit["spans"])
+    require(source.keys() == predictions["units"].keys() and truth_units.keys() <= source.keys(),
+            "prediction_join")
     totals = Counter()
     by_kind = defaultdict(Counter)
-    for key, unit in truth_units.items():
-        result = predictions["units"][key]
+    role_metrics = RoleMetrics()
+    for key, result in predictions["units"].items():
         selected = {tuple(item) for item in result["accepted"]}
         require(all(0 <= s < e <= len(source[key]) for s, e, _ in selected), "invalid_prediction_span")
+        incomplete = result["status"] != "complete"
         totals["units"] += 1
-        totals["incomplete_units"] += result["status"] != "complete"
+        totals["incomplete_units"] += incomplete
         totals["units_with_review_candidates"] += bool(result["review"])
-        for span in unit["spans"]:
+        if key not in truth_units:
+            totals["unannotated_units"] += 1
+        explicit_roles = {(span["start"], span["end"], span["kind"]): span["role"]
+                          for span in truth_units.get(key, ())
+                          if span["kind"] in IDENTIFIERS and span.get("role")}
+        role_metrics.update(explicit_roles, selected, result)
+        gold = defaultdict(set)
+        for span in truth_units.get(key, ()):
             start, end, kind = span["start"], span["end"], span["kind"]
+            require(0 <= start < end <= len(source[key]), "invalid_annotation_span")
+            require(source[key][start:end] == span["surface"], "annotation_source_mismatch")
             if kind == "PROTECT":
                 totals["protected_spans"] += 1
                 totals["protected_overlaps"] += any(s < end and start < e for s, e, _ in selected)
+                totals["protected_incomplete"] += incomplete
             elif kind in IDENTIFIERS:
-                bucket = by_kind[kind]
-                bucket["annotated"] += 1
-                bucket["exact_hits"] += (start, end, kind) in selected
-                bucket["overlap_hits"] += any(s < end and start < e and k == kind
-                                               for s, e, k in selected)
-                bucket["incomplete"] += result["status"] != "complete"
+                gold[kind].add((start, end, kind))
+        for kind, expected in gold.items():
+            observed = {finding for finding in selected if finding[2] == kind}
+            bucket = by_kind[kind]
+            bucket["annotated"] += len(expected)
+            bucket["exact_hits"] += len(expected & observed) if not incomplete else 0
+            bucket["overlap_hits"] += overlap_matches(expected, observed) if not incomplete else 0
+            bucket["incomplete"] += len(expected) if incomplete else 0
     return {"counts": totals, "by_category": by_kind, "annotation_status": "generated_unreviewed",
-            "overlap_semantics": "typed overlap per annotated span, without precision or FPR"}
+            "role_metrics": role_metrics.summary(),
+            "overlap_semantics": "one-to-one typed overlap without precision or FPR"}
 
 
 def released_by_input(folder, release):
-    manifest = read_json(folder / "manifest.json")
-    grouped = defaultdict(deque)
-    for row in read_json(release / "report.json")["files"]:
-        grouped[row["input_sha256"]].append(row)
-    result = {}
-    for relative, digest_value in sorted(manifest["files"].items()):
-        require(bool(grouped[digest_value]), "missing_report_file")
-        row = grouped[digest_value].popleft()
-        if row["output"]:
-            target = (release / row["output"]).resolve()
-            require(target.is_relative_to((release / "sanitized").resolve()) and target.is_file(),
-                    "unsafe_report_path")
-        result[relative] = row
-    require(not any(grouped.values()), "unmatched_report_file")
-    return result
+    source = folder / "input"
+    files = read_json(folder / "manifest.json")["files"]
+    actual = {path.relative_to(source).as_posix(): digest(path)
+              for path in source.rglob("*") if path.is_file()}
+    require(files == actual, "audit_input_manifest_mismatch")
+    return reconcile(release, files)
+
+
+def matching_index_entry(index, output, loc):
+    if output is None:
+        return None, loc
+    ancestors = [loc]
+    if loc.startswith("/"):
+        parent = loc.rsplit("/", 1)[0]
+        while parent:
+            ancestors.append(parent)
+            parent = parent.rsplit("/", 1)[0]
+    if loc != "doc":
+        ancestors.append("doc")
+    for ancestor in ancestors:
+        row = index.get((output, ancestor))
+        if row:
+            destination = row.get("out", ancestor)
+            suffix = loc if ancestor == "doc" and loc.startswith("/") else loc[len(ancestor):]
+            if ancestor != loc:
+                if ancestor == "doc" and loc.startswith("row:"):
+                    return row, loc
+                if destination.startswith("/") or destination == "doc":
+                    destination = ("" if destination == "doc" else destination) + suffix
+            return row, destination
+    return None, loc
 
 
 def audit(folder, release):
@@ -294,87 +338,146 @@ def audit(folder, release):
     index = {}
     for row in map(json.loads, (release / "records.jsonl").read_text().splitlines()):
         key = row["file"], row["loc"]
+        require(all(isinstance(value, str) and value for value in (*key, row.get("out", key[1]))),
+                "invalid_release_locator")
+        require(row.get("patient") is None or isinstance(row["patient"], str), "invalid_pseudonym")
+        require(row.get("status", "sanitized") in ("sanitized", "generalized", "suppressed"),
+                "invalid_record_status")
         require(key not in index, "duplicate_release_locator")
         index[key] = row
     counters = defaultdict(Counter)
     matched = set()
-    expected_linked = defaultdict(list)
+    occupied = set()
+    known_identifiers = set()
+    predicted_by_id = {}
     predicted_groups = defaultdict(list)
     for record in truth:
-        output = destinations[record["file"]]["output"]
+        original = record_value(folder / "input" / record["file"], record["format"], record["loc"])
+        file_entry = destinations[record["file"]]
+        output = file_entry["output"]
         by_format = counters[record["format"]]
         by_format["records"] += 1
         by_format["records_in_exported_file"] += bool(output)
         key = output, record["loc"]
-        row = index.get(key)
-        if row:
-            matched.add(key)
+        row, destination = matching_index_entry(index, output, record["loc"])
+        suppressed = file_entry["status"] == "suppressed" or bool(row and row.get("status") == "suppressed")
+        if suppressed:
+            by_format["records_suppressed"] += 1
+        if key in index and not suppressed:
             by_format["indexed"] += 1
-            predicted = row.get("patient")
-        else:
-            predicted = None
+        predicted = row.get("patient") if row and not suppressed else None
+        if row:
+            matched.add((row["file"], row["loc"]))
         try:
-            after = record_value(release / output, record["format"], row.get("out", record["loc"])
-                                 if row else record["loc"]) if output else None
+            after = record_value(release / output, record["format"], destination) if output and not suppressed else None
         except (OSError, KeyError, IndexError, TypeError, UnicodeError, csv.Error, ValueError):
             after = None
         by_format["records_locatable"] += after is not None
+        if after is not None:
+            output_record = output, destination
+            require(output_record not in occupied, "reused_output_record")
+            occupied.add(output_record)
         if predicted is not None:
             if after is None or predicted not in json.dumps(after, ensure_ascii=False):
                 by_format["pseudonyms_missing_from_records"] += 1
                 predicted = None
             else:
                 predicted_groups[predicted].append(record["patient_group"])
-        expected_linked[record["patient_group"]].append(predicted)
+        if "id" in record:
+            predicted_by_id[record["id"]] = predicted
         for unit in record["units"]:
-            if after is None:
-                rendered = None
-            else:
+            source = unit_text(original, unit)
+            rendered = None
+            if after is not None:
                 try:
                     rendered = unit_text(after, unit)
                 except (KeyError, IndexError, TypeError, UnicodeError, ValueError):
-                    rendered = None
-            locatable = rendered is not None
-            rendered = rendered if locatable else ""
-            protected = Counter(s["surface"] for s in unit["spans"] if s["kind"] == "PROTECT")
-            by_format["protected_spans"] += sum(protected.values())
-            by_format["protected_preserved"] += sum(min(count, rendered.count(surface))
-                                                     for surface, count in protected.items())
-            annotated = Counter(s["surface"] for s in unit["spans"] if s["kind"] in IDENTIFIERS)
-            by_format["identifier_labels"] += sum(annotated.values())
-            by_format["identifier_labels_in_locatable_units"] += sum(annotated.values()) if locatable else 0
-            by_format["literal_residuals"] += sum(min(count, max(0, rendered.count(surface) - protected[surface]))
-                                                  for surface, count in annotated.items())
-    pairs = sum(len(group) == 2 for group in expected_linked.values())
-    true_links = sum(len(group) == 2 and group[0] is not None and group[0] == group[1]
-                     for group in expected_linked.values())
+                    pass
+            coverage = "unexported" if output is None or suppressed else "unresolved"
+            mapping = OccurrenceAlignment(source, rendered)
+            for span in unit["spans"]:
+                start, end, kind = span["start"], span["end"], span["kind"]
+                require(0 <= start < end <= len(source) and source[start:end] == span["surface"],
+                        "invalid_original_span")
+                outcome = mapping.outcome(start, end) if rendered is not None else coverage
+                if kind == "PROTECT":
+                    by_format["protected_spans"] += 1
+                    by_format["protected_preserved"] += outcome == "visible"
+                    by_format["protected_damaged"] += outcome in {"partial", "transformed"}
+                    by_format["protected_unresolved"] += outcome == "unresolved"
+                    by_format["protected_unexported"] += outcome == "unexported"
+                elif kind in IDENTIFIERS:
+                    known_identifiers.add(span["surface"])
+                    by_format["identifier_labels"] += 1
+                    by_format["identifier_labels_in_locatable_units"] += rendered is not None
+                    by_format["literal_residuals"] += outcome == "visible"
+                    by_format["identifier_partial"] += outcome == "partial"
+                    by_format["identifier_transformed"] += outcome == "transformed"
+                    by_format["identifier_unresolved"] += outcome == "unresolved"
+                    by_format["identifier_unexported"] += outcome == "unexported"
+    linkage_path = folder / "linkage.json"
+    eligible = read_json(linkage_path)["eligible_same_patient"] if linkage_path.is_file() else []
+    pairs = len(eligible)
+    true_links = sum(predicted_by_id[left] is not None and predicted_by_id[left] == predicted_by_id[right]
+                     for left, right in eligible)
     def count_pairs(n):
         return n * (n - 1) // 2
 
     false_links = sum(count_pairs(len(group)) - sum(count_pairs(n) for n in Counter(group).values())
                       for group in predicted_groups.values())
     return {"by_format": counters, "extra_index_entries": len(index.keys() - matched),
+            "release_surface_scan": scan_known_surfaces(release, known_identifiers),
             "files": Counter(row["status"] for row in destinations.values()),
+            "linkage_truth_available": linkage_path.is_file(),
             "linkage": {"eligible_pairs": pairs, "true_pairs": true_links, "false_pairs": false_links,
                         "pair_precision": true_links / (true_links + false_links) if true_links + false_links else None,
                         "pair_recall": true_links / pairs if pairs else None},
-            "scope": "literal annotated input surfaces at mapped output coordinates"}
+            "scope": "conservative original-occurrence alignment within mapped output units"}
 
 
 def audit_rejection(folder, release):
     expected = read_json(folder / "manifest.json")
-    observed = {row["input_sha256"]: row["status"] for row in read_json(release / "report.json")["files"]}
-    require(set(observed) == {r["sha256"] for r in expected.values()}, "rejection_report_join")
-    return {"fixtures": len(expected), "mismatches": {
-        name: {"expected": item["expected_disposition"], "observed": observed[item["sha256"]]}
-        for name, item in expected.items() if observed[item["sha256"]] != item["expected_disposition"]
-    }}
+    observed = reconcile(release, {name: item["sha256"] for name, item in expected.items()})
+    index = {json.loads(line)["file"] for line in (release / "records.jsonl").read_text().splitlines()}
+    mismatches = {}
+    for name, item in expected.items():
+        entry = observed[name]
+        if item["expected_disposition"] != entry["status"]:
+            mismatches[name] = {"expected": item["expected_disposition"], "observed": entry["status"]}
+        elif item["reason"] == "metadata_zero_records" and entry["output"] in index:
+            mismatches[name] = {"expected": "metadata_zero_records", "observed": "metadata_index_entry"}
+    return {"fixtures": len(expected), "mismatches": mismatches}
+
+
+def vocabulary_audit(root):
+    def surfaces(folder):
+        _, records = load_split(folder)
+        groups = defaultdict(Counter)
+        for record in records:
+            for field in record["units"]:
+                for span in field["spans"]:
+                    if span["kind"] in IDENTIFIERS or span["kind"] == "PROTECT":
+                        groups[span["kind"]][span["surface"]] += 1
+        groups["source_labels"].update(item["label"] for item in source_units(folder)
+                                       if item.get("label"))
+        return groups
+
+    dev = surfaces(root / "development")
+    validation = surfaces(root / "validation")
+    return {
+        kind: {"validation_occurrences": sum(group.values()),
+               "validation_occurrences_seen_in_development": sum(
+                    n for value, n in group.items() if value in dev[kind]),
+               "validation_unique": len(group),
+               "validation_unique_seen_in_development": len(group.keys() & dev[kind].keys())}
+        for kind, group in sorted(validation.items())
+    }
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    for command in ("validate", "units", "score", "release", "rejection"):
+    for command in ("validate", "units", "score", "release", "rejection", "vocabulary"):
         sub = commands.add_parser(command)
         sub.add_argument("dataset", type=Path)
         if command == "validate":
@@ -393,6 +496,8 @@ def main():
         result = score_spans(args.dataset, args.units.read_bytes(), read_json(args.predictions))
     elif args.command == "release":
         result = audit(args.dataset, args.release)
+    elif args.command == "vocabulary":
+        result = vocabulary_audit(args.dataset)
     else:
         result = audit_rejection(args.dataset, args.release)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))

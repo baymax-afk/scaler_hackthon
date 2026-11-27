@@ -1,13 +1,32 @@
 import hashlib
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import unittest
 
-from evaluate import keyed, predict, score
+from evaluate import keyed, practice_audit, predict, score
 from splits import split
 
 
 class EvaluationTest(unittest.TestCase):
+    def test_practice_counts_files_with_joint_exposure_once(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "sanitized").mkdir()
+            path = "sanitized/note.txt"
+            (root / path).write_text("Fictional Name visited Example Village")
+            (root / "report.json").write_text(json.dumps({"counts": {}, "files": [
+                {"input_sha256": "one", "output": path},
+                {"input_sha256": "two", "output": None, "reason": "invalid_input"}]}))
+            entities = [{"type": kind, "surface": value, "script": "latin", "channel": "content"}
+                        for kind, value in (("PATIENT_NAME", "Fictional Name"),
+                                            ("VILLAGE", "Example Village"))]
+            units = {key: {"entities": entities} for key in ("one", "two")}
+            truth = {"files": {key: {"sha256": key, "units": units} for key in ("one", "two")}}
+            exposure = practice_audit(root, truth)["file_exposure"]
+            self.assertEqual(exposure, {"exported": 1, "patient_name_visible": 1,
+                                        "patient_name_and_geography_visible": 1})
+
     def test_open_v2_example_keeps_roles_and_incomplete_join_explicit(self):
         fixture = Path(__file__).resolve().parents[1] / "docs/datasets/robustness_v2/open_example"
         raw = (fixture / "inputs.json").read_bytes()
@@ -51,6 +70,26 @@ class EvaluationTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "invalid_unit_join"):
             score(raw, truth, predict(raw))
 
+    def test_exact_role_mismatch_is_separate_from_category_match(self):
+        raw = json.dumps([{"id": "a", "record_id": "fixture", "locator": "doc",
+                           "text": "Patient: Mira Sen"}]).encode()
+        expected = {"record_id": "fixture", "locator": "doc",
+                    "input_sha256": hashlib.sha256(raw).hexdigest(), "gold": [[9, 17, "NAME"]],
+                    "occurrences": [{"start": 9, "end": 17, "type": "NAME", "role": "patient",
+                                     "treatment": "REMOVE"}],
+                    "annotation_status": "adjudicated", "negative_scope": "exhaustive"}
+        snapshot = predict(raw)
+        result = score(raw, {"a": expected}, snapshot, strict_v2=True)
+        self.assertEqual(result["role_metrics"]["correct_exact"], 1)
+        snapshot["units"]["a"]["accepted_roles"] = [[9, 17, "NAME", "relative"]]
+        result = score(raw, {"a": expected}, snapshot, strict_v2=True)
+        self.assertEqual(result["precision"], 1.0)
+        self.assertEqual(result["role_metrics"]["wrong_role_exact"], 1)
+        snapshot["units"]["a"].pop("accepted_roles")
+        result = score(raw, {"a": expected}, snapshot, strict_v2=True)
+        self.assertEqual(result["role_metrics"]["exact_missing_role"], 1)
+        self.assertIsNone(result["role_metrics"]["known_role_recall"])
+
     def test_strict_v2_requires_all_join_fields(self):
         raw = json.dumps([{"id": "a", "text": "No identifiers"}]).encode()
         truth = keyed(b'[{"id":"a","gold":[],"protect":[]}]')
@@ -76,6 +115,20 @@ class EvaluationTest(unittest.TestCase):
         self.assertIsNone(result["fpr"])
         self.assertIsNone(result["accuracy"])
 
+    def test_strict_does_not_count_unreviewed_predictions_as_false_positives(self):
+        raw = json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
+                           "text": "Mira and Alia"}]).encode()
+        truth = keyed(json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
+                                  "input_sha256": hashlib.sha256(raw).hexdigest(),
+                                  "gold": [[0, 4, "NAME"]], "negative_scope": "partial",
+                                  "annotation_status": "adjudicated"}]).encode())
+        snapshot = predict(raw)
+        snapshot["units"]["a"]["accepted"] = [[0, 4, "NAME"], [9, 13, "NAME"]]
+        result = score(raw, truth, snapshot, strict_v2=True)
+        self.assertIsNone(result["precision"])
+        self.assertEqual(result["known_positive_recall"], 1.0)
+        self.assertEqual(result["unjudged_exact_predictions"], 1)
+
     def test_exact_and_overlap_scores_separate_boundary_errors(self):
         raw = json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
                            "text": "abcdefghij"}]).encode()
@@ -83,7 +136,8 @@ class EvaluationTest(unittest.TestCase):
         truth = keyed(json.dumps([{"id": "a", "record_id": "r1", "locator": "doc",
                                   "input_sha256": digest, "gold": [[0, 4, "NAME"],
                                                                     [5, 9, "NAME"]],
-                                  "protect": [], "annotation_status": "adjudicated"}]).encode())
+                                  "protect": [], "annotation_status": "adjudicated",
+                                  "negative_scope": "exhaustive"}]).encode())
         snapshot = predict(raw)
         snapshot["units"]["a"]["accepted"] = [[1, 5, "NAME"], [6, 9, "NAME"]]
         result = score(raw, truth, snapshot, strict_v2=True)

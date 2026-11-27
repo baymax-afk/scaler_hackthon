@@ -6,9 +6,11 @@ from decimal import Decimal
 import io
 import json
 import re
+import unicodedata
 import xml.etree.ElementTree as ET
 
-from .detection import FIELDS, NAME, SourceUnit, detect, normalize_label
+from .detection import FIELDS, NAME, SourceUnit, detect
+from .source_context import normalize_label, source_section, structured_label
 
 
 UUID = re.compile(r"(?:urn:uuid:)?[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
@@ -71,6 +73,7 @@ def table(text, extension, rewrite):
     if len(set(renamed)) < len(set(header)):
         raise UnsafeInput("header_collision")
     patient_table = any(normalize_label(label) in FIELDS or
+                        normalize_label(label) in PERSON_NAME_FIELDS or
                         detect(SourceUnit(label, channel="header")).findings for label in header)
     destination = io.StringIO(newline="")
     writer = csv.writer(destination, delimiter=delimiter, lineterminator="\n")
@@ -195,10 +198,13 @@ def json_document(text, rewrite):
     return encode_json(result) + "\n", locations
 
 
-def walk(value, rewrite, path=(), label="", unit="", resource=""):
+def walk(value, rewrite, path=(), label="", unit="", resource="", siblings=None, name_surfaces=()):
     if len(path) > 80:
         raise UnsafeInput("json_depth_limit")
     if isinstance(value, dict):
+        # A link can grant access to the unsanitized document behind it.
+        if resource and "url" in value and ("contentType" in value or label == "attachment"):
+            raise UnsafeInput("uninspected_attachment_url")
         if resource and "data" in value and "contentType" in value and ({"size", "hash"} & value.keys()):
             raise UnsafeInput("unsupported_attachment_integrity_metadata")
         result = {}
@@ -207,6 +213,7 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
         resource_type = value.get("resourceType")
         if resource and isinstance(resource_type, str):
             resource = resource_type
+            name_surfaces = human_name_surfaces(value) if resource in {"Patient", "RelatedPerson"} else ()
         for key, item in value.items():
             attachment_field = normalize_label(key) in {"attachment", "data base64", "base64", "b64", "payload base64"}
             typed_attachment = resource and isinstance(item, dict) and "contentType" in item
@@ -218,18 +225,15 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
             updated = rewrite.text(key, channel="key")
             if updated in result or (resource and updated != key):
                 raise UnsafeInput("json_key_collision_or_fhir_key")
-            result[updated] = walk(item, rewrite, (*path, key), key, unit, resource)
+            result[updated] = walk(item, rewrite, (*path, key), key, unit, resource, value, name_surfaces)
         return result
     if isinstance(value, list):
-        return [walk(item, rewrite, (*path, index), label, unit, resource)
+        return [walk(item, rewrite, (*path, index), label, unit, resource, siblings, name_surfaces)
                 for index, item in enumerate(value)]
-    if resource:
-        label = fhir_label(path, label, resource)
-    elif label == "name" and any(part in ("doctor", "physician", "provider", "clinician") for part in path):
-        label = "clinician name"
+    label = structured_label(path, label, resource, siblings)
     if isinstance(value, str):
         if resource and label == "div" and "text" in path:
-            return narrative(value, rewrite, resource)
+            return narrative(value, rewrite, resource, name_surfaces)
         if resource and label in FHIR_DATE_FIELDS:
             if rewrite.findings(value, label=label):
                 raise UnsafeInput("unsupported_fhir_date_transform")
@@ -241,29 +245,12 @@ def walk(value, rewrite, path=(), label="", unit="", resource=""):
             return value
         if resource and label == "source" and "meta" in path:
             return "urn:rakshak:redacted" if rewrite.findings(value, label="source path") else value
-        return rewrite.text(value, label=label, unit_of_measure=unit)
+        return rewrite.text(value, label=label, section=source_section(label, resource),
+                            unit_of_measure=unit)
     if type(value) in {int, Decimal}:
         if rewrite.findings(str(value), label=label, unit_of_measure=unit):
             return 0 if type(value) is int else Decimal(0)
     return value
-
-
-def fhir_label(path, label, resource):
-    if "identifier" in path and label == "value":
-        return "patient identifier"
-    if resource in {"Patient", "RelatedPerson"}:
-        if "name" in path and label in {"text", "given", "family"}:
-            return "patient name"
-        if "telecom" in path and label == "value":
-            return "phone"
-        if "address" in path and label in {"line", "postalCode", "text", "city"}:
-            return "address"
-    if "valueQuantity" in path and label == "value":
-        return "observation value"
-    if label == "name" and isinstance(path[-1], str):
-        # HumanName is a complex element. Scalar name in Organization and Device is not a patient name.
-        return ""
-    return label
 
 
 def attachment(value, content_type, rewrite):
@@ -279,7 +266,26 @@ def attachment(value, content_type, rewrite):
     return base64.b64encode(cleaned.encode("utf-8")).decode("ascii")
 
 
-def narrative(text, rewrite, resource):
+def normalized_name(value):
+    return " ".join(unicodedata.normalize("NFC", value).casefold().split())
+
+
+def human_name_surfaces(resource):
+    names = resource.get("name")
+    surfaces = set()
+    for name in names if isinstance(names, list) else ():
+        if not isinstance(name, dict):
+            continue
+        if isinstance(name.get("text"), str):
+            surfaces.add(normalized_name(name["text"]))
+        given, family = name.get("given"), name.get("family")
+        if isinstance(given, list) and given and all(isinstance(part, str) for part in given) \
+                and isinstance(family, str) and family:
+            surfaces.add(normalized_name(" ".join([*given, family])))
+    return surfaces - {""}
+
+
+def narrative(text, rewrite, resource, name_surfaces):
     if "<!" in text or "<?" in text:
         raise UnsafeInput("unsupported_fhir_narrative")
     try:
@@ -294,6 +300,17 @@ def narrative(text, rewrite, resource):
         if any(key.casefold().startswith("on") or rewrite.findings(value)
                for key, value in element.attrib.items()):
             raise UnsafeInput("unsafe_fhir_narrative_attribute")
+    for element in root.iter():
+        if name_surfaces and (
+            element is root or element.tag.removeprefix(f"{{{XHTML}}}") in {"p", "h1", "h2", "h3"}
+        ):
+            block = "".join(element.itertext())
+            if normalized_name(block) in name_surfaces:
+                label = "patient name" if resource == "Patient" else "related person name"
+                element.text = rewrite.text(block, label=label, section="fhir")
+                for descendant in element.iter():
+                    if descendant is not element:
+                        descendant.text = descendant.tail = None
         if element.text:
             fragment = element.text
             if resource in {"Patient", "RelatedPerson"} and element is root:

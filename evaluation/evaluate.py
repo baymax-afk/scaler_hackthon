@@ -1,6 +1,6 @@
 """Phase A evaluation. Generate frozen predictions or score an existing release."""
 import argparse
-from collections import Counter, defaultdict, deque
+from collections import Counter, defaultdict
 import hashlib
 import json
 from pathlib import Path
@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "submission")]
 from check_dev import all_text_under, norm, read_text
 from evaluation.linkage import score_linkage
+from evaluation.matching import overlap_matches
+from evaluation.role_metrics import RoleMetrics
 from rakshak.detection import SourceUnit, detect
 
 SOURCE_FIELDS = {"text", "label", "channel", "section", "unit_of_measure"}
@@ -27,13 +29,18 @@ def keyed(raw):
 def predict(raw):
     units = {}
     for key, item in keyed(raw).items():
+        join = {name: item[name] for name in JOIN_FIELDS if name in item}
+        if error := item.get("parse_error"):
+            units[key] = {"status": error, "accepted": [], "review": [], **join}
+            continue
         unit = SourceUnit(**{name: value for name, value in item.items() if name in SOURCE_FIELDS})
         result = detect(unit)
         units[key] = {
             "status": result.error or "complete",
             "accepted": [(x.start, x.end, x.kind) for x in result.findings],
             "review": [(x.start, x.end, x.kind) for x in result.review],
-            **{name: item[name] for name in JOIN_FIELDS if name in item},
+            "accepted_roles": [(x.start, x.end, x.kind, x.role) for x in result.findings if x.role],
+            **join,
         }
     return {"schema": "phase-a-predictions/1", "input_sha256": hashlib.sha256(raw).hexdigest(),
             "variant": "regex", "units": units}
@@ -41,42 +48,6 @@ def predict(raw):
 
 def ratio(n, d):
     return n / d if d else None
-
-
-def overlap_matches(gold, actual):
-    """Maximum one-to-one same-kind matches with any code-point overlap."""
-    wanted = sorted(gold)
-    found = sorted(actual)
-    neighbors = [[index for index, (left, right, kind) in enumerate(found)
-                  if kind == expected_kind and start < right and left < end]
-                 for start, end, expected_kind in wanted]
-    assigned_actual = {}
-    assigned_gold = {}
-    for start in range(len(wanted)):
-        queue = deque([start])
-        visited_gold = {start}
-        parent_actual = {}
-        free_actual = None
-        while queue and free_actual is None:
-            gold_index = queue.popleft()
-            for actual_index in neighbors[gold_index]:
-                if actual_index in parent_actual:
-                    continue
-                parent_actual[actual_index] = gold_index
-                if actual_index not in assigned_actual:
-                    free_actual = actual_index
-                    break
-                next_gold = assigned_actual[actual_index]
-                if next_gold not in visited_gold:
-                    visited_gold.add(next_gold)
-                    queue.append(next_gold)
-        while free_actual is not None:
-            gold_index = parent_actual[free_actual]
-            previous_actual = assigned_gold.get(gold_index)
-            assigned_actual[free_actual] = gold_index
-            assigned_gold[gold_index] = free_actual
-            free_actual = previous_actual
-    return len(assigned_actual)
 
 
 def score(raw, truth, snapshot, *, strict_v2=False):
@@ -100,6 +71,8 @@ def score(raw, truth, snapshot, *, strict_v2=False):
     adjudicated = Counter()
     adjudicated_overlap = Counter()
     exhaustive_negative = Counter()
+    known_positive = Counter()
+    role_metrics = RoleMetrics()
     for key, annotations in truth.items():
         if strict_v2 and ("input_sha256" not in annotations or
                           any(name not in annotations for name in JOIN_FIELDS)):
@@ -121,6 +94,10 @@ def score(raw, truth, snapshot, *, strict_v2=False):
             raise ValueError("invalid_span")
         if any(not (0 <= start < end <= length) for start, end in protected):
             raise ValueError("invalid_protected_span")
+        explicit_roles = {(item["start"], item["end"], item["type"]): item["role"]
+                          for item in annotations.get("occurrences", ())
+                          if item.get("role") and (item["start"], item["end"], item["type"]) in gold}
+        role_metrics.update(explicit_roles, actual, pred)
         unit_class = ("tp" if gold & actual else "fn") if gold else ("fp" if actual else "tn")
         counts[unit_class + "_units"] += 1
         matches = overlap_matches(gold, actual)
@@ -131,17 +108,19 @@ def score(raw, truth, snapshot, *, strict_v2=False):
                       protected_overlaps=sum(any(start < right and left < end
                                                  for start, end, _ in actual)
                                              for left, right in protected))
-        is_exhaustive_negative = not gold and annotations.get("negative_scope") == "exhaustive"
-        if (pred["status"] == "complete" and
-                annotations.get("annotation_status") == "adjudicated" and
-                (gold or is_exhaustive_negative)):
+        if pred["status"] != "complete" or annotations.get("annotation_status") != "adjudicated":
+            continue
+        known_positive.update(tp=len(gold & actual), fn=len(gold - actual))
+        if annotations.get("negative_scope") == "exhaustive":
             adjudicated.update(units=1, tp=len(gold & actual), fp=len(actual - gold),
-                               fn=len(gold - actual))
+                               fn=len(gold - actual), exact_units=(gold == actual))
             adjudicated_overlap.update(tp=matches, fp=len(actual) - matches,
                                        fn=len(gold) - matches)
-            adjudicated[unit_class + "_units"] += 1
-            if is_exhaustive_negative:
+            if not gold:
                 exhaustive_negative.update(units=1, fp=bool(actual), tn=not actual)
+        else:
+            known_positive["unjudged_predictions"] += len(actual - gold)
+
     tp, fp, fn = (counts[key] for key in ("tp", "fp", "fn"))
     otp, ofp, ofn = (overlap_counts[key] for key in ("tp", "fp", "fn"))
     utp, ufp, utn, ufn = (counts[f"{key}_units"] for key in ("tp", "fp", "tn", "fn"))
@@ -150,7 +129,7 @@ def score(raw, truth, snapshot, *, strict_v2=False):
             "counts": dict(counts), "precision": ratio(tp, tp + fp), "recall": ratio(tp, tp + fn),
             "f1": ratio(2 * tp, 2 * tp + fp + fn), "accuracy": ratio(utp + utn, len(truth)),
             "fpr": ratio(ufp, ufp + utn), "fnr": ratio(ufn, ufn + utp),
-            "overlap_counts": dict(overlap_counts),
+            "overlap_counts": dict(overlap_counts), "role_metrics": role_metrics.summary(),
             "overlap_precision": ratio(otp, otp + ofp),
             "overlap_recall": ratio(otp, otp + ofn),
             "overlap_f1": ratio(2 * otp, 2 * otp + ofp + ofn)}
@@ -162,12 +141,13 @@ def score(raw, truth, snapshot, *, strict_v2=False):
                       overlap_precision=ratio(aotp, aotp + aofp),
                       overlap_recall=ratio(aotp, aotp + aofn),
                       overlap_f1=ratio(2 * aotp, 2 * aotp + aofp + aofn),
-                      accuracy=ratio(adjudicated["tp_units"] + adjudicated["tn_units"],
-                                     adjudicated["units"]),
+                      accuracy=ratio(adjudicated["exact_units"], adjudicated["units"]),
+                      known_positive_recall=ratio(known_positive["tp"],
+                                                  known_positive["tp"] + known_positive["fn"]),
+                      unjudged_exact_predictions=known_positive["unjudged_predictions"],
                       fpr=ratio(exhaustive_negative["fp"],
                                 exhaustive_negative["fp"] + exhaustive_negative["tn"]),
-                      fnr=ratio(adjudicated["fn_units"],
-                                adjudicated["fn_units"] + adjudicated["tp_units"]))
+                      fnr=ratio(afn, afn + atp))
         result["metric_support"] = {"adjudicated_units": adjudicated["units"],
                                     "exhaustive_negative_units": exhaustive_negative["units"]}
     return result
@@ -189,6 +169,8 @@ def practice_audit(root, gold):
         outputs[metadata["input_sha256"]].append(metadata["output"])
     totals = Counter()
     by_script = defaultdict(Counter)
+    file_exposure = Counter(exported=0, patient_name_visible=0, patient_name_and_geography_visible=0)
+    geography = {"HOUSE", "LOCALITY", "VILLAGE", "LANDMARK", "PIN"}
     for _, file in sorted(gold["files"].items()):
         matches = outputs[file["sha256"]]
         if not matches:
@@ -198,6 +180,7 @@ def practice_audit(root, gold):
         totals["required_files_exported"] += file.get("expect") == "sanitize" and result is not None
         text = export_text(root, result)
         path = norm(result or "")
+        visible_types = set()
         for unit in file["units"].values():
             for annotation in unit["entities"]:
                 if annotation["type"] == "CANARY":
@@ -205,6 +188,8 @@ def practice_audit(root, gold):
                 phrase = norm(annotation["surface"])
                 haystack = path if annotation["channel"] == "filename" else text
                 visible = bool(phrase) and phrase in haystack
+                if visible:
+                    visible_types.add(annotation["type"])
                 totals["identifier_mentions"] += 1
                 totals["identifier_mentions_exported"] += result is not None
                 totals["visible_mentions"] += visible
@@ -213,9 +198,14 @@ def practice_audit(root, gold):
                 totals["input_clinical_probes"] += 1
                 totals["exported_clinical_probes"] += result is not None
                 totals["preserved_clinical_probes"] += bool(result) and norm(probe["text"]) in text
+        if result is not None:
+            file_exposure["exported"] += 1
+            if "PATIENT_NAME" in visible_types:
+                file_exposure["patient_name_visible"] += 1
+                file_exposure["patient_name_and_geography_visible"] += bool(geography & visible_types)
     if any(outputs.values()):
         raise ValueError("extra_report_entries")
-    return {"counts": dict(totals), "report_counts": report["counts"],
+    return {"counts": dict(totals), "file_exposure": dict(file_exposure), "report_counts": report["counts"],
             "by_script": {key: dict(value) for key, value in by_script.items()},
             "quarantine_reasons": dict(Counter(file["reason"] for file in report["files"] if file["output"] is None))}
 

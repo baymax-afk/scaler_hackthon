@@ -207,3 +207,11 @@ flowchart LR
 The full cycle exceeds the historical 24-person-hour budget at the high end before external reviews. If that budget still binds, prioritize release correctness, one candidate-coverage slice, an evidence-gated exact linkage slice and valid patient-level date handling. Reserve separate effort for completing and independently reviewing the full 2,000 records. Report limited evidence while the corpus is incomplete and reserve the sealed comparison until QA passes. Schedule packaging and runner checks in parallel with the first slices.
 
 Use a separate local feature branch or sibling worktree per owner. Keep prototypes on isolated branches. Both developers review one small interface change and frozen sample before consumer branches rely on it. Merge small independently verified PRs after agreed authorization. Keep evaluation, generated input and private seed assets in distinct locations. Sync from the approved main revision and agree which person resolves any shared contract conflict. Adopt a named immutable V1 Git reference once authorized, using the existing SHA in the meantime. See the [dataset custody protocol](research/dataset-v2-design.md#leakage-and-sealed-ownership) and the [Git collaboration workflow](#git-collaboration).
+
+## Generalization workstream checkpoint
+
+The [generalization solution plan](research/generalization-solution-plan.md#ownership-gates-and-shortest-path) proposes that B qualify source-only benchmark inputs and an independent role-aware release audit while A prepares open-fixture field-role, normalization and clinical-boundary experiments. Share the Source Unit and finding schema at the first checkpoint. Accept performance or tuning claims only against the qualified evaluator. Continue B-only custody of the sealed set. Detector changes, any learned model and final acceptance thresholds require the next approval.
+
+The [generalization engineering specification](GENERALIZATION_SPEC.md) consolidates the public test seams, evaluator-first acceptance gate, deterministic fixes and parallel delivery roadmap. The attached work packets reuse existing GitHub issues and are ready for breakdown review after spec approval.
+
+The [first-slice implementation and replay](research/generalization-first-slices.md) records the two deterministic fixes, new evaluator behavior and remaining qualification work.

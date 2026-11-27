@@ -3,7 +3,10 @@ import csv
 from datetime import date
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 import unittest
 
@@ -13,11 +16,79 @@ from rakshak.release import publish_release
 
 
 class DetectionTest(unittest.TestCase):
+    def test_patient_identity_fields_stop_before_demographics_in_both_scripts(self):
+        text = "मरीज़ का नाम: काव्या देव    आयु: 47 वर्ष   BP 120/80"
+        rendered, _ = transform(text, ".txt", Rewrite())
+        self.assertEqual(rendered, "मरीज़ का नाम: [NAME]    आयु: 47 वर्ष   BP 120/80")
+        table, _ = transform("Naam\tDawai\nNivara Dev\t5 mg\n", ".tsv", Rewrite())
+        self.assertEqual(table, "Naam\tDawai\n[NAME]\t5 mg\n")
+
+    def test_subject_of_measured_vital_preserves_value_and_other_roles(self):
+        source = ("Nivara Dev ka BP 120/80 mmHg. Review in 2 weeks.\n"
+                  "Dr. Nivara Dev ka BP 120/80 mmHg.\n"
+                  "Patient Education ka BP chart was discussed.\n"
+                  "left arm ka BP 118/78 mmHg.")
+        rendered, _ = transform(source, ".txt", Rewrite())
+        self.assertEqual(rendered, source.replace("Nivara Dev", "[NAME]", 1))
+
+    def test_name_boundary_keeps_separate_registration_id_private(self):
+        note = "मरीज़ का नाम: Nivara Dev   आयु: 45/F   Reg No: HZ-792   Dose: 5 mg"
+        actual, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(actual, "मरीज़ का नाम: [NAME]   आयु: 45/F   Reg No: [MRN]   Dose: 5 mg")
+
+    def test_honorific_and_measured_vital_support_an_abbreviated_patient_mention(self):
+        source = "Nivara ji ki blood pressure: 125/80.\nDr sahab ka BP 128/84."
+        rendered, _ = transform(source, ".txt", Rewrite())
+        self.assertEqual(rendered, "[NAME] ji ki blood pressure: 125/80.\nDr sahab ka BP 128/84.")
+
+    def test_generic_naam_under_medication_and_provider_keeps_its_source_role(self):
+        obj = {"medication": {"naam": "Ferrous Sulfate"}, "provider": {"naam": "Nivara Dev"},
+               "patient": {"naam": "Nivara Dev"}}
+        rendered, _ = transform(json.dumps(obj), ".json", Rewrite())
+        obj["patient"]["naam"] = "[NAME]"
+        self.assertEqual(json.loads(rendered), obj)
+
     def test_positions_are_original(self):
         source = "🩺 ९१२३\u200b४५६७८९; 650 mg"
         finding, = detect(SourceUnit(source)).findings
         self.assertEqual(source[finding.start:finding.end], "९१२३\u200b४५६७८९")
         self.assertEqual(finding.kind, "PHONE")
+
+    def test_nonbreaking_label_keeps_original_offsets(self):
+        source = "🩺\nPatient Name: ईशा राव\nDose: 5 mg"
+        finding, = detect(SourceUnit(source)).findings
+        self.assertEqual((finding.start, finding.end, finding.kind),
+                         (source.index("ईशा"), source.index("राव") + 3, "NAME"))
+
+    def test_name_candidate_stops_before_dose(self):
+        for suffix in (" dose 5 mg", " 500 mg daily", " dose: 5 mg", " 5 mg/kg"):
+            source = "Name: Mira Sen" + suffix
+            finding, = detect(SourceUnit(source)).findings
+            self.assertEqual(source[finding.start:finding.end], "Mira Sen")
+
+    def test_name_boundary_preserves_clinical_tails_in_text_and_cells(self):
+        for tail in (" metformin 5 mg", " Medication: exampledrug 5 mg",
+                     " follow-up in 7 days", " follow up in 2 weeks"):
+            with self.subTest(tail=tail):
+                value = "Mira Sen" + tail
+                note, _ = transform("Patient Name: " + value, ".txt", Rewrite())
+                self.assertEqual(note, "Patient Name: [NAME]" + tail)
+                table, _ = transform(f"Patient Name,Dx\n{value},asthma\n", ".csv", Rewrite())
+                self.assertEqual(table, f"Patient Name,Dx\n[NAME]{tail},asthma\n")
+
+    def test_tabs_and_equivalent_colon_keep_original_name_offsets(self):
+        source = "🩺\nPatient\tName： Mira Sen; Dose: 5 mg"
+        finding, = detect(SourceUnit(source)).findings
+        self.assertEqual((finding.start, finding.end), (source.index("Mira"), source.index(";")))
+
+    def test_findings_report_only_roles_supported_by_the_source(self):
+        cases = (("Patient Name: Mira Sen", "patient"),
+                 ("S/o Mira Sen", "relative"),
+                 ("Name: Mira Sen", None))
+        for note, role in cases:
+            with self.subTest(note=note):
+                finding, = detect(SourceUnit(note)).findings
+                self.assertEqual(finding.role, role)
 
     def test_name_roles_and_ambiguous_care_of(self):
         source = "Dr. Mira spoke. S/o Mira"
@@ -77,6 +148,51 @@ class FormatTest(unittest.TestCase):
         for source, expected in cases:
             with self.subTest(expected=expected):
                 self.assertEqual(transform(source, ".json", Rewrite())[1], expected)
+    def test_keeps_reordered_name_initials_inside_the_identifier_span(self):
+        note = "Patient: Velan, K. R.; dose 5 mg\nDr. Velan, K. R. verified."
+        rendered, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(rendered, "Patient: [NAME]; dose 5 mg\nDr. Velan, K. R. verified.")
+
+    def test_uses_patient_role_and_chart_context_in_structured_fields(self):
+        data = {
+            "referral": {"subject": {"display": "நிலா வேலன்", "email": "patient@example.invalid",
+                                     "medicalRecordReference": "WEST-39A-0021"}},
+            "assessment": {"subject": {"display": "Diabetes Mellitus"}},
+            "attending": {"subject": {"display": "நிலா வேலன்", "email": "provider@example.invalid"}},
+            "diagnosis": {"code": "E11.9"}, "specimen": {"number": "WEST-39A-0021"},
+        }
+        rendered, _ = transform(json.dumps(data), ".json", Rewrite())
+        result = json.loads(rendered)
+        self.assertEqual(result["referral"]["subject"],
+                         {"display": "[NAME]", "email": "[EMAIL]", "medicalRecordReference": "[MRN]"})
+        self.assertEqual(result["attending"]["subject"]["display"], "நிலா வேலன்")
+        for key in ("assessment", "diagnosis", "specimen"):
+            self.assertEqual(result[key], data[key])
+
+    def test_recognizes_explicit_referral_role_in_tables(self):
+        rendered, _ = transform(
+            'Referred Subject,Clinical subject,Sample reference\n"Patel, J.",Pulse Pressure,WD-072B\n',
+            ".csv", Rewrite(),
+        )
+        self.assertEqual(rendered,
+                         "Referred Subject,Clinical subject,Sample reference\n[NAME],Pulse Pressure,WD-072B\n")
+
+    def test_uses_chart_number_cue_without_treating_all_codes_as_mrns(self):
+        note = "Chart # NOR-872B/04\nSpecimen # NOR-872B/04\nDiagnosis: E11.9"
+        rendered, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(rendered, "Chart # [MRN]\nSpecimen # NOR-872B/04\nDiagnosis: E11.9")
+
+    def test_localized_name_cues_and_relationship_lines_preserve_their_neighbors(self):
+        note = ("Mareez ka naam / Nivara Dast\n"
+                "ರೋಗಿಯ ಹೆಸರು: ಕಾವ್ಯ ಸೇನ್\n"
+                "நோயாளியின் பெயர்: நிலா வேலன்\n"
+                "W/o நிலா வேலன் 5 mg\n"
+                "S/o Ahira M. D. Velam\n"
+                "BP: 120/80 mmHg")
+        rendered, _ = transform(note, ".txt", Rewrite())
+        self.assertEqual(rendered, "Mareez ka naam / [NAME]\nರೋಗಿಯ ಹೆಸರು: [NAME]\n"
+                         "நோயாளியின் பெயர்: [NAME]\nW/o [RELATIVE] 5 mg\n"
+                         "S/o [RELATIVE]\nBP: 120/80 mmHg")
 
     def test_delimiter_and_original_label_roles(self):
         output, locations = transform('नाम\tDose\n"ईशा राव"\t650 mg\n', ".tsv", Rewrite())
@@ -135,6 +251,42 @@ class FormatTest(unittest.TestCase):
         with self.assertRaisesRegex(UnsafeInput, "unresolved_fhir_reference"):
             transform(json.dumps(bundle), ".json", Rewrite())
 
+    def test_fhir_name_roles_use_source_paths_for_identical_surfaces(self):
+        patient_url = "urn:uuid:17ba0c07-910b-4395-a3d1-dd81ad44670b"
+        entries = [
+            {"fullUrl": patient_url,
+             "resource": {"resourceType": "Patient", "name": [{"text": "Mira Sen"}],
+                          "contact": [{"name": {"text": "Mira Sen"}}]}},
+            {"fullUrl": "urn:uuid:17ba0c07-910b-4395-a3d1-dd81ad44670c",
+             "resource": {"resourceType": "RelatedPerson", "name": [{"text": "Mira Sen"}],
+                          "patient": {"reference": patient_url}}},
+            {"fullUrl": "urn:uuid:17ba0c07-910b-4395-a3d1-dd81ad44670d",
+             "resource": {"resourceType": "Practitioner", "name": [{"text": "Mira Sen"}]}},
+        ]
+        rendered, _ = transform(json.dumps({"resourceType": "Bundle", "type": "collection",
+                                            "entry": entries}), ".json", Rewrite())
+        patient, relative, clinician = (entry["resource"] for entry in json.loads(rendered)["entry"])
+        self.assertEqual(patient["name"][0]["text"], "[NAME]")
+        self.assertEqual(patient["contact"][0]["name"]["text"], "[NAME]")
+        self.assertEqual(relative["name"][0]["text"], "[RELATIVE]")
+        self.assertEqual(clinician["name"][0]["text"], "Mira Sen")
+
+    def test_fhir_narrative_corroborates_names_across_xhtml_nodes(self):
+        div = ('<div xmlns="http://www.w3.org/1999/xhtml"><p><b>நிலா</b> <em>வேலன்</em></p>'
+               '<p>Dr. நிலா வேலன் documented 5 mg.</p></div>')
+        bundle = {"resourceType": "Bundle", "type": "collection", "entry": [
+            {"resource": {"resourceType": "Patient", "name": [{"given": ["நிலா"], "family": "வேலன்"}],
+                          "text": {"status": "generated", "div": div}}}
+        ]}
+        rendered, _ = transform(json.dumps(bundle), ".json", Rewrite())
+        patient = json.loads(rendered)["entry"][0]["resource"]
+        content = patient["text"]["div"]
+        self.assertEqual(patient["name"], [{"given": ["[NAME]"], "family": "[NAME]"}])
+        self.assertNotIn("<b>நிலா</b>", content)
+        self.assertNotIn("<em>வேலன்</em>", content)
+        self.assertIn("[NAME]", content)
+        self.assertIn("Dr. நிலா வேலன் documented 5 mg.", content)
+
     def test_fhir_birth_date_never_becomes_an_invalid_placeholder(self):
         bundle = {"resourceType": "Bundle", "type": "document", "entry": [
             {"fullUrl": "urn:uuid:22222222-2222-4222-8222-222222222222",
@@ -182,6 +334,62 @@ class ReleaseTest(unittest.TestCase):
             self.assertEqual(report["counts"]["files_quarantined"], 1)
             self.assertEqual(report["files"][0]["reason"], "unsafe_directory_name")
             self.assertFalse(list((output / "sanitized").rglob("*.txt")))
+    def test_cli_preserves_clinical_neighbors_of_unicode_name_label(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            incoming = root / "input"
+            incoming.mkdir()
+            (incoming / "note.txt").write_text(
+                "Patient Name: Mira Sen dose 0,5 mg\n"
+                "Patient Name: Mira Sen (dose 5 mg)\nDr. Mira Sen reviewed."
+            )
+            outgoing = root / "output"
+            cli = Path(__file__).resolve().parents[1] / "main.py"
+            subprocess.run([sys.executable, "-B", str(cli), "--input", str(incoming),
+                            "--output", str(outgoing)], check=True, capture_output=True,
+                           env={**os.environ, "RAKSHA_SECRET": "boundary-fixture"})
+            self.assertEqual((outgoing / "sanitized/note.txt").read_text(),
+                             "Patient Name: [NAME] dose 0,5 mg\n"
+                             "Patient Name: [NAME] (dose 5 mg)\nDr. Mira Sen reviewed.")
+
+    def test_masked_phone_cannot_escape_in_content_or_release_paths(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            incoming = root / "input"
+            incoming.mkdir()
+            masked = "98XXXXXX10"
+            (incoming / (masked + ".txt")).write_text(
+                "Callback requested at " + masked + ". Dose 10 mg. Lot AB98XXXXXX10Z.")
+            output = root / "release"
+            publish_release(incoming, output, b"fixture")
+            report = json.loads((output / "report.json").read_text())
+            self.assertEqual(report["counts"]["files_sanitized"], 1)
+            path = report["files"][0]["output"]
+            self.assertNotIn(masked, path)
+            self.assertEqual((output / path).read_text(),
+                             "Callback requested at [PHONE]. Dose 10 mg. Lot AB98XXXXXX10Z.")
+            self.assertNotIn(masked, (output / "records.jsonl").read_text())
+
+    def test_uninspected_attachment_link_is_withheld_from_entire_release(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "input"
+            source.mkdir()
+            marker = "synthetic-download-token"
+            attachment = {"url": "https://files.example.invalid/" + marker,
+                          "contentType": "application/pdf"}
+            bundle = {"resourceType": "Bundle", "type": "collection", "entry": [
+                {"resource": {"resourceType": "DocumentReference",
+                              "content": [{"attachment": attachment}]}}]}
+            (source / "ref.json").write_text(json.dumps(bundle))
+            (source / "safe.txt").write_text("Dose 5 mg.")
+            out = root / "release"
+            counts = publish_release(source, out, b"fixture")
+            self.assertEqual((counts["files_sanitized"], counts["files_quarantined"]), (1, 1))
+            self.assertFalse((out / "sanitized/ref.json").exists())
+            self.assertEqual((out / "sanitized/safe.txt").read_text(), "Dose 5 mg.")
+            for artifact in (out / "report.json", out / "records.jsonl"):
+                self.assertNotIn(marker, artifact.read_text())
 
     def test_repeatable_and_quarantine_does_not_publish_raw(self):
         with TemporaryDirectory() as temporary:
