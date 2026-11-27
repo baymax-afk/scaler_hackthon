@@ -1,4 +1,4 @@
-"""Build a runtime-only organizer checkout at a new directory."""
+"""Build an allowlisted organizer checkout, including the project brief."""
 import argparse
 from pathlib import Path
 import shutil
@@ -7,9 +7,9 @@ import tempfile
 
 RUNTIME = Path(__file__).resolve().parent / "submission"
 FILES = (
-    "raksha.toml", "README.md", "requirements.txt", "main.py",
+    "raksha.toml", "README.md", "requirements.txt", "main.py", "project-brief.pdf",
     "rakshak/detection.py", "rakshak/formats.py", "rakshak/release.py",
-    "rakshak/source_context.py",
+    "rakshak/source_context.py", "rakshak/linkage.py", "rakshak/quasi.py",
 )
 
 
