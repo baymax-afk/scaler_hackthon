@@ -9,7 +9,7 @@ import re
 import unicodedata
 import xml.etree.ElementTree as ET
 
-from .detection import NAME, SourceUnit, detect
+from .detection import FIELDS, NAME, SourceUnit, detect
 from .source_context import normalize_label, source_section, structured_label
 
 
@@ -72,6 +72,9 @@ def table(text, extension, rewrite):
     renamed = [rewrite.text(label, channel="header") for label in header]
     if len(set(renamed)) < len(set(header)):
         raise UnsafeInput("header_collision")
+    patient_table = any(normalize_label(label) in FIELDS or
+                        normalize_label(label) in PERSON_NAME_FIELDS or
+                        detect(SourceUnit(label, channel="header")).findings for label in header)
     destination = io.StringIO(newline="")
     writer = csv.writer(destination, delimiter=delimiter, lineterminator="\n")
     writer.writerow(renamed)
@@ -79,9 +82,8 @@ def table(text, extension, rewrite):
     for index, row in enumerate(reader):
         if len(row) != len(header):
             raise UnsafeInput("ragged_table")
-        start = len(rewrite.entities)
         writer.writerow([rewrite.text(value, label=label) for label, value in zip(header, row)])
-        if len(rewrite.entities) > start:
+        if patient_table:
             locations.append(f"row:{index}")
     return destination.getvalue(), locations
 
@@ -112,23 +114,87 @@ def pointer(value):
     return value.replace("~", "~0").replace("/", "~1")
 
 
+PATIENT_COLLECTIONS = {"patients", "visits", "encounters", "registrations"}
+PATIENT_FIELDS = {"patient", "patient name", "patient ref", "patient id", "patient identifier",
+                  "uhid", "mrn"}
+PERSON_NAME_FIELDS = {"name", "naam", "नाम"}
+PERSON_CONTACT_FIELDS = {"phone", "phone number", "mobile", "फोन", "फ़ोन", "email"}
+CLINICAL_FIELDS = {"diagnosis", "complaints", "history", "vitals", "rx", "microscopy",
+                   "chat", "action plan", "observation", "prescription"}
+CONTACT_VALUE = re.compile(r"(?i)[\w.+-]+@[\w.-]+\.[a-z]{2,}|(?<!\d)[6-9]\d{9}(?!\d)")
+
+
+def patient_evidence(record):
+    """Find record roles from structure, independently of detector hits."""
+    roles = set()
+    pending = [(record, 0)]
+    while pending:
+        value, depth = pending.pop()
+        if depth > 8:
+            continue
+        if isinstance(value, dict):
+            for key, item in value.items():
+                label = normalize_label(key)
+                if label in PATIENT_FIELDS or label.startswith("patient "):
+                    roles.add("patient")
+                if label in PERSON_NAME_FIELDS and isinstance(item, str) and item.strip():
+                    roles.add("person_name")
+                if label in PERSON_CONTACT_FIELDS and isinstance(item, str) and item.strip():
+                    roles.add("person_contact")
+                if label == "subject" and isinstance(item, dict) and isinstance(item.get("display"), str):
+                    roles.add("patient")
+                if label in CLINICAL_FIELDS:
+                    roles.add("clinical")
+                if isinstance(item, str) and CONTACT_VALUE.search(item):
+                    roles.add("contact")
+                if isinstance(item, (dict, list)):
+                    pending.append((item, depth + 1))
+        elif isinstance(value, list):
+            pending.extend((item, depth + 1) for item in value)
+    return ("patient" in roles or {"clinical", "contact"} <= roles
+            or {"person_name", "person_contact"} <= roles)
+
+
+def json_record_locators(document):
+    if isinstance(document, list):
+        if not document:
+            return []
+        candidates = [isinstance(item, dict) and patient_evidence(item) for item in document]
+        if any(candidates) and not all(candidates):
+            raise UnsafeInput("ambiguous_record_collection")
+        return [f"/{index}" for index in range(len(document))] if all(candidates) else []
+    if not isinstance(document, dict):
+        return []
+    collections = []
+    for key, value in document.items():
+        if not isinstance(value, list) or not value:
+            continue
+        if not all(isinstance(item, dict) for item in value):
+            continue
+        expected = normalize_label(key) in PATIENT_COLLECTIONS
+        evidence = [patient_evidence(item) for item in value]
+        if expected or any(evidence):
+            if not expected and not all(evidence):
+                raise UnsafeInput("ambiguous_record_collection")
+            if detect(SourceUnit(key, channel="key")).findings:
+                raise UnsafeInput("unsafe_record_locator")
+            collections.append((key, len(value)))
+    if len(collections) > 1:
+        raise UnsafeInput("ambiguous_record_collection")
+    if collections:
+        key, length = collections[0]
+        return [f"/{pointer(key)}/{index}" for index in range(length)]
+    return ["doc"] if patient_evidence(document) else []
+
+
 def json_document(text, rewrite):
     document = json.loads(text, object_pairs_hook=unique_pairs,
                           parse_float=Decimal, parse_constant=invalid_constant)
     fhir = isinstance(document, dict) and document.get("resourceType") == "Bundle"
     if fhir:
         return fhir_document(document, rewrite)
-    locations = []
-    if isinstance(document, dict):
-        for key, value in document.items():
-            if isinstance(value, list) and value and all(isinstance(item, dict) for item in value):
-                if detect(SourceUnit(key, channel="key")).findings:
-                    raise UnsafeInput("unsafe_record_locator")
-                locations.extend(f"/{pointer(key)}/{index}" for index in range(len(value)))
-    start = len(rewrite.entities)
+    locations = json_record_locators(document)
     result = walk(document, rewrite)
-    if not locations and len(rewrite.entities) > start:
-        locations = ["doc"]
     return encode_json(result) + "\n", locations
 
 
@@ -318,7 +384,6 @@ def transform(text, extension, rewrite):
     if extension == ".json":
         return json_document(text, rewrite)
     if extension == ".txt":
-        start = len(rewrite.entities)
         result = rewrite.text(text)
-        return result, ["doc"] if len(rewrite.entities) > start else []
+        return result, ["doc"]
     raise UnsafeInput("unsupported_format")

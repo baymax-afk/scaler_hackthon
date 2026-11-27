@@ -132,7 +132,7 @@ def main():
             rendered = (output / result).read_bytes()
             haystack = norm(read_text(output / result))
             trace = TracedRewrite()
-            written = output_location(relative, secret, trace)
+            written = output_location(relative, secret)
             replayed, _ = transform(decode(raw), relative.suffix.lower(), trace)
             if "sanitized/" + written.as_posix() != result or replayed.encode("utf-8") != rendered:
                 raise ValueError("release_replay_mismatch")

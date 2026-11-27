@@ -279,6 +279,7 @@ def open_slice_audit(dataset, release):
         raise ValueError("invalid_release_ledger")
     by_hash = {entry["input_sha256"]: entry for entry in entries}
     output_records = {}
+    output_paths = {}
     used_outputs = set()
     sanitized = 0
     for relative, fingerprint in fingerprints.items():
@@ -290,7 +291,8 @@ def open_slice_audit(dataset, release):
             continue
         if entry["status"] != "sanitized" or not isinstance(output, str):
             raise ValueError("invalid_release_ledger")
-        if output != "sanitized/" + relative:
+        if not output.startswith("sanitized/") or Path(output).is_absolute() or \
+                any(part in {"", ".", ".."} for part in output.split("/")):
             raise ValueError("invalid_release_path")
         target = (release / output).resolve()
         if not target.is_relative_to((release / "sanitized").resolve()) or not target.is_file():
@@ -303,6 +305,7 @@ def open_slice_audit(dataset, release):
             raise ValueError("invalid_release_ledger")
         format_name = formats[relative]
         output_records[relative] = parsed_records(target.read_bytes(), format_name)
+        output_paths[relative] = output
         sanitized += 1
     sanitized_root = release / "sanitized"
     if not sanitized_root.is_dir() or sanitized_root.is_symlink():
@@ -318,10 +321,11 @@ def open_slice_audit(dataset, release):
     records = {record["id"]: record for record in manifest["records"]}
     if len(records) != len(manifest["records"]):
         raise ValueError("invalid_record_join")
-    expected_index = {(f"sanitized/{record['file']}", record["locator"])
+    expected_index = {(output_paths[record['file']], record["locator"])
                       for record in records.values() if record["file"] in output_records}
-    record_by_index = {(f"sanitized/{record['file']}", record["locator"]): record["id"]
+    record_by_index = {(output_paths[record['file']], record["locator"]): record["id"]
                        for record in records.values() if record["file"] in output_records}
+    original_by_output = {output: original for original, output in output_paths.items()}
     if len(record_by_index) != len(expected_index):
         raise ValueError("invalid_record_join")
     pseudonyms = {identifier: None for identifier in records}
@@ -337,7 +341,7 @@ def open_slice_audit(dataset, release):
             patient = entry["patient"]
             if patient is not None:
                 if not isinstance(patient, str) or not patient or \
-                        patient not in json.dumps(output_records[key[0][len("sanitized/"):]][key[1]],
+                        patient not in json.dumps(output_records[original_by_output[key[0]]][key[1]],
                                                   ensure_ascii=False):
                     raise ValueError("invalid_record_index")
             pseudonyms[record_by_index[key]] = patient

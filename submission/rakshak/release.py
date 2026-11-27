@@ -11,25 +11,25 @@ import tempfile
 import time
 
 from .formats import Rewrite, UnsafeInput, decode, transform
+from .detection import SourceUnit, detect
 import csv
 
 MAX_FILE = 16 * 1024 * 1024
 SUPPORTED = {".csv", ".tsv", ".json", ".txt"}
 
 
-def output_location(relative, secret, rewrite):
-    directories = []
+def output_location(relative, secret):
     for component in relative.parts[:-1]:
-        findings = rewrite.findings(component, channel="filename")
-        if findings:
-            token = hmac.digest(secret, component.encode(), "sha256").hex()[:24]
-            component = "directory_" + token
-        directories.append(component)
-    name = relative.name
-    if rewrite.findings(name, channel="filename"):
-        token = hmac.digest(secret, relative.as_posix().encode(), "sha256").hex()[:24]
-        name = "file_" + token + relative.suffix.lower()
-    return Path(*directories, name)
+        result = detect(SourceUnit(component, channel="filename"))
+        if result.error or result.review or result.findings:
+            raise UnsafeInput("unsafe_directory_name")
+    result = detect(SourceUnit(relative.name, channel="filename"))
+    if result.error or result.review:
+        raise UnsafeInput("ambiguous_filename")
+    if not result.findings:
+        return relative
+    token = hmac.digest(secret, ("file/" + relative.as_posix()).encode(), "sha256").hex()[:24]
+    return relative.with_name("file_" + token + relative.suffix.lower())
 
 
 def build_release(input_path, output, secret):
@@ -60,7 +60,7 @@ def build_release(input_path, output, secret):
                     if len(raw) > MAX_FILE:
                         raise UnsafeInput("file_limit")
                     rewrite = Rewrite()
-                    destination = output_location(file.relative_to(input_path), secret, rewrite)
+                    destination = output_location(file.relative_to(input_path), secret)
                     rendered, locators = transform(decode(raw), suffix, rewrite)
                     # Validate UTF-8 before publication, including JSON surrogate escapes.
                     rendered_bytes = rendered.encode("utf-8")

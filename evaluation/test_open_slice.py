@@ -57,7 +57,7 @@ class OpenSliceTest(unittest.TestCase):
                                  if item["status"] == "sanitized"]
             sanitized_entries[1]["output"] = sanitized_entries[0]["output"]
             report_path.write_text(json.dumps(duplicate))
-            with self.assertRaisesRegex(ValueError, "invalid_release_path"):
+            with self.assertRaisesRegex(ValueError, "invalid_release_ledger"):
                 open_slice_audit(self.original, release)
             report_path.write_text(json.dumps(report))
             fingerprint = manifest["files"]["registration/row-0002.csv"]
@@ -70,7 +70,7 @@ class OpenSliceTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "invalid_release_ledger"):
                 open_slice_audit(self.original, release)
 
-    def test_release_audit_requires_original_paths_and_complete_record_index(self):
+    def test_release_audit_requires_safe_paths_and_complete_record_index(self):
         with TemporaryDirectory() as temporary:
             release = Path(temporary) / "release"
             root = Path(__file__).resolve().parents[1]
@@ -82,7 +82,7 @@ class OpenSliceTest(unittest.TestCase):
             original_report = report_path.read_bytes()
             report = json.loads(original_report)
             entry = next(item for item in report["files"] if item["status"] == "sanitized")
-            entry["output"] = "sanitized/renamed.txt"
+            entry["output"] = "sanitized/../renamed.txt"
             report_path.write_text(json.dumps(report), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "invalid_release_path"):
                 open_slice_audit(self.original, release)
@@ -102,17 +102,21 @@ class OpenSliceTest(unittest.TestCase):
                            env={**os.environ, "RAKSHA_SECRET": "practice"},
                            check=True, capture_output=True, text=True)
             token = "PSN-SYNTHETIC-COLLISION"
-            note = release / "sanitized/notes/note-0001.txt"
+            manifest = json.loads((self.original / "manifest.json").read_bytes())
+            report = json.loads((release / "report.json").read_bytes())
+            by_hash = {item["input_sha256"]: item["output"] for item in report["files"]}
+            def published(original):
+                return release / by_hash[manifest["files"][original]]
+            note = published("notes/note-0001.txt")
             note.write_text(note.read_text(encoding="utf-8").rstrip("\n") +
                             " " + token + "\n", encoding="utf-8")
-            table = release / "sanitized/registration/row-0002.csv"
+            table = published("registration/row-0002.csv")
             table.write_text(table.read_text(encoding="utf-8").replace(
                 "pulse 72", "pulse 72 " + token), encoding="utf-8")
             index_path = release / "records.jsonl"
             entries = [json.loads(line) for line in index_path.read_text(encoding="utf-8").splitlines()]
             for entry in entries:
-                if entry["file"] in {"sanitized/notes/note-0001.txt",
-                                     "sanitized/registration/row-0002.csv"}:
+                if entry["file"] in {str(note.relative_to(release)), str(table.relative_to(release))}:
                     entry["patient"] = token
             index_path.write_text("".join(json.dumps(item) + "\n" for item in entries),
                                   encoding="utf-8")

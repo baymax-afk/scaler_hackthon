@@ -17,12 +17,12 @@ FIELD_GROUPS = {
     "EMAIL": "email|email address|e mail",
     "AADHAAR": "aadhaar|aadhaar no|aadhr no|aadhaar number|aadhar|aadhaar masked|masked aadhaar|आधार",
     "ABHA": "abha|abha no|abha number|abha address",
-    "MRN": "mrn|patient id|patientid|patient identifier|uhid|ipd no|opd no|registration no|hospital id|admission id|admission no",
-    "ADDRESS": "address|patient address|residence|street|house no|village|village mohalla|mohalla|landmark|पता",
+    "MRN": "mrn|patient id|patientid|patient identifier|patient ref|uhid|hospital uhid|ipd no|opd no|registration no|hospital id|admission id|admission no",
+    "ADDRESS": "address|patient address|residence|street|house no|village|village mohalla|mohalla|landmark|pata|gaon|पता",
     "PIN": "pin|pin code|pincode|zip|postal code",
-    "DOB": "dob|date of birth|birth date|birthdate|जन्म तिथि|जन्मतिथि",
+    "DOB": "dob|date of birth|birth date|birthdate|janm tithi|janam tithi|जन्म तिथि|जन्मतिथि",
     "PAN": "pan|pan no|pan number",
-    "INSURANCE_ID": "insurance id|insurance number|policy number|policy no|member id",
+    "INSURANCE_ID": "insurance id|insurance number|policy number|policy no|member id|pmjay id",
     "PATH": "source path|original path|original filename|input path|original file",
 }
 FHIR_NAME_TYPES = {"contact name": "NAME", "related person name": "RELATIVE"}
@@ -101,6 +101,7 @@ SHAPES = (
 NUMERIC = {"PHONE", "AADHAAR", "ABHA"}
 OPAQUE_KEY = re.compile(r"[A-Za-z]{3,40}[0-9]{6,16}")
 FILE_NAME = re.compile(r"(?i)^(?:discharge_summary|patient|prescription|report)[_-](?:[a-z]{2,30}[_ -])+[a-z]{2,30}(?=[_-](?:[A-Z]{2,8}[-_]?)?[0-9])")
+FILENAME_IP = re.compile(r"(?i)(?<![A-Za-z0-9])IP-[0-9]{2}-[0-9]{5}(?![A-Za-z0-9])")
 
 
 @dataclass(frozen=True)
@@ -262,6 +263,8 @@ def detect(unit: SourceUnit) -> DetectionResult:
         match = FILE_NAME.match(source)
         if match:
             accepted.append(Finding(*match.span(), "NAME", .90, "filename_template"))
+        for match in FILENAME_IP.finditer(source):
+            accepted.append(Finding(*match.span(), "MRN", .90, "filename_ip_id"))
 
     if any(character.isdecimal() for character in source) or "@" in source:
         view, positions = comparison_view(source)
